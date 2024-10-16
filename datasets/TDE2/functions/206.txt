@@ -1,0 +1,31 @@
+```python
+import pandas as pd
+
+def alternate_sort_list(seq_a):
+    def alternate_sort(s):
+        digits = ''.join(sorted([char for char in s if char.isdigit()]))
+        letters = ''.join(sorted([char for char in s if char.isalpha()]))
+        
+        result = []
+        len_max = max(len(digits), len(letters))
+        
+        for i in range(len_max):
+            if i < len(letters):
+                result.append(letters[i])
+            if i < len(digits):
+                result.append(digits[i])
+                
+        return ''.join(result)
+    
+    df = pd.DataFrame(seq_a, columns=['original'])
+    df['transformed'] = df['original'].apply(alternate_sort)
+    
+    return df['transformed'].tolist()
+
+# Sequences
+seq_a = ['D4C3B2A1', 'E7C3B2A1', 'ABCDE12345', 'AB12345CDE', 'E12HY5']
+
+# Apply the transformation and store the result in seq_b
+seq_b = alternate_sort_list(seq_a)
+print(seq_b)
+```

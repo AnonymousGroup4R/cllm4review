@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+
+def prepend_area_code(seq_a):
+    series_a = pd.Series(seq_a)
+
+    def add_area_code(phone_number):
+        if phone_number.count('-') == 1:  # If there's only one dash
+            return '425-' + phone_number
+        else:
+            return phone_number
+
+    series_b = series_a.apply(add_area_code)
+    seq_b = series_b.tolist()
+
+    return seq_b
+
+# Define the sequence
+seq_a = ['499-999-2020', '999-2020', '390-9292', '299-398-0003', '321-2020']
+
+# Apply the transformation
+transformed_seq = prepend_area_code(seq_a)
+
+# Print the result to verify
+print(transformed_seq)
+```

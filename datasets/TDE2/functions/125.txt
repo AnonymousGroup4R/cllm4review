@@ -1,0 +1,14 @@
+```python
+def inch_to_cm(seq_a):
+    # Extracting the numeric values from seq_a
+    seq_a_numeric = [float(i.split()[0]) for i in seq_a]
+    # Converting inches to cm
+    seq_b = [(num * 2.54) for num in seq_a_numeric]
+    # Formatting the result to have 'cm' unit
+    seq_b = [f'{num:.2f} cm' for num in seq_b]
+    return seq_b
+
+seq_a = ['9 inch', '15 inch', '911 inch', '33 inch', '16 inch']
+transformed_seq = inch_to_cm(seq_a)
+print(transformed_seq)
+```

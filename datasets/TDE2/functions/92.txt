@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+
+def rgb_list_to_hex(seq_a):
+    df = pd.DataFrame(seq_a, columns=['rgb'])
+    
+    def rgb_to_hex(rgb_str):
+        rgb = list(map(int, rgb_str.split(',')))
+        return '#' + ''.join([f"{x:02X}" for x in rgb])
+        
+    df['hex'] = df['rgb'].apply(rgb_to_hex)
+    
+    return df['hex'].tolist()
+
+# Test the function
+seq_a = ['255,255,255', '238,130,238', '147,112,219', '219,112,147', '34,139,34']
+seq_b = rgb_list_to_hex(seq_a)
+print(seq_b)
+```

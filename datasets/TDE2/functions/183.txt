@@ -1,0 +1,8 @@
+def transform_to_five_char(seq_a):
+    seq_b = [x.zfill(5) for x in seq_a]
+    return seq_b
+
+# Test the function
+seq_a = ['2', '144', '12345', '789', '99']
+result = transform_to_five_char(seq_a)
+print(result)

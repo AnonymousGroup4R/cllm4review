@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+
+def to_acronyms(seq_a):
+    series_a = pd.Series(seq_a)
+
+    def to_acronym(phrase):
+        return ''.join(word[0] for word in phrase.split() if word[0].upper() == word[0])
+
+    acronyms = series_a.apply(to_acronym)
+    seq_b = acronyms.tolist()
+
+    return seq_b
+
+# Define the initial sequence of phrases
+seq_a = ['Association Computing Machinery', 'Principle Of Programming Languages', 
+         'Special Interest Group on Management Of Data', 'Relational Data Base Management System', 
+         'Table Extraction by Global Record Alignment']
+
+# Transform the input and store the result in seq_b
+seq_b = to_acronyms(seq_a)
+
+# Display the transformed sequence
+print(seq_b)
+```

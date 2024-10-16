@@ -1,0 +1,30 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_ounces_to_pounds(seq_a):
+    # Conversion factor from ounces to pounds
+    ounces_to_pounds_factor = 16
+
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    def convert_ounces_to_pounds(oz_string):
+        ounces = int(oz_string.split()[0])
+        pounds = ounces / ounces_to_pounds_factor
+        return '{} lb'.format(format_output(pounds))
+
+    return pd.Series(seq_a).apply(convert_ounces_to_pounds).tolist()
+
+# Initial sequence in ounces
+seq_a = ['3 oz', '862 oz', '51 oz', '1 oz', '5 oz']
+
+# Displaying the result
+print(convert_ounces_to_pounds(seq_a))
+```

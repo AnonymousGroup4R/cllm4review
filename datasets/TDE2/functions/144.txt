@@ -1,0 +1,41 @@
+// modified manually
+// seq_a = ['3 inch', '17 inch', '100 inch', '13 inch', '33 inch']
+// seq_b = ['76.2 mm', '431.8 mm', '2540 mm', '330.2 mm', '838.2 mm']
+```python
+import pandas as pd
+from decimal import Decimal
+
+def transform_inch_to_mm(seq_a):
+    # Convert the list into a pandas DataFrame
+    df = pd.DataFrame(seq_a, columns=['Measurements'])
+
+    # Extract the numerical part from the strings (assuming all measurements end with " inch")
+    df['Inches'] = df['Measurements'].str.extract('(\d+)').astype(int)
+
+    # Convert inches to millimeters
+    df['Millimeters'] = df['Inches'] * 25.4
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 4 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end > 0 and res[_end-1] == '.':
+            _end -= 1
+        return res[:_end]
+
+    # Format the millimeter values into strings with ' mm' appended
+    df['Result'] = df['Millimeters'].apply(lambda x: f'{format_output(x)} mm')
+
+    # Extract the list of formatted strings
+    seq_b = df['Result'].tolist()
+    
+    return seq_b
+
+seq_a = ['3 inch', '17 inch', '100 inch', '13 inch', '33 inch']
+print(transform_inch_to_mm(seq_a))
+```

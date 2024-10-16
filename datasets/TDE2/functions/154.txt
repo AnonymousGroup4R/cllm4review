@@ -1,0 +1,37 @@
+```python
+import pandas as pd
+
+def transform_addresses(addresses):
+    # create a DataFrame
+    df = pd.DataFrame(addresses, columns=['full_address'])
+
+    # function to clean up addresses
+    def clean_address(address):
+        # Split by comma, take the first part as the base address might end before the first comma
+        base_address = address.split(',')[0].lower()
+        
+        # Split again if there are still extra descriptors like Suite, Room, etc.
+        street_name = base_address.split(' ste ')[0].split(' room ')[0].split(' ste. ')[0]
+
+        # Handling more complex scenarios can involve identifying further patterns,
+        # for now using just the first component before the comma is a good start.
+        return street_name.strip()
+
+    # apply the function to the address column
+    df['cleaned_address'] = df['full_address'].apply(clean_address)
+
+    return df['cleaned_address'].tolist()
+
+# sequence a as provided
+seq_a = [
+    '1 microsoft way, redmond, wa, 98052',
+    '5 super commerce place blvd Ste H, Richmond, VA, 23452',
+    '1001 sunset blvd, Room 301, Sacramento California',
+    '1730 Minor Ave, Seattle, WA 98101',
+    '100 main street, redmond, wa, 98052'
+]
+
+# Output just the cleaned sequence
+seq_b = transform_addresses(seq_a)
+print(seq_b)
+```

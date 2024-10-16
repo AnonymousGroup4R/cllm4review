@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+import re
+
+def transform_to_scientific_notation(input_list):
+    # Convert the list of strings to a Pandas Series of floats
+    series_a = pd.Series(input_list).astype(float)
+
+    # Format the numbers into scientific notation
+    output_series = series_a.map(lambda x: re.sub(r'0*E\+0?','E', "{:.4E}".format(x)))
+
+    # Convert the Pandas Series back to a list
+    output_list = output_series.tolist()
+
+    return output_list
+
+# Original sequence in string format
+seq_a = ['1234', '23912000', '98100', '110', '12345']
+
+# Transform seq_a to seq_b using the defined function
+seq_b = transform_to_scientific_notation(seq_a)
+
+# Print the result
+print(seq_b)
+```

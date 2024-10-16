@@ -1,0 +1,41 @@
+```python
+import pandas as pd
+import re
+
+def transform_html_tags(seq_a):
+    # Convert the list into a pandas DataFrame
+    df = pd.DataFrame(seq_a, columns=['original'])
+    
+    # Function to remove HTML tags using regular expression
+    def remove_html_tags(text):
+        # Define the HTML tag pattern
+        html_pattern = re.compile('<.*?>')
+        # Replace each tag with space
+        clean_text = re.sub(html_pattern, ' ', text)
+        # merge spaces.
+        clean_text = re.sub(r'\s+', ' ', clean_text)
+        return clean_text.strip()
+
+    # Apply the function to remove HTML tags from each string in the DataFrame
+    df['cleaned'] = df['original'].apply(remove_html_tags)
+
+    # Extract the final sequence
+    seq_b = df['cleaned'].tolist()
+
+    return seq_b
+
+# Define Sequence A
+seq_a = [
+    '<b>Hello World.</b><br/><p><i>Is there anyone out there?</i><p>',
+    '<html><body>bla bla</td><td>bla bla<body><html>',
+    '<b>hello world!</b><br /><i>it is me! !</i>',
+    '<b>hello world!</b><br /><i>it is me! !</i>',
+    '<b>test</b>'
+]
+
+# Apply the transformation function
+transformed_seq = transform_html_tags(seq_a)
+
+# Display the resulting sequence
+print(transformed_seq)
+```

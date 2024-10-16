@@ -1,0 +1,20 @@
+```python
+import pandas as pd
+
+def convert_decimal_to_octal(seq_a):
+    def decimal_to_octal(decimal_num):
+        octal_num = oct(int(decimal_num))[2:]
+        return octal_num
+    
+    df = pd.DataFrame(seq_a, columns=['Decimal'])
+    df['Octal'] = df['Decimal'].apply(decimal_to_octal)
+    seq_b = list(df['Octal'])
+    
+    return seq_b
+
+# Create the sequences
+seq_a = ['2358', '198645', '33', '232', '1234']
+# Convert seq_a to octal and print the result
+seq_b = convert_decimal_to_octal(seq_a)
+print(seq_b)
+```

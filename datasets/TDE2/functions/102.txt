@@ -1,0 +1,31 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def transform_to_feet(seq_a):
+    df = pd.DataFrame(seq_a, columns=['Measurement'])
+    df['Value'] = df['Measurement'].str.extract('(\d+)').astype(float)
+    
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    df['Value'] = df['Value'] * 3.28084
+    df['Value'] = df['Value'].map(format_output).map('{} feet'.format)
+    
+    return df['Value'].tolist()
+
+# Define the original sequence
+seq_a = ['8 m', '259 m', '387 m', '333 m', '888 m']
+
+# Call the function to transform the sequence
+seq_b = transform_to_feet(seq_a)
+
+# Print the converted sequence
+print(seq_b)
+```

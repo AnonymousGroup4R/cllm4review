@@ -1,0 +1,27 @@
+```python
+import pandas as pd
+
+def convert_roman_to_int(input_list):
+    conversion_dict = {'numerals': ['I', 'V', 'X', 'L', 'C', 'D', 'M'],
+                        'values': [1, 5, 10, 50, 100, 500, 1000]}
+    conversion_df = pd.DataFrame(conversion_dict)
+    
+    def roman_to_int(roman):
+        result = 0
+        prev_value = 0
+        for numeral in roman[::-1]:
+            value = conversion_df.loc[conversion_df['numerals'] == numeral, 'values'].values[0]
+            if value < prev_value:
+                result -= value
+            else:
+                result += value
+            prev_value = value
+        return result
+    
+    result_list = [str(roman_to_int(numeral)) for numeral in input_list]
+    return result_list
+
+seq_a = ['III', 'CCXXXIII', 'C', 'CCXXII', 'MCCXXXIV']
+seq_b = convert_roman_to_int(seq_a)
+print(seq_b)
+```

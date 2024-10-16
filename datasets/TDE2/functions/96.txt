@@ -1,0 +1,17 @@
+```python
+import pandas as pd
+
+def convert_mm_to_inches(seq_a):
+    df = pd.DataFrame(seq_a, columns=['measure'])
+    df['number_mm'] = df['measure'].str.extract('(\d+)').astype(float)
+    df['number_inches'] = df['number_mm'] * 0.03937007874
+    df['result'] = df['number_inches'].apply(lambda x: f"{x:.6f} inch")
+    return df['result'].tolist()
+
+# Define the initial sequence of strings
+seq_a = ['1 mm', '8 mm', '17 mm', '33 mm', '22 mm']
+
+# Invoke the function to get the transformed sequence
+seq_b = convert_mm_to_inches(seq_a)
+print(seq_b)
+```

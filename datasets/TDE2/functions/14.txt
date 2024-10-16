@@ -1,0 +1,21 @@
+```python
+import pandas as pd
+
+def extract_values(seq_list):
+    def process_element(element):
+        parts = [part.strip() for part in element.split(';')]
+        if len(parts) > 1:
+            sub_parts = [sub_part.strip() for sub_part in parts[1].split(',')]
+            return sub_parts[0]
+        return ''
+    
+    seq_list = pd.Series(seq_list)
+    res = seq_list.apply(process_element)
+    
+    return res.tolist()
+
+# Test the function
+seq_a = ['a, b; cccc, d; e, f', 'x, aaay; aaaz, d', 'a; ffeaa; aa, aaa, aaa, aaa', 'ajfj, ajfie, ajaj, aj; jwi, ajaj, aj, a; aj, ajiw, ajif, jfi', 'ccc; aaa, bbb, ccc, ddd; xyz']
+output_seq_b = extract_values(seq_a)
+print(output_seq_b)
+```

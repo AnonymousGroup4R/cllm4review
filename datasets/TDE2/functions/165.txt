@@ -1,0 +1,29 @@
+```python
+import pandas as pd
+
+def extract_primary_domain(seq_a):
+    # Converting the input list into a pandas Series
+    series_a = pd.Series(seq_a)
+    
+    # Function to extract the primary domain
+    def extract_domain(url):
+        parts = url.split('.')
+        # Finding the second last item in the split list; this usually holds the primary domain unless it's a special case
+        if 'co' in parts[-2]:
+            return parts[-3]  # for cases like 'co.uk'
+        else:
+            return parts[-2]
+    
+    # Apply the function to each element of the Series
+    domain_series = series_a.apply(extract_domain)
+    
+    return domain_series.tolist()
+
+# Creating the initial sequence as a list
+seq_a = ['www.news.cnn.com', 'cnn.co.uk', 'drive.google.ca', 'photos.twitter.com', 'www.photos.abc.com']
+
+# Call the function with seq_a as the input
+seq_b = extract_primary_domain(seq_a)
+
+print(seq_b)
+```

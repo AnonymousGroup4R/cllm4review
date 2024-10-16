@@ -1,0 +1,24 @@
+```python
+import pandas as pd
+import utm
+
+def convert_latlong_to_utm(seq_a):
+    df = pd.DataFrame(seq_a, columns=['lat_long'])
+    df[['latitude', 'longitude']] = df['lat_long'].str.split(',', expand=True).astype(float)
+
+    def latlong_to_utm(lat, lon):
+        utm_conversion = utm.from_latlon(lat, lon)
+        return f"{int(utm_conversion[0])}mE, {int(utm_conversion[1])}mN"
+
+    df['utm'] = df.apply(lambda x: latlong_to_utm(x['latitude'], x['longitude']), axis=1)
+    seq_b = df['utm'].tolist()
+    
+    return seq_b
+
+# Data sequence
+seq_a = ['32.44, 44.11', '36.11, 80.22', '10.82, 20.21', '23.11, 39.33', '10.22, -39.33']
+
+# Apply transformation and print the result
+seq_b = convert_latlong_to_utm(seq_a)
+print(seq_b)
+```

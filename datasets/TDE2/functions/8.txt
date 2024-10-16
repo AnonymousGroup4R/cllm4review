@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def transform_filenames(seq_a):
+    filenames = pd.Series(seq_a)
+    dates = filenames.str.extract(r'(\d{2})_(\d{4})')
+    dates_formatted = pd.to_datetime(dates[0] + '/01/' + dates[1], format='%m/%d/%Y')
+    seq_b = dates_formatted.dt.strftime('%m/%d/%Y')
+    
+    return seq_b.tolist()
+
+# Example usage
+seq_a = ['03_2005_XXX.xls', '12_2011_xaz.xls', '04_2015_rrrrr.xls', '03_2015_rrrrr.xls', '11_2012_rrrrr.xls']
+transformed_seq = transform_filenames(seq_a)
+print(transformed_seq)
+```

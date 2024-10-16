@@ -1,0 +1,10 @@
+def transform_sequence(seq_a_list):
+    import pandas as pd
+    df = pd.DataFrame({'seq_a': seq_a_list})
+    df['seq_b'] = df['seq_a'].apply(lambda x: x.split('\t')[0].upper())
+    return df['seq_b'].tolist()
+
+# Example usage
+seq_a = ['abc\txyz', 'azzz\tttt', 'xyz\tttttt', 'cccc\tabc', 'abcdefg\tuvw']
+transformed_list = transform_sequence(seq_a)
+print(transformed_list)

@@ -1,0 +1,10 @@
+```python
+def kb_to_mb(seq_a):
+    seq_b = [str(int(x.split()[0])/1000) + ' mb' for x in seq_a]
+    return seq_b
+
+# Given sequence
+seq_a = ['3 kb', '59 kb', '140 kb', '2 kb', '123 kb']
+# Display converted sequence
+print(kb_to_mb(seq_a))
+```

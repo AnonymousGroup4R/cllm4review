@@ -1,0 +1,21 @@
+```python
+import pandas as pd
+
+def transform_movie_titles(seq_a):
+    df = pd.DataFrame({'original_title': seq_a})
+    df['title'] = df['original_title'].str.extract(r'aka (.+)$')
+    df['title'] = df['title'].str.replace('New ', '')
+    df = df.drop('original_title', axis=1)
+    
+    return df['title'].tolist()
+
+# Example usage:
+seq_a = ['Harry Potter 4 aka Harry Potter and the Goblet of Fire', 
+         'Indy 4 aka Indiana Jones and the Kingdom of the Crystal Skull', 
+         'New Star Trek aka Star Trek Into Darkness', 
+         'The Hunger Games 3 aka the hunger games mockingjay part 1', 
+         'New X man aka X-Men: Days of Future Past']
+
+seq_b = transform_movie_titles(seq_a)
+print(seq_b)
+```

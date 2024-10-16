@@ -1,0 +1,15 @@
+```python
+import pandas as pd
+
+def convert_hourly_wage_to_annual_salary(seq_a):
+    df = pd.DataFrame(seq_a, columns=['hourly_wage'])
+    df['hourly_wage'] = df['hourly_wage'].str.replace('$','').str.replace('/hour','').astype(float)
+    df['salary'] = df['hourly_wage'] * 2080  # Assuming 2080 working hours in a year
+    seq_b = df['salary'].apply(lambda x: '${:,.2f}'.format(x)).tolist()
+    return seq_b
+
+# Test the function with seq_a
+seq_a = ['$12/hour', '$15/hour', '$40/hour', '$22/hour', '$11/hour']
+result = convert_hourly_wage_to_annual_salary(seq_a)
+print(result)
+```

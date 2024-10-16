@@ -1,0 +1,23 @@
+```python
+import pandas as pd
+
+def adjust_datetime(seq_a):
+    # Convert list to pandas DatetimeIndex
+    dates = pd.to_datetime(seq_a)
+    # Subtract one hour from each datetime object
+    dates_adjusted = dates - pd.DateOffset(hours=1)
+    # Convert back to strings
+    seq_b = dates_adjusted.strftime('%Y/%m/%d %H:%M:%S').tolist()
+    
+    return seq_b
+
+# Sequence A
+seq_a = ['2007/02/26 18:37:58', '2008/02/26 17:37:58', '2000/02/26 00:37:50',
+         '2009/02/26 16:37:58', '2000/02/26 11:37:50']
+
+# Transform sequence A to sequence B
+seq_b = adjust_datetime(seq_a)
+
+# Display the new sequence
+print(seq_b)
+```

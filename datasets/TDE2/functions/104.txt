@@ -1,0 +1,37 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+# Conversion factor from liters to gallons
+conversion_factor = 0.264172
+
+def liters_to_gallons(seq_a):
+    # Create a pandas Series
+    liters_series = pd.Series(seq_a)
+
+    # Remove ' L' and convert to float, apply the conversion factor, and format the result
+    gallons_series = liters_series.str.replace(' L', '').astype(float) * conversion_factor
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    # Format the resulting values as strings with ' gal' appended
+    seq_b = gallons_series.apply(format_output).apply(lambda x: f'{x} gal').tolist()
+
+    return seq_b
+
+# Given sequence of liters
+seq_a = ['7 L', '15 L', '98 L', '33 L', '17 L']
+result = liters_to_gallons(seq_a)
+
+# Output the result
+print(result)
+```

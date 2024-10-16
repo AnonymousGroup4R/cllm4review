@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+
+def convert_cm_to_feet_and_inches(seq_a):
+    
+    df = pd.DataFrame(seq_a, columns=['Measurement'])
+    df['cm'] = df['Measurement'].str.replace(' cm', '').astype(int)
+
+    def cm_to_inches(cm):
+        return cm * 0.3937007874
+
+    def inches_to_feet_inches(inches):
+        feet = int(inches // 12)
+        inches_remainder = inches % 12
+        return f'{feet} feet and {inches_remainder:.4f} inches'
+
+    df['inches'] = df['cm'].apply(cm_to_inches)
+    df['feet_inch'] = df['inches'].apply(inches_to_feet_inches)
+    
+    return df['feet_inch'].tolist()
+
+seq_a = ['3 cm', '870 cm', '69 cm', '44 cm', '555 cm']
+seq_b = convert_cm_to_feet_and_inches(seq_a)
+
+print(seq_b)
+```

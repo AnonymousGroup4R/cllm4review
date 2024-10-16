@@ -1,0 +1,36 @@
+// modified manually
+// seq_a = ['0830818030', '316148410X', '1566199093', '0198526636', '1861972717']
+// seq_b = ['978-0-830-81803-7', '978-3-161-48410-0', '978-1-566-19909-4', '978-0-198-52663-6', '978-1-861-97271-2']
+```python
+import pandas as pd
+
+def isbn10_to_isbn13_conversion(seq_a):
+    def isbn10_to_isbn13(isbn10):
+        # Strip any existing hyphens and take the first 9 digits only (ignore old check digit)
+        isbn_base = '978' + isbn10.replace('-', '')[:-1]
+        
+        # Compute check digit for ISBN-13
+        check_sum = 0
+        for i, char in enumerate(isbn_base):
+            check_sum += int(char) * (1 if i % 2 == 0 else 3)
+        check_digit = 10 - (check_sum % 10)
+        if check_digit == 10:
+            check_digit = 0
+        
+        # Concatenate base ISBN with new check digit
+        isbn13 = isbn_base + str(check_digit)
+        
+        # Ideally, formatting can also be defined by specific rules. Here, a simplified general formatting:
+        formatted_isbn13 = f'{isbn13[:3]}-{isbn13[3]}-{isbn13[4:7]}-{isbn13[7:12]}-{isbn13[12]}'
+        
+        return formatted_isbn13
+    
+    df = pd.DataFrame(seq_a, columns=['ISBN-10'])
+
+    df['ISBN-13'] = df['ISBN-10'].apply(isbn10_to_isbn13)
+
+    return df['ISBN-13'].tolist()
+
+seq_a = ['0830818030', '316148410X', '1566199093', '0198526636', '1861972717']
+print(isbn10_to_isbn13_conversion(seq_a))
+```

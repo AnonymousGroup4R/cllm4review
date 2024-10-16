@@ -1,0 +1,33 @@
+```python
+import pandas as pd
+import math
+
+def transform_sequence(input_list):
+    def remove_trailing_zeros(res):
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end >= 0 and res[_end-1] == '.': _end -= 1
+        return res[:_end]
+
+    def custom_format(n):
+        if n < 0.01 or n >= 1000:
+            # Use scientific notation
+            return '{:.2E}'.format(n).replace('E+0', 'E').replace('E-0', 'E-')
+        else:
+            # Use normal float format with 2 decimal places
+            return remove_trailing_zeros('{:.2f}'.format(math.floor(n * 100) / 100))
+
+    df = pd.DataFrame(input_list, columns=['numbers'])
+    df['numbers'] = df['numbers'].astype(float)
+    df['formatted'] = df['numbers'].apply(custom_format)
+    
+    return df['formatted'].tolist()
+
+# Define the initial sequence as a list
+seq_a = ['.2367', '.00367', '22.3', '3364.0', '11']
+
+# Transform seq_a to seq_b
+seq_b = transform_sequence(seq_a)
+print(seq_b)
+```

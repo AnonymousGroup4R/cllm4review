@@ -1,0 +1,12 @@
+def transform_hex_to_binary(seq_a):
+    def hex_to_binary(hex_string):
+        binary_string = ' '.join(f"{int(char, 16):04b}" for char in hex_string)
+        return binary_string
+    
+    seq_b = [hex_to_binary(x) for x in seq_a]
+    return seq_b
+
+# Input sequence
+seq_a = ['123A', '469E', 'AAE352', '123', '3333']
+seq_b = transform_hex_to_binary(seq_a)
+print(seq_b)

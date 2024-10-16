@@ -1,0 +1,44 @@
+// modified manually
+// seq_a = ['15 km', '251 km', '321 km', '12 km', '44 km']
+// seq_b = ['9.32057 mile', '155.964 mile', '199.46 mile', '7.45645 mile', '27.3403 mile']
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_km_to_miles(seq_a):
+    # Convert the list to a pandas Series
+    distances_km = pd.Series(seq_a)
+    
+    # Extract the numeric part of each string and convert to float
+    distances_km_numeric = distances_km.str.extract(r'(\d+)').astype(float)
+    
+    # Define the conversion factor from kilometers to miles
+    conversion_factor = 0.621371
+    
+    # Convert kilometers to miles
+    distances_miles = distances_km_numeric * conversion_factor
+    
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return "{} mile".format(res[:_end])
+    
+    # Format the results to a more readable form with "mile" appended
+    seq_b = distances_miles[0].apply(format_output)
+    
+    return seq_b.tolist()
+
+# Define your sequence of distances in kilometers
+seq_a = ['15 km', '251 km', '321 km', '12 km', '44 km']
+
+# Call the function to transform seq_a to seq_b
+seq_b = convert_km_to_miles(seq_a)
+
+# Print the converted miles sequence
+print(seq_b)
+```

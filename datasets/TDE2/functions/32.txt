@@ -1,0 +1,21 @@
+// modified manually
+// seq_a= ['2 N Central Avenue Phoenix, AZ 85004', 'University Ave Middleton, WI 53562', 'Farwell St Mc Farland, WI 53558', '1 Microsoft Way, Redmond, WA 98052', '14820 36th ST NE, Redmond, WA 98052']
+// seq_b= ['85004', '53562', '53558', '98052', '98052']
+```python
+import pandas as pd
+
+def extract_zip_codes(seq_a):
+    # create a DataFrame from seq_a
+    df = pd.DataFrame({'Address': seq_a})
+    
+    # extract the zip codes from Address column using str.extract and regex
+    df['Zip Code'] = df['Address'].str.extract(r'(\d{5}$)')
+    
+    # convert the Zip Code column to a list
+    seq_b = df['Zip Code'].tolist()
+    
+    return seq_b
+
+seq_a = ['2 N Central Avenue Phoenix, AZ 85004', 'University Ave Middleton, WI 53562', 'Farwell St Mc Farland, WI 53558', '1 Microsoft Way, Redmond, WA 98052', '14820 36th ST NE, Redmond, WA 98052']
+print(extract_zip_codes(seq_a))
+```

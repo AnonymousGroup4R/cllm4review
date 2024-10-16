@@ -1,0 +1,28 @@
+```python
+import pandas as pd
+
+def transform_cm_to_inches(seq_a):
+    # Create a DataFrame from the input sequence
+    df = pd.DataFrame(seq_a, columns=['Measurements'])
+    
+    # Extract the numeric part from the 'Measurements' column assuming the format is always number followed by ' cm'
+    df['Value_cm'] = df['Measurements'].str.extract('(\d+)').astype(int)
+    
+    # Convert centimeters to inches; 1 cm = 0.3937007874 inches
+    df['Value_inches'] = df['Value_cm'] * 0.3937007874
+    
+    # Format the inches values to match the desired output format in `seq_b`
+    df['Value_inches_formatted'] = df['Value_inches'].apply(lambda x: f'{x:.8f} inch')
+    
+    # Get the final sequence of inches values as a list
+    seq_b = df['Value_inches_formatted'].tolist()
+    
+    return seq_b
+
+# Define the initial sequence of strings with cm values
+seq_a = ['1 cm', '5 cm', '6 cm', '2 cm', '3 cm']
+
+# Usage example
+seq_b = transform_cm_to_inches(seq_a)
+print(seq_b)
+```

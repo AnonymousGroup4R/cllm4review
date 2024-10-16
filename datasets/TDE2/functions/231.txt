@@ -1,0 +1,31 @@
+```python
+import pandas as pd
+import re
+
+# Define the function to transform seq_a to seq_b
+def extract_caps_words(seq_a):
+    df = pd.DataFrame(seq_a, columns=['text'])
+    
+    # Define a function to extract all caps words
+    def extract_caps(text):
+        # Use regex to capture words with only capital letters and possibly punctuation
+        return ', '.join(re.findall(r'\b[A-Z]{2,}\b', text))
+
+    # Apply the function to the DataFrame
+    df['capital_words'] = df['text'].apply(extract_caps)
+
+    # Get the result as a list
+    seq_b = df['capital_words'].tolist()
+    return seq_b
+
+seq_a = [
+    'This is one of the best breakfasts I have had! Is the decor dated? Absolutely but it just adds to the nostalgic charm! The place just reeks of beef cooking... Ahhh delicious! Check out the pastry cases!!!! OMG, is all I have to say!',
+    'When she asked if we had reservations, I replied no, and she commented NO? You KNOW IT IS SATURDAY. I wanted to say yes, yesterday was Friday and tomorrow is Sunday. Instead I replied that I was TERRIBLY sorry i did not realize i needed a reservation',
+    'ABC ajib DDD xyz',
+    'This is MY work',
+    'HOW ARE YOU'
+]
+
+result = extract_caps_words(seq_a)
+print(result)
+```

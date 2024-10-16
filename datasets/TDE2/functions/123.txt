@@ -1,0 +1,22 @@
+```python
+import pandas as pd
+
+def convert_gallons_to_cups(seq_a):
+    # Define the conversion factor
+    conversion_factor = 16
+    # Create a DataFrame for seq_a
+    data = {'seq_a': seq_a}
+    df = pd.DataFrame(data)
+    # Extract the number of gallons from seq_a and convert to cups
+    df['gallons'] = df['seq_a'].apply(lambda x: int(x.split()[0]))
+    df['cups'] = df['gallons'] * conversion_factor
+    # Create seq_b from the DataFrame
+    seq_b = df['cups'].apply(lambda x: str(x) + ' cups').tolist()
+    
+    return seq_b
+
+# Example usage
+seq_a = ['1 gallons', '3 gallons', '11 gallons', '15 gallons']
+result = convert_gallons_to_cups(seq_a)
+print(result)
+```

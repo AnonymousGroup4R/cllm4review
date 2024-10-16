@@ -1,0 +1,15 @@
+```python
+import pandas as pd
+
+def decimal_to_hex_upper(seq_a):
+    series_a = pd.Series(seq_a)
+    seq_b_converted = series_a.astype(int).apply(lambda x: hex(x)[2:].upper())
+    return seq_b_converted.tolist()
+
+# Input decimal sequence as strings
+seq_a = ['22', '2156', '9876', '323', '123234']
+# Transform seq_a to seq_b
+seq_b = decimal_to_hex_upper(seq_a)
+# Checking the result
+print(seq_b)
+```

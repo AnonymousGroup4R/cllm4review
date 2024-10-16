@@ -1,0 +1,15 @@
+```python
+import pandas as pd
+
+def generate_initials_list(seq_a):
+    df = pd.DataFrame({'full_name': seq_a})
+    df['first_name'] = df['full_name'].apply(lambda x: x.split()[0])
+    df['last_name'] = df['full_name'].apply(lambda x: x.split()[1])
+    df['initials'] = df['first_name'].apply(lambda x: x[0] + '. ') + df['last_name']
+    return df['initials'].tolist()
+
+# Example usage
+seq_a = ['Jack Bauer', 'Charles Wooten', 'Kim Lee', 'Lucy Goodman', 'Rachel Green']
+seq_b = generate_initials_list(seq_a)
+print(seq_b)
+```

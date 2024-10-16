@@ -1,0 +1,34 @@
+// modified manually
+// seq_a = ['17 b', '39 b', '198 b', '33 b', '12 b']
+// seq_b = ['7.71107 kg', '17.6901 kg', '89.8113 kg', '14.9685 kg', '5.44311 kg']
+```python
+import pandas as pd
+from decimal import Decimal
+
+def pounds_to_kilograms(seq_a):
+    df = pd.DataFrame(seq_a, columns=['pounds'])
+    
+    df['pounds'] = df['pounds'].str.replace(' b', '').astype(float)
+
+    conversion_factor = 0.45359237
+
+    df['kilograms'] = df['pounds'] * conversion_factor
+
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    df['formatted_kg'] = df['kilograms'].apply(format_output).apply(lambda x: f'{x} kg')
+
+    seq_b = df['formatted_kg'].tolist()
+
+    return seq_b
+
+seq_a = ['17 b', '39 b', '198 b', '33 b', '12 b']
+print(pounds_to_kilograms(seq_a))
+```

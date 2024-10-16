@@ -1,0 +1,41 @@
+```python
+import pandas as pd
+from ummalqura.hijri_date import HijriDate
+from datetime import datetime
+
+def transform_hijri_to_gregorian(seq_a):
+    hijri_months = {
+        'Muharram': 1,
+        'Safar': 2,
+        'Rabiulawal': 3,
+        'Rabiulakhir': 4,
+        'Jumadilawal': 5,
+        'Jumadilakhir': 6,
+        'Rajab': 7,
+        'Shaaban': 8,
+        'Ramadan': 9,
+        'Shawwal': 10,
+        'Thulqaidah': 11,
+        'Thulhijjah': 12
+    }
+    
+    def convert_hijri_to_gregorian(hijri_string):
+        day, month, year = hijri_string.split()
+        day = int(day)
+        year = int(year)
+        month = hijri_months[month]
+        
+        hijri_date = HijriDate(year, month, day, gr=False)
+        result_date = datetime.strptime(f"{hijri_date.year_gr}-{hijri_date.month_gr}-{hijri_date.day_gr}", "%Y-%m-%d")
+        formatted_date = result_date.strftime('%A %d %B %Y C.E')
+        return formatted_date
+    
+    seq_b = [convert_hijri_to_gregorian(date) for date in seq_a]
+    return seq_b
+
+# Define the sequence of Hijri dates
+seq_a = ['11 Shawwal 1430', '19 Rajab 1460', '1 Muharram 1431']
+
+seq_b = transform_hijri_to_gregorian(seq_a)
+print(seq_b)
+```

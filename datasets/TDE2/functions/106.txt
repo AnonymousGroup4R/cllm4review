@@ -1,0 +1,31 @@
+Here is the refactored code snippet in the form of a function:
+
+```python
+import pandas as pd
+
+def convert_mm_to_inch(seq_a):
+    # Convert the sequence into a pandas Series
+    s = pd.Series(seq_a)
+
+    # Remove the ' mm' part and convert the string numbers to integers
+    s = s.str.replace(' mm', '').astype(int)
+
+    # Convert millimeters to inches (1 mm = 0.0393701 inches)
+    s = s * 0.0393701
+
+    # Format the values back to strings with ' inch'
+    seq_b = s.apply(lambda x: f'{x:.5f} inch').tolist()
+
+    return seq_b
+
+# The given sequence of strings with 'mm' units
+seq_a = ['15 mm', '39 mm', '130 mm', '4 mm', '41 mm']
+
+# Call the function and pass the input list
+result = convert_mm_to_inch(seq_a)
+
+# Show the result
+print(result)
+```
+
+The code has been refactored into a function called `convert_mm_to_inch` that accepts a list as input `seq_a`. The list is transformed from millimeters to inches and returned as the transformed output. The function is then called with the provided list using `convert_mm_to_inch(seq_a)`.

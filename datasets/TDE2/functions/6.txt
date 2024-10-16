@@ -1,0 +1,14 @@
+```python
+import pandas as pd
+
+def transform_seq(seq_a):
+    df = pd.DataFrame(seq_a, columns=['data'])
+    df['data'] = df['data'].str.extract("\[\[(.*?)\|")
+    seq_b = df['data'].tolist()
+    return seq_b
+
+# Test the function with seq_a input
+seq_a = ['| style="text-align: center;"| {{Sort|01|[[Super Bowl I|I]]}}', '| style="text-align: center;"| {{Sort|02|[[Super Bowl II|II]]}}', '| style="text-align: center;"| {{Sort|03|[[Super Bowl III|III]]}}', '| style="text-align: center;"| {{Sort|05|[[Super Bowl IV|IV]]}}', '| style="text-align: center;"| {{Sort|03|[[Super Bowl V|III]]}}']
+seq_b = transform_seq(seq_a)
+print(seq_b)
+```

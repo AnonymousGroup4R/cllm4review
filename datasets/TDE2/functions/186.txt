@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+
+def transform_sequence(seq_a):
+    # Convert seq_a into a pandas Series
+    data = pd.Series(seq_a)
+
+    # Convert all strings to floats
+    data = data.astype(float)
+
+    # Custom function to format the numbers
+    def custom_format(x):
+        return "{:.2E}".format(x).replace('E+0', 'E').replace('E-0', 'E-')
+
+    # Apply the formatting function to the data series
+    seq_b = data.apply(custom_format)
+
+    return seq_b.tolist()
+
+# Initial sequence (seq_a)
+seq_a = ['2.431', '1.5857E+0', '1234567890', '13.33e-11', '12.34']
+
+# Display the new sequence
+print(transform_sequence(seq_a))
+```

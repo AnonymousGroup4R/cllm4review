@@ -1,0 +1,20 @@
+Here is the refactored code snippet as a function:
+
+```python
+import re
+
+def extract_first_element_from_first_set(seq_a):
+    # Use a regular expression to extract the first element of the first set from each string in the list
+    extracted_elements = [re.search(r',\s+\{([^,{}]+)', item).group(1).strip() for item in seq_a]
+    
+    return extracted_elements
+
+# Define the original sequence
+seq_a = ['{{aaa, bbb}, {ccc, ddd}, {eee, fff}}', '{{x, y}, {z, zz}}', '{{a}, {bb}, {ccc, ddd, eee, fff}}', '{{p, q}, {r, s, t}, {u, v, w}}']
+
+# Call the function and print the result to verify
+extracted_elements = extract_first_element_from_first_set(seq_a)
+print(extracted_elements)
+``` 
+
+The function 'extract_first_element_from_first_set' takes a list 'seq_a' as input, extracts the first element of the first set from each string in the list, and returns the extracted elements.

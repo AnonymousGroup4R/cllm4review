@@ -1,0 +1,19 @@
+// modified manually
+// seq_a = ['1:00 PM', '6:00 PM', '11:00 PM', '8:00 AM', '11:00 AM']
+// seq_b = ['1300', '1800', '2300', '0800', '1100']
+```python
+import pandas as pd
+
+def convert_to_military_time(seq_a):
+    # Create a pandas series from seq_a
+    s = pd.Series(seq_a)
+    # Convert the series to datetime format
+    s = pd.to_datetime(s)
+    # Convert the datetime format to military time format
+    seq_b = s.dt.strftime('%H%M').tolist()
+    
+    return seq_b
+
+seq_a = ['1:00 PM', '6:00 PM', '11:00 PM', '8:00 AM', '11:00 AM']
+print(convert_to_military_time(seq_a))
+```

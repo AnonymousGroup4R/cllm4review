@@ -1,0 +1,17 @@
+```python
+import pandas as pd
+
+def transform_acres_to_square_feet(seq_a):
+    acres_series = pd.Series(seq_a)
+    numbers = acres_series.str.extract(r'(\d*\.?\d+)')[0].astype(float)
+    conversion_factor = 43560
+    square_feet = numbers * conversion_factor
+    seq_b = square_feet.apply(lambda x: f'{int(x)} square feet').tolist()
+    return seq_b
+
+# Define the input sequence
+seq_a = ['2 acres', '0.5 acres', '15 acres', '1 acres', '4 acres']
+# Transform the sequence
+seq_b = transform_acres_to_square_feet(seq_a)
+print(seq_b)
+```

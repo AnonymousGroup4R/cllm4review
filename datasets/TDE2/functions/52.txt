@@ -1,0 +1,37 @@
+```python
+
+import pandas as pd
+
+def convert_rgb_to_cmyk(seq_a):
+    def rgb_to_cmyk(s):
+        rgb = [int(x) for x in s.split(',')]
+        R, G, B = rgb[0], rgb[1], rgb[2]
+        
+        # Normalize RGB values to the range 0-1
+        R, G, B = R / 255.0, G / 255.0, B / 255.0
+        
+        # Convert RGB to CMY values
+        C = 1 - R
+        M = 1 - G
+        Y = 1 - B
+        
+        # Compute the min CMY value for using it to find key (black component)
+        min_CMY = min(C, M, Y)
+        C = (C - min_CMY) / (1 - min_CMY) if min_CMY != 1 else 0
+        M = (M - min_CMY) / (1 - min_CMY) if min_CMY != 1 else 0
+        Y = (Y - min_CMY) / (1 - min_CMY) if min_CMY != 1 else 0
+        K = min_CMY
+        
+        # format to string and remove trailing 0s.
+        def format_value(fv):
+            _v = float(f"{fv:.3f}")
+            return str(int(_v)) if _v == int(_v) else str(_v) 
+        values = [C, M, Y, K]
+        return ','.join([format_value(x) for x in values])
+    
+    return [rgb_to_cmyk(s) for s in seq_a]
+
+seq_a = ['3,4,5', '0,0,0', '33,44,55', '255,0,255', '0,255,0']
+seq_b = convert_rgb_to_cmyk(seq_a)
+print(seq_b)
+```

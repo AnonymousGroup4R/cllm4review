@@ -1,0 +1,14 @@
+```python
+import pandas as pd
+
+def add_20_to_list_elements(seq_a):
+    seq_a_series = pd.Series(seq_a).astype(int)
+    seq_a_modified = seq_a_series + 20
+    seq_b = seq_a_modified.astype(str).tolist()
+    return seq_b
+
+# Testing the function with the original seq_a list
+seq_a = ['25', '35', '10', '1', '11']
+resulting_seq = add_20_to_list_elements(seq_a)
+print(resulting_seq)
+```

@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+
+def transform_weight_to_pounds(seq_a):
+    weights_series = pd.Series(seq_a)
+    weights_in_grams = weights_series.str.extract('(\d+)').astype(float)
+    weights_in_pounds = weights_in_grams[0] / 453.59237
+    seq_b = weights_in_pounds.apply(lambda x: f'{x:.8f} b').tolist()
+    return seq_b
+
+# Step 1: Initial data
+seq_a = ['6 g', '89 g', '100 g', '66 g', '23 g']
+
+# Apply the transform function
+seq_b = transform_weight_to_pounds(seq_a)
+
+# Output result
+print(seq_b)
+```

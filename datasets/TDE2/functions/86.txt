@@ -1,0 +1,29 @@
+```python
+import pandas as pd
+
+def transform_mixed_fraction_to_decimal(seq_a):
+    # Creating a DataFrame with seq_a
+    data = {'mixed_fraction': seq_a}
+    df = pd.DataFrame(data)
+    
+    def convert_fraction_to_decimal(mixed_fraction):
+        if ' ' in mixed_fraction:
+            whole, fraction = mixed_fraction.split(' ')
+            numerator, denominator = map(int, fraction.split('/'))
+            decimal = int(whole) + numerator/denominator
+        else:
+            decimal = mixed_fraction
+        return str(decimal)
+    
+    # Applying the function to the DataFrame
+    df['decimal'] = df['mixed_fraction'].apply(convert_fraction_to_decimal)
+    
+    # Getting the sequence seq_b
+    seq_b = df['decimal'].tolist()
+    return seq_b
+
+# Example usage:
+seq_a = ['7 1/4', '21 2/5', '129', '6 9/100', '3 4/5']
+result = transform_mixed_fraction_to_decimal(seq_a)
+print(result)
+```

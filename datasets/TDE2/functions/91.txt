@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+
+def arabic_to_roman_numbers(seq_a):
+    df = pd.DataFrame({'Arabic': ['1', '4', '5', '9', '10', '40', '50', '90', '100', '400', '500', '900', '1000'],
+                       'Roman': ['I', 'IV', 'V', 'IX', 'X', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'CM', 'M']})
+
+    def convert_to_roman(num):
+        num = int(num)
+        result = ''
+        while num > 0:
+            largest_arabic = df[df['Arabic'].apply(int) <= num]['Arabic'].iloc[-1]
+            result += df[df['Arabic'] == largest_arabic]['Roman'].values[0]
+            num -= int(largest_arabic)
+        return result
+
+    seq_b = [convert_to_roman(num) for num in seq_a]
+    
+    return seq_b
+
+# Input sequence
+seq_a = ['4', '1350', '981', '34', '11']
+seq_b = arabic_to_roman_numbers(seq_a)
+print(seq_b)
+```

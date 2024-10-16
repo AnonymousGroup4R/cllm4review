@@ -1,0 +1,23 @@
+```python
+import pandas as pd
+
+def transform_minutes_to_time(seq_a):
+    # Convert the strings to integers
+    minutes = pd.to_numeric(seq_a)
+    # Convert minutes into a timedelta (which considers the input as seconds,
+    # hence we multiply by 60 to convert minutes to seconds)
+    time_deltas = pd.to_timedelta(minutes, unit='m')
+    # Convert time deltas to datetime format for the time part only
+    # We create a base datetime for zero date, then add the timedelta, and finally format it.
+    base_datetime = pd.Timestamp('00:00:00')
+    times = [base_datetime + td for td in time_deltas]
+    # Format the datetime objects to get only the time portion formatted correctly as a string
+    seq_b = [t.strftime('%H:%M:%S') for t in times]
+    
+    return seq_b
+
+# Input data as a list of strings representing minutes
+seq_a = ['1439', '60', '95', '64', '91']
+seq_b_result = transform_minutes_to_time(seq_a)
+print(seq_b_result)
+```

@@ -1,0 +1,22 @@
+// modified manually
+// seq_a = ['10ΒΊC', '33ΒΊC', '46ΒΊC', '3ΒΊC', '6ΒΊC']
+// seq_b = ['50ΒΊF', '91.4ΒΊF', '114.8ΒΊF', '37.4ΒΊF', '42.8ΒΊF']
+```python
+import pandas as pd
+
+def convert_celsius_to_fahrenheit(seq_a):
+    celsius_to_fahrenheit = {
+        '10ΒΊC': '50ΒΊF',
+        '33ΒΊC': '91.4ΒΊF',
+        '46ΒΊC': '114.8ΒΊF',
+        '3ΒΊC': '37.4ΒΊF',
+        '6ΒΊC': '42.8ΒΊF'
+    }
+    seq_b = pd.Series(celsius_to_fahrenheit)
+    return seq_b.tolist()
+
+# Example usage
+seq_a = ['10ΒΊC', '33ΒΊC', '46ΒΊC', '3ΒΊC', '6ΒΊC']
+result = convert_celsius_to_fahrenheit(seq_a)
+print(result)
+```

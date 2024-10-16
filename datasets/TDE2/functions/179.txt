@@ -1,0 +1,38 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def transform_sequence(seq_a):
+    # Convert seq_a into a pandas Series
+    s = pd.Series(seq_a).astype(float)  # Convert all strings to float for uniformity
+
+    # Define a custom function to format each number according to seq_b's specifications
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 1 - d.adjusted()
+        if round_num < 0:
+            # return exponent format.
+            return f'{x:.1E}'
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end > 0 and res[_end-1] == '.':
+            _end -= 1
+        return res[:_end]
+
+    # Apply the formatting function to each element in the Series
+    seq_b = s.apply(format_output)
+
+    # Convert result to list for checking the output
+    seq_b_list = seq_b.tolist()
+
+    return seq_b_list
+
+# Given sequence
+seq_a = ['2.431', '0.15857', '123', '13.4', '1.234']
+result = transform_sequence(seq_a)
+print(result)
+```

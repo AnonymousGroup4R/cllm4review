@@ -1,0 +1,20 @@
+```python
+import pandas as pd
+
+def convert_excel_dates(seq_a):
+    # Convert strings to integers
+    excel_dates = [int(x) for x in seq_a]
+    # Convert Excel serial date to datetime
+    # Specify the origin date, Excel serial dates are typically based on 1900-01-01 but Pandas use 1900-12-30 due to Excel leap year bug
+    datetimes = pd.to_datetime(excel_dates, unit='D', origin='1899-12-30')
+    # Format datetimes as strings in 'MM/DD/YYYY' format
+    seq_b = datetimes.strftime('%m/%d/%Y').tolist()
+    return seq_b
+
+# Original sequence (Excel serial date numbers as strings)
+seq_a = ['39938', '39934', '39958', '36557', '39270']
+# Transform seq_a to seq_b
+result = convert_excel_dates(seq_a)
+# Display converted dates
+print(result)
+```

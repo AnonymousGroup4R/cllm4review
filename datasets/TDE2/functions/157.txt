@@ -1,0 +1,49 @@
+```python
+import pandas as pd
+
+def transform_names_list(seq_a):
+    # Define the sequence `seq_a`
+
+    # Step 1: Create a pandas Series
+    names_series = pd.Series(seq_a)
+
+    # Step 2: Function to parse names into "initial + last name" format
+    def format_name(full_name):
+        # Remove any titles or suffixes (like "Mr.", "III")
+        name = full_name.replace('Mr.', '').replace('III', '').strip()
+
+        first, last = None, None
+        # Find comma and split accordingly
+        if ',' in name:
+            # check if the first part is a full name.
+            parts = name.split(',')
+            if len(parts) == 2 and ' ' not in parts[0]:
+                last, first = parts
+            else:
+                name = parts[0]
+
+        if last is None:
+            name_parts = name.split()
+            if len(name_parts) > 1:
+                first, last = name_parts[0], name_parts[-1]
+            else:
+                # Handling potential unusual cases where there might be just one name part
+                return name
+
+        # Take the first letter of the first name and combine with the last name
+        return f"{first.strip()[0]}. {last.strip()}"
+
+    # Step 3: Apply the format_name function to the names series
+    formatted_names = names_series.apply(format_name)
+
+    # Step 4: Convert the Series back to a list
+    seq_b = formatted_names.tolist()
+    
+    return seq_b
+
+# Define the sequence `seq_a`
+seq_a = ['Doe, John', 'James Smith', 'Mr. Charles P. Wooten, III', 'John Johnson', 'Alice C. Doe']
+
+# Check output
+print(transform_names_list(seq_a))
+```

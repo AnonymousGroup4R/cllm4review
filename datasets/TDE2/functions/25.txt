@@ -1,0 +1,12 @@
+```python
+import pandas as pd
+
+def transform_sequence(seq_a):
+    df = pd.DataFrame({'seq_a': seq_a})
+    df['seq_b'] = df['seq_a'].apply(lambda x: [i.strip() for i in x.split(',')][-1])
+    return df['seq_b'].tolist()
+
+seq_a = ['a, b, c, d', 'x, y, z', '1, 2, 3', 'o, p', '1, 2, 3, 4, 5, 6, 7']
+seq_b = transform_sequence(seq_a)
+print(seq_b)
+```

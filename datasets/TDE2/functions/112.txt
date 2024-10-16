@@ -1,0 +1,30 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_cm_to_feet(seq_a):
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    def cm_to_feet(x):
+        num = float(x.split(' ')[0])
+        feet = num / 30.48
+        return f"{format_output(feet)} feet"
+
+    series_a = pd.Series(seq_a)
+    seq_b = series_a.apply(cm_to_feet)
+
+    return seq_b.tolist()
+
+# Creating the initial sequence
+seq_a = ['4 cm', '17 cm', '201 cm', '3 cm', '2 cm']
+
+# Apply the conversion function and output the converted values
+print(convert_cm_to_feet(seq_a))
+```

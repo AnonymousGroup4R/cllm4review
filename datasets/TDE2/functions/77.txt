@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+import mgrs
+
+# Initialize MGRS converter
+m = mgrs.MGRS()
+
+def convert_mgrs_to_latlon(seq_a):
+    def mgrs_to_latlon(mgrs_str):
+        # Remove any extra spaces for consistency
+        mgrs_str = mgrs_str.strip()
+        latlon = m.toLatLon(mgrs_str.encode('utf-8'))
+        return f"{latlon[0]:.5f}  {latlon[1]:.5f}"
+    
+    seq_b_converted = [mgrs_to_latlon(coord.replace(' ', '')) for coord in seq_a]
+    
+    df = pd.DataFrame({'MGRS': seq_a, 'LatLong': seq_b_converted})
+    
+    return df['LatLong'].to_list()
+
+seq_a = ['12U UA 84323 40791', '15S WC 80817 51205', '19T DJ 38588 97366', '12U UA 87466 40791 ', '15S WC 40817 12345']
+result = convert_mgrs_to_latlon(seq_a)
+
+print(result)
+```

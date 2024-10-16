@@ -1,0 +1,27 @@
+```python
+import pandas as pd
+from decimal import Decimal, ROUND_HALF_UP
+
+def transform_sequence(seq_a):
+    series_a = pd.Series(seq_a)
+    
+    series_decimal = series_a.apply(lambda x: Decimal(x))
+    
+    def custom_format(x):
+        return str(x.quantize(Decimal('0.0'), ROUND_HALF_UP))
+    
+    series_b = series_decimal.apply(custom_format)
+    
+    seq_b = series_b.tolist()
+    
+    return seq_b
+
+# Given sequence
+seq_a = ['2.431', '1.5857E+0', '1234567890', '13.33e-11', '23.45']
+
+# Transform the sequence
+seq_b = transform_sequence(seq_a)
+
+# Output the converted list
+print(seq_b)
+```

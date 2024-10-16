@@ -1,0 +1,17 @@
+// modified manually
+// seq_a= ["* '''1953 [[Meena Kumari]] \x96 ''[[Baiju Bawra (film)|Baiju Bawra]]''''' as '''Gauri'''", "* '''1954 [[Meena Kumari]] \x96 ''[[Parineeta (1953 film)|Parineeta]]''''' as '''Lalita'''", "* '''1955 [[Kamini Kaushal]] \x96 ''[[Biraj Bahu]]''''' as '''Biraj Chakravorty'''", "** [[Geeta Bali]] \x96 ''[[Vachan]]'' as Kamla", "** [[Meena Kumari]] \x96 ''[[Azaad (1955 film)|Azaad]]'' as Shobha", "* '''1956 [[Nutan]] \x96 ''[[Seema (1955 film)|Seema]]''''' as '''Gauri'''", "* '''1957 [[Nargis Dutt]] \x96 ''[[Mother India]]''''' as '''Radha'''", "* '''1958 [[Vyjayanthimala]] \x96 ''[[Sadhna]]''''' as '''Champabai / Rajani'''", "** [[Meena Kumari]] \x96 ''[[Sahara (1958 film)|Sahara]]'' as Leela", "** [[Vyjayanthimala]] \x96 ''[[Madhumati]]'' as Madhumati / Madhavi / Radha", "* '''1959 [[Nutan]] \x96 ''[[Sujata (1959 film)|Sujata]]''''' as '''Sujata'''", "** [[Mala Sinha]] \x96 ''[[Dhool Ka Phool]]'' as Meena Khosla", "** [[Meena Kumari]] \x96 ''[[Chirag Kahan Roshni Kahan]]'' as Ratna"]
+// seq_b= ['Meena Kumari', 'Meena Kumari', 'Kamini Kaushal', 'Geeta Bali', 'Meena Kumari', 'Nutan', 'Nargis Dutt', 'Vyjayanthimala', 'Meena Kumari', 'Vyjayanthimala', 'Nutan', 'Mala Sinha', 'Meena Kumari']
+```python
+def extract_actress_names(seq_a):
+    import re
+    actress_names = []
+    for row in seq_a:
+        match = re.search(r'\[\[(.*?)\]\]', row)
+        if match:
+            actress_names.append(match.group(1))
+    return actress_names
+
+seq_a = ["* '''1953 [[Meena Kumari]] \x96 ''[[Baiju Bawra (film)|Baiju Bawra]]''''' as '''Gauri'''", "* '''1954 [[Meena Kumari]] \x96 ''[[Parineeta (1953 film)|Parineeta]]''''' as '''Lalita'''", "* '''1955 [[Kamini Kaushal]] \x96 ''[[Biraj Bahu]]''''' as '''Biraj Chakravorty'''", "** [[Geeta Bali]] \x96 ''[[Vachan]]'' as Kamla", "** [[Meena Kumari]] \x96 ''[[Azaad (1955 film)|Azaad]]'' as Shobha", "* '''1956 [[Nutan]] \x96 ''[[Seema (1955 film)|Seema]]''''' as '''Gauri'''", "* '''1957 [[Nargis Dutt]] \x96 ''[[Mother India]]''''' as '''Radha'''", "* '''1958 [[Vyjayanthimala]] \x96 ''[[Sadhna]]''''' as '''Champabai / Rajani'''", "** [[Meena Kumari]] \x96 ''[[Sahara (1958 film)|Sahara]]'' as Leela", "** [[Vyjayanthimala]] \x96 ''[[Madhumati]]'' as Madhumati / Madhavi / Radha", "* '''1959 [[Nutan]] \x96 ''[[Sujata (1959 film)|Sujata]]''''' as '''Sujata'''", "** [[Mala Sinha]] \x96 ''[[Dhool Ka Phool]]'' as Meena Khosla", "** [[Meena Kumari]] \x96 ''[[Chirag Kahan Roshni Kahan]]'' as Ratna"]
+seq_b = extract_actress_names(seq_a)
+print(seq_b)
+```

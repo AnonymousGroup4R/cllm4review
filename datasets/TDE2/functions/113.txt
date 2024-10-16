@@ -1,0 +1,39 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_fahrenheit_to_celsius(seq_a):
+    # Step 2: Define the sequence of Fahrenheit temperatures as a Pandas Series
+    s = pd.Series(seq_a)
+
+    # Step 3: Convert Fahrenheit to Celsius using vectorized operations
+    # Extract the numeric part and convert it from Fahrenheit to Celsius
+    # Formula: (Fahrenheit - 32) * 5/9
+    # Use str.split() to separate the temperature values from the word 'fahrenheit'
+    s_numeric = s.str.split(' ').str[0].astype(float)
+    celsius_values = (s_numeric - 32) * 5/9
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+        
+    # Step 4: Format the Celsius values to match the desired output format
+    # Format the values to string with decimal precision and add ' celsius' suffix
+    seq_b = celsius_values.apply(lambda x: "{} celsius".format(format_output(x))).tolist()
+
+    return seq_b
+
+# Define the input
+seq_a = ['19 fahrenheit', '100 fahrenheit', '350 fahrenheit', '1 fahrenheit', '123 fahrenheit']
+
+# Call the function and print the result
+result = convert_fahrenheit_to_celsius(seq_a)
+print(result)
+```

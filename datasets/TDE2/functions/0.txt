@@ -1,0 +1,27 @@
+```python
+import pandas as pd
+
+def greek_to_latin(seq_a):
+    def transliterate(text):
+        replacements = {
+            'ν': 'i',
+            'σ': 'o',
+            'ϊ': 'u',
+            'αι': 'ae'
+        }
+        for gr_char, en_char in replacements.items():
+            text = text.replace(gr_char, en_char)
+        return text
+    
+    df = pd.DataFrame(seq_a, columns=['original'])
+    df['transformed'] = df['original'].apply(transliterate)
+    
+    return df['transformed'].tolist()
+
+# Initial sequence
+seq_a = ['αινσϊ', 'aeiou', 'aeνouxyz', 'aeνo', 'aeνouνσϊz']
+
+# Transform the sequence
+seq_b = greek_to_latin(seq_a)
+print(seq_b)
+```

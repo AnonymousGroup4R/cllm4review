@@ -1,0 +1,42 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def meters_to_inches(seq_a):
+    # Convert seq_a to a pandas Series
+    s = pd.Series(seq_a)
+
+    # Remove the ' m' part and convert the remaining part to float
+    s = s.str.replace(' m', '').astype(float)
+
+    # Conversion factor from meters to inches
+    conversion_factor = 39.3700787402
+
+    # Convert meters to inches
+    s_inches = s * conversion_factor
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 8 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    # Formatting the result to include ' inch' and round off the decimal places as shown in seq_b
+    s_inches = s_inches.apply(lambda x: f'{format_output(x)} inch')
+
+    return s_inches.to_list()
+
+# Define the sequence of values in meters (seq_a)
+seq_a = ['1 m', '1856 m', '200 m', '188 m', '33 m']
+
+# Apply the transformation function
+seq_b = meters_to_inches(seq_a)
+
+# Print the result
+print(seq_b)
+```

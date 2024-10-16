@@ -1,0 +1,23 @@
+```python
+import pandas as pd
+import re
+
+def transform_seq(seq_a):
+    def remove_special_chars(s):
+        return re.sub('[^A-Za-z0-9]', '', s)
+    
+    series_a = pd.Series(seq_a)
+    seq_b = series_a.apply(remove_special_chars)
+    result_list = seq_b.tolist()
+    
+    return result_list
+
+# Define the original sequence
+seq_a = ['BA(kfa1237fdn', '*9kk12jf7eYTk1', '()kjfdsk13^$$*A', '092378LLLL111', '11PP))(*(&^%%&*']
+
+# Call the function to transform seq_a to seq_b
+seq_b = transform_seq(seq_a)
+
+# Output the converted list
+print(seq_b)
+```

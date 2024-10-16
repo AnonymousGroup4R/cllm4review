@@ -1,0 +1,15 @@
+def military_time_to_standard_time(seq_a):
+    import pandas as pd
+    # Create a DataFrame with the military time sequence
+    df = pd.DataFrame({'Military Time': seq_a})
+    # Convert military time to standard time
+    df['Standard Time'] = pd.to_datetime(df['Military Time'], format='%H%M').dt.strftime('%-I:%M %p')
+    # Retrieve the sequence in standard time format
+    seq_b = df['Standard Time'].tolist()
+    
+    return seq_b
+
+# Example usage
+seq_a = ['0100', '1800', '1400', '1300', '1600', '0200']
+transformed_seq = military_time_to_standard_time(seq_a)
+print(transformed_seq)

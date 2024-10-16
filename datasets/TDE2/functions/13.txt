@@ -1,0 +1,43 @@
+```python
+import pandas as pd
+
+def get_longest_from_second_braces(seq_a):
+    # Sample data
+    df = pd.DataFrame(seq_a, columns=['raw'])
+
+    # Function to extract the longest string from the second set of curly braces
+    def extract_second_element(text):
+        # Split text into sections based on "}, {"
+        parts = text.split('}, {')
+
+        # Get the second part, which is at index 1
+        # Remove leading or trailing curly braces or spaces
+        second_part = parts[1].replace('}', '').replace('{', '').replace(' ', '')
+
+        # Check if text is empty or not
+        if second_part:
+            # Split by comma to get each individual item, and get the first element
+            return second_part.split(',')[0]
+        return ''
+
+    # Apply function to each row of DataFrame
+    df['longest_in_second_braces'] = df['raw'].apply(extract_second_element)
+
+    # The desired output sequence
+    seq_b = df['longest_in_second_braces'].tolist()
+    
+    return seq_b
+
+# Sample data
+seq_a = ['{{a, b}, {cccc, d}, {e, f}}',
+         '{{x, aaay}, {aaaz, d}}',
+         '{{a}, {ffeaa}, {aa, aaa, aaa, aaa}}',
+         '{{ajfj, ajfie, ajaj, aj}, {jwi, ajaj, aj, a}, {aj, ajiw, ajif, jfi}}',
+         '{{a}, {b}, {c}}']
+
+# Call the function to transform seq_a to seq_b
+seq_b = get_longest_from_second_braces(seq_a)
+
+# Print resulting sequence
+print(seq_b)
+```

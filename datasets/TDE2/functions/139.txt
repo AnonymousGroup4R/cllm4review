@@ -1,0 +1,39 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def transform_liters_to_ounces(seq_a):
+    # Define initial sequence
+    # Remove the ' L' and convert to a pandas Series of integers
+    liters = pd.Series(seq_a).replace(' L', '', regex=True).astype(float)
+
+    # Conversion factor from liters to ounces
+    liters_to_ounces = 33.814022702
+
+    # Perform the conversion
+    ounces = liters * liters_to_ounces
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 8 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end > 0 and res[_end-1] == '.':
+            _end -= 1
+        return res[:_end]
+
+    # Format the results with 'oz'
+    seq_b = ounces.apply(lambda x: f"{format_output(x)} oz").tolist()
+
+    return seq_b
+
+# Define the initial sequence
+seq_a = ['1 L', '5870 L', '35 L', '112 L', '99 L']
+transformed_sequence = transform_liters_to_ounces(seq_a)
+print(transformed_sequence)
+```

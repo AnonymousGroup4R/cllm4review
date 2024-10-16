@@ -1,0 +1,42 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_ounces_to_grams(seq_a):
+    # Create DataFrame
+    df = pd.DataFrame(seq_a, columns=['Ounces'])
+    
+    # Extract the numerical part and convert data type to float
+    df['Ounces_value'] = df['Ounces'].str.extract('(\d+)').astype(float)
+    
+    # Convert ounces to grams
+    df['Grams'] = df['Ounces_value'] * 28.34952
+    
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+    
+    # Format grams with 'g' and rounded to four decimals
+    df['Grams_formatted'] = df['Grams'].apply(lambda x: f'{format_output(x)} g')
+    
+    # Extract the formatted grams into a list
+    seq_b = df['Grams_formatted'].tolist()
+    
+    return seq_b
+
+# Source sequence
+seq_a = ['3 oz', '19 oz', '320 oz', '11 oz', '23 oz']
+
+# Get the transformed list
+transformed_list = convert_ounces_to_grams(seq_a)
+
+# Display the transformed result
+print(transformed_list)
+```

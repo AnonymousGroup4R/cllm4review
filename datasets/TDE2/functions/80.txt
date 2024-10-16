@@ -1,0 +1,13 @@
+```python
+import pandas as pd
+
+def binary_to_base_ten(seq_a):
+    df = pd.DataFrame({'seq_a': seq_a})
+    df['seq_a'] = df['seq_a'].apply(lambda x: str(int(x, 2)))
+    return df['seq_a'].tolist()
+
+# Test the function
+seq_a = ['010101', '111101', '1011010', '11', '111']
+seq_b = binary_to_base_ten(seq_a)
+print(seq_b) # Output: ['21', '61', '90', '3', '7']
+```

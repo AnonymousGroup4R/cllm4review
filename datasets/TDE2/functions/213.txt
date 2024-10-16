@@ -1,0 +1,24 @@
+```python
+import pandas as pd
+
+def evaluate_math_expressions(seq_a):
+    # Create a pandas Series
+    series_a = pd.Series(seq_a)
+
+    # Evaluate each expression in the series, round to avoid floating point precision issues
+    series_b = series_a.apply(lambda x: int(eval(x)))
+
+    # Convert the evaluated series back to a list
+    seq_b_converted = series_b.astype(str).tolist()
+
+    return seq_b_converted
+
+# Sequence A from the question
+seq_a = ['3+6', '40-9', '2*6', '9/3', '1+9-2', '1+4/2']
+
+# Call the function to transform seq_a to seq_b
+seq_b_converted = evaluate_math_expressions(seq_a)
+
+# Print the result to check
+print(seq_b_converted)
+```

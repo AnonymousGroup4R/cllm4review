@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+
+def transform_dna_sequence(seq_a):
+    def reverse_complement(dna):
+        complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+        return ''.join([complement[base] for base in dna])
+
+    # Providing transformed sequence
+    seq_b = [reverse_complement(seq) for seq in seq_a]
+
+    return seq_b
+
+# Provided sequences
+seq_a = ['TAGTC', 'CGCAT', 'ACCAG', 'GACTA', 'CGCAA']
+
+transformed_seq = transform_dna_sequence(seq_a)
+print(transformed_seq)
+```

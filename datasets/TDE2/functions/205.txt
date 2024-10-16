@@ -1,0 +1,14 @@
+```python
+import pandas as pd
+
+def transform_phone_number(seq_a):
+    df = pd.DataFrame(seq_a, columns=['phone_number'])
+    df['phone_number'] = df['phone_number'].apply(lambda x: x[:3] + '-' + x[3:6] + '-' + x[6:])
+    seq_b = df['phone_number'].tolist()
+    return seq_b
+
+# Test the function
+seq_a = ['5197818816', '9134445555', '5097918816', '9124445555', '4654764768']
+transformed_seq = transform_phone_number(seq_a)
+print(transformed_seq)
+```

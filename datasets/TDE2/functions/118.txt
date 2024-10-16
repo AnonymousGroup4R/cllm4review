@@ -1,0 +1,29 @@
+```python
+import pandas as pd
+
+def celsius_to_fahrenheit_list(seq_a):
+    def remove_trailing_zeros(res):
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end >= 0 and res[_end-1] == '.':
+            _end -= 1
+        return res[:_end]
+
+    def celsius_to_fahrenheit(celsius_str):
+        celsius_value = float(celsius_str.split()[0])
+        fahrenheit_value = (celsius_value * 9/5) + 32
+        fahrenheit_value = remove_trailing_zeros(f'{fahrenheit_value:.1f}')
+        return f"{fahrenheit_value} Fahrenheit"
+
+    df = pd.DataFrame(seq_a, columns=['Celsius'])
+    df['Fahrenheit'] = df['Celsius'].apply(celsius_to_fahrenheit)
+    seq_b = df['Fahrenheit'].tolist()
+
+    return seq_b
+
+seq_a = ['1 Celsius', '7 Celsius', '18 Celsius', '-17.2222 Celsius', '50.5556 Celsius']
+seq_b = celsius_to_fahrenheit_list(seq_a)
+
+print(seq_b)
+```

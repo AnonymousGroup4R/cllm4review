@@ -1,0 +1,15 @@
+// modified manually
+// seq_a: ['aaaaaaaa', 'bb', 'ccc', 'ddddd', 'eeeeeee']
+// seq_b: ['aaa', 'bb', 'ccc', 'ddd', 'eee']
+```python
+import pandas as pd
+
+def transform_sequence(seq_a):
+    df = pd.DataFrame({'seq_a': seq_a})
+    df['seq_b'] = df['seq_a'].apply(lambda x: x[:3])
+    seq_b = df['seq_b'].tolist()
+    return seq_b
+
+seq_a = ['aaaaaaaa', 'bb', 'ccc', 'ddddd', 'eeeeeee']
+print(transform_sequence(seq_a))
+```

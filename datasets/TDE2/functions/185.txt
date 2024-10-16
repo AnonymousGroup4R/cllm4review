@@ -1,0 +1,21 @@
+```python
+import pandas as pd
+
+def transform_to_scientific_notation(seq_a):
+    # Step 1: Convert seq_a to a pandas Series of floats
+    series_a = pd.Series(seq_a).astype(float)
+
+    # Step 2: Format the numbers into scientific notation with 1 decimal place
+    seq_b = series_a.map(lambda x: f"{x:.1e}".upper().replace('E+0', 'E').replace('E-0', 'E-'))
+    
+    return list(seq_b)
+
+# The original sequence
+seq_a = ['2.431', '1.55', '1293.3', '0.0013', '123']
+
+# Transform seq_a to seq_b
+seq_b = transform_to_scientific_notation(seq_a)
+
+# Print the transformed sequence
+print(seq_b)
+```

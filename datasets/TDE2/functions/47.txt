@@ -1,0 +1,14 @@
+// modified manually
+// seq_a = ['101010', '11111111', '0000101', '11', '111']
+// seq_b = ['2A', 'FF', '5', '3', '7']
+```python
+import pandas as pd
+
+def binary_to_hexadecimal(seq_a):
+    df = pd.DataFrame({'seq_a': seq_a})
+    df['seq_b'] = df['seq_a'].apply(lambda x: format(int(x, 2), 'X'))
+    return df['seq_b'].tolist()
+
+seq_a = ['101010', '11111111', '0000101', '11', '111']
+print(binary_to_hexadecimal(seq_a))
+```

@@ -1,0 +1,17 @@
+```python
+import pandas as pd
+import re
+
+def add_spaces_before_capital(input_list):
+    def insert_spaces(text):
+        return re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', text)
+    
+    series_a = pd.Series(input_list)
+    series_b = series_a.apply(insert_spaces)
+    
+    return list(series_b)
+
+seq_a = ['SampleText', 'DoesNotMatterHowManyWords', 'WhatIf', 'SunInTheRain', 'TestIsGood']
+seq_b = add_spaces_before_capital(seq_a)
+print(seq_b)
+```

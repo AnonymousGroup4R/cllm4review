@@ -1,0 +1,14 @@
+```python
+import pandas as pd
+
+def transform_date_format(seq_a):
+    df = pd.DataFrame({'date': seq_a})
+    df['date'] = pd.to_datetime(df['date'])
+    df['date'] = df['date'].dt.strftime('%m/%d/%Y')
+    seq_b = df['date'].tolist()
+    return seq_b
+
+seq_a = ['2009/8/1', '2001/12/12', '2014/3/2', '2011/12/22', '2012/4/11']
+seq_b = transform_date_format(seq_a)
+print(seq_b)
+```

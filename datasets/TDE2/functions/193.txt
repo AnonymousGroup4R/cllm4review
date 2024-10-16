@@ -1,0 +1,37 @@
+```python
+import pandas as pd
+
+def format_numbers(seq_a):
+    # Convert the sequence into a DataFrame
+    df = pd.DataFrame(seq_a, columns=['Numbers'])
+    # Convert numbers to integers
+    df['Numbers'] = df['Numbers'].astype(int)
+
+    # Define a function to format the numbers
+    def format_number(num):
+        if num >= 1e10:
+            return f"{num // 1e9:.0f}B"
+        elif num >= 1e9:
+            return f"{num // 1e9:.0f}B"
+        elif num >= 1e7:
+            return f"{num // 1e6:.0f}M"
+        elif num >= 1e6:
+            return f"{num // 1e6:.0f}M"
+        else:
+            return f"{num // 1e3:.0f}K"
+
+    # Apply the function to the column
+    df['Formatted'] = df['Numbers'].apply(format_number)
+
+    # Get the final sequence
+    seq_b_calculated = df['Formatted'].tolist()
+    return seq_b_calculated
+
+# Define the sequence a
+seq_a = ['10000', '212321', '9876549', '7321876984', '1111111111', '12123123123',
+         '10001', '212341', '9876149', '7321176984', '2111111111', '22123123123']
+
+# Apply the formatting function
+seq_b_result = format_numbers(seq_a)
+print(seq_b_result)
+```

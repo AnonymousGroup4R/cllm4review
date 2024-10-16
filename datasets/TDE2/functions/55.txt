@@ -1,0 +1,12 @@
+```python
+import pandas as pd
+def binary_to_decimal(seq_a):
+    def base_two_to_ten(binary_str):
+        return str(int(binary_str, 2))
+    seq_b = [base_two_to_ten(binary_str) for binary_str in seq_a]
+    return seq_b
+
+seq_a = ['11111', '10101001', '100001101', '111', '101010']
+seq_b = binary_to_decimal(seq_a)
+print(seq_b)
+```

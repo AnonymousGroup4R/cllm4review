@@ -1,0 +1,20 @@
+```python
+import pandas as pd
+
+def extract_month_from_dates(seq_a):
+    # Create a pandas Series from the list
+    date_series = pd.Series(seq_a)
+    # Convert the date strings into datetime objects using to_datetime
+    # The errors='coerce' argument deals with any parsing errors by setting the value to NaT (not a time)
+    dates_parsed = pd.to_datetime(date_series, errors='coerce')
+    # Extract the month names from the datetime objects
+    seq_b = dates_parsed.dt.strftime('%B')
+    
+    return seq_b.tolist()
+
+# Original sequence of dates in various formats
+seq_a = ['2011-10-11', '2011-Jan-12', '7/1/2009', '2012-02-12', '6/1/2009 12:01:01']
+# Transform seq_a to seq_b
+seq_b = extract_month_from_dates(seq_a)
+print(seq_b)
+```

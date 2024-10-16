@@ -1,0 +1,26 @@
+Here is the refactored code snippet transformed into a function:
+
+```python
+import pandas as pd
+
+def transform_sequence(seq_a):
+    # Create a pandas DataFrame from the input list
+    df = pd.DataFrame(seq_a, columns=['name'])
+    # Split the 'name' column on the tab character into 'first_name' and 'last_name'
+    df[['first_name', 'last_name']] = df['name'].str.split('\t', expand=True)
+    # Create a new 'formatted_name' column by concatenating the first letter of the first name and the last name
+    df['formatted_name'] = df['first_name'].str[0].str.upper() + df['last_name'].str.capitalize()
+    # Convert the DataFrame column 'formatted_name' back to a list
+    seq_b = df['formatted_name'].tolist()
+    
+    return seq_b
+
+# Define the initial sequence
+seq_a = ['james\tsmith', 'jane\tjohnson', 'bob\twhite', 'alice\tjohnson', 'charlie\tdenis']
+# Perform the transformation using the function
+seq_b = transform_sequence(seq_a)
+# Print the resulting sequence
+print(seq_b)
+```
+
+In the refactored code, the function `transform_sequence` accepts a list `seq_a` as input, performs the necessary transformation on it, and returns the transformed list. This function encapsulates the logic of transforming `seq_a` to `seq_b` based on the provided requirements.

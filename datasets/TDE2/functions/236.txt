@@ -1,0 +1,35 @@
+```python
+import pandas as pd
+from urllib.parse import urlparse
+from tld import get_tld
+
+def extract_domains(seq_a):
+    df = pd.DataFrame(seq_a, columns=['url'])
+
+    # Function to extract domain
+    def get_domain(url):
+        parsed_url = urlparse(url)
+        domain = parsed_url.netloc
+        res = get_tld(url, as_object=True)
+        return res.fld
+
+    # Apply the function to the URL column
+    df['domain'] = df['url'].apply(get_domain)
+
+    # Output the transformed data (domain names)
+    seq_b = df['domain'].tolist()
+    return seq_b
+
+# Original sequence to transform
+seq_a = [
+    'http://www.google.com/url?sa=t&source=web&ct=res&cd=1&ved=0CAgQFjAA&url=http://www.test.com/&rct=j&q=test&ei=G2phS-HdJJWTjAfckvHJDA&usg=AFQjCNFSEAztaqtkaIvEzxmRm2uOARn1kQ',
+    'http://www.beta.microsoft.com/path/page.htm',
+    'http://www.beta.microsoft.co.uk/path/page.htm',
+    'ftp://username:password@website.com',
+    'http://www.microsoft.com/'
+]
+
+# Transform the original sequence using the function
+seq_b = extract_domains(seq_a)
+print(seq_b)
+```

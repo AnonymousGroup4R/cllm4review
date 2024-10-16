@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+
+def convert_speeds(seq_a):
+    # Conversion factor from meters per second to miles per hour
+    conversion_factor = 2.236936
+    
+    # Convert the sequence into a pandas Series
+    speed_series = pd.Series(seq_a)
+
+    # Remove the ' m/s' and convert to numeric
+    speed_series = speed_series.str.replace(' m/s', '').astype(float)
+
+    # Convert m/s to mph
+    mph_series = speed_series * conversion_factor
+
+    # Format the resulting speeds to strings with precision as in seq_b
+    seq_b_converted = mph_series.apply(lambda x: f'{x:.4f} mph').tolist()
+    
+    return seq_b_converted
+
+# Original sequence
+seq_a = ['2 m/s', '89 m/s', '123 m/s', '12 m/s', '33 m/s']
+seq_b_converted = convert_speeds(seq_a)
+print(seq_b_converted)
+```

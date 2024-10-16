@@ -1,0 +1,28 @@
+```python
+import pandas as pd
+
+def convert_hex_to_ascii(seq_a):
+    # Convert hex to ASCII using pandas
+    # Create a DataFrame from seq_a
+    df = pd.DataFrame(seq_a, columns=['hex'])
+
+    # Define a function to convert hex to ASCII
+    def hex_to_ascii(hex_val):
+        # Convert hex to an integer and then to its corresponding ASCII character
+        return chr(int(hex_val, 16))
+
+    # Apply the function to the 'hex' column and create a new 'ascii' column
+    df['ascii'] = df['hex'].apply(hex_to_ascii)
+
+    # Output the ASCII values (in list form if needed)
+    return df['ascii'].tolist()
+
+# Sequence of hex values
+seq_a = ['34', '55', '74', '44', '22']
+
+# Call the function to convert hex values to ASCII
+result = convert_hex_to_ascii(seq_a)
+
+# Print the converted sequence
+print(result)
+```

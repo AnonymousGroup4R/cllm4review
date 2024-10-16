@@ -1,0 +1,29 @@
+def convert_grams_to_pounds(seq_a):
+    import pandas as pd
+    
+    # Conversion constants
+    GRAMS_PER_POUND = 453.59237
+    
+    # Extract the numeric part and convert
+    grams = pd.Series(seq_a).str.replace('g', '').astype(int)
+    
+    # Convert grams to pounds
+    pounds = grams / GRAMS_PER_POUND
+    
+    # Extract integer pounds
+    int_pounds = pounds.astype(int)
+    
+    # Calculate remaining ounces
+    remaining_ounces = (pounds - int_pounds) * 16
+    
+    # Format output as 'Xlb Yoz'
+    seq_b = int_pounds.astype(str) + 'lb ' + remaining_ounces.round(3).astype(str) + 'oz'
+    
+    return seq_b.tolist()
+
+# Input data
+seq_a = ['32g', '1000g', '3400g', '222g', '123g']
+
+# Call function
+result = convert_grams_to_pounds(seq_a)
+print(result)

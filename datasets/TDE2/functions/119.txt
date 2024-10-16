@@ -1,0 +1,19 @@
+def transform_to_cm(seq_a):
+    import pandas as pd
+    
+    # Create a dataframe with the conversion factor
+    df = pd.DataFrame({'inch': [1],'cm': [2.54]})
+    
+    seq_b = []
+    
+    for item in seq_a:
+        num = int(item.split(' ')[0])
+        converted_num = num * df['cm'].values[0]
+        seq_b.append('{:.2f} cm'.format(converted_num))
+    
+    return seq_b
+
+# Example of how to call the function
+seq_a = ['1 inch', '23 inch', '921 inch', '13 inch', '22 inch']
+result = transform_to_cm(seq_a)
+print(result)

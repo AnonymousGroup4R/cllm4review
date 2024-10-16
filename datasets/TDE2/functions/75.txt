@@ -1,0 +1,15 @@
+```python
+import pandas as pd
+
+def transform_month_numbers_to_names(seq_a):
+    month_dict = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June',
+                  '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
+    seq_b = pd.Series(seq_a).map(month_dict).tolist()
+    return seq_b
+
+# Define the initial sequence
+seq_a = ['4', '7', '12', '10', '3']
+# Call the function to transform month numbers to month names
+seq_b = transform_month_numbers_to_names(seq_a)
+print(seq_b)
+```

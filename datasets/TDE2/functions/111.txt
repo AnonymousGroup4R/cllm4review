@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def cm_to_inches(seq_a):
+    df = pd.DataFrame(seq_a, columns=['Measurement'])
+    df['cm'] = df['Measurement'].str.replace(' cm', '').astype(int)
+    df['inches'] = df['cm'] * 0.393701
+
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    df['Formatted'] = df['inches'].apply(lambda x: f"{format_output(x)} inch")
+
+    return df['Formatted'].tolist()
+
+seq_a = ['1 cm', '99 cm', '367 cm', '33 cm', '123 cm']
+seq_b = cm_to_inches(seq_a)
+print(seq_b)
+```

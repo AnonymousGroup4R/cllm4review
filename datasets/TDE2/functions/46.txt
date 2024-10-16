@@ -1,0 +1,22 @@
+```python
+import pandas as pd
+
+def convert_timedelta_to_decimal_hours(seq_a):
+    # Convert the sequence into a pandas Series
+    times = pd.Series(pd.to_timedelta(seq_a))
+
+    # Calculate the decimal hours from Timedelta objects
+    decimal_hours = times.dt.seconds / 3600 + times.dt.days * 24
+
+    # Format the output Series as required
+    seq_b = decimal_hours.apply(lambda h: f"{h:.4f} hours")
+    
+    return seq_b.to_list()
+
+# Input sequence
+seq_a = ['02:45:45', '1:30:25', '12:10:02', '03:22:45', '22:22:22']
+
+# Call the function and display the result
+result = convert_timedelta_to_decimal_hours(seq_a)
+print(result)
+```

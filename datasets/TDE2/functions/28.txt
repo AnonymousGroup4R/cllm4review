@@ -1,0 +1,17 @@
+```python
+import pandas as pd
+
+def transform_phone_numbers(seq_a):
+    # Convert the sequences into a pandas DataFrame
+    df = pd.DataFrame(seq_a, columns=['Phone Numbers'])
+    # Insert dashes in the Phone Numbers column at specified positions
+    df['Phone Numbers'] = df['Phone Numbers'].apply(lambda x: x[:3] + '-' + x[3:6] + '-' + x[6:])
+    # Convert the DataFrame back into a sequence
+    seq_b = df['Phone Numbers'].tolist()
+    return seq_b
+
+# Define the sequences
+seq_a = ['1922123456', '9822135882', '8332213215', '9918882777', '1234567890']
+seq_b = transform_phone_numbers(seq_a)
+print(seq_b)
+```

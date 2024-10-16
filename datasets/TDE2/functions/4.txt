@@ -1,0 +1,23 @@
+```python
+import pandas as pd
+
+def extract_prices(seq_a):
+    # Extracting the prices from seq_a
+    prices = [ad.split('$')[1].split()[0] for ad in seq_a]
+    # Converting the prices list into a DataFrame
+    df = pd.DataFrame(prices, columns=['Price'])
+    # Converting the DataFrame into a list
+    seq_b = df['Price'].tolist()
+    
+    return seq_b
+
+# Testing the function with seq_a
+seq_a = ['Mar 18 Beautiful One bedroom Available. Schedule your appointment today $1410 / 1br - 938ft2 - (Downtown Tacoma, Theater District) pic map',
+          'Mar 18 1. Warm sunsets, Lake Washington, Downtown Seattle Skyline. Act fast! $2829 / 3br - 1535ft2 - (Renton, WA) pic map',
+          'Mar 18 New AVAILABLE NOW FURNISHED $1650 / 1br - 750ft2 - (Bellevue) pic',
+          'Mar 1 Lake Washington, Bellevue $1234 / 3br - 1899ft2 - (Bellevue, WA) pic map',
+          'Mar 23 Downtown Seattle Skyline. Act fast! $2829 / 3br - 355ft2 - (Seattle, WA) pic map']
+
+result = extract_prices(seq_a)
+print(result)
+```

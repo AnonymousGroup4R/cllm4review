@@ -1,0 +1,20 @@
+```python
+import pandas as pd
+
+def format_dates(seq_a):
+    # Convert seq_a into a pandas Series
+    dates = pd.Series(seq_a)
+    # Convert the string sequence to datetime
+    dates = pd.to_datetime(dates, format='%Y/%m/%d')
+    # Format the dates into 'm/d/y' and convert back to list
+    seq_b = dates.dt.strftime('%-m/%-d/%Y').tolist()
+    
+    return seq_b
+
+# Input sequence
+seq_a = ['2009/8/19', '2001/12/12', '2014/3/20', '2011/12/22', '2012/4/11']
+# Get the transformed output
+seq_b = format_dates(seq_a)
+# Output the resulting sequence
+print(seq_b)
+```

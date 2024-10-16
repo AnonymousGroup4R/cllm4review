@@ -1,0 +1,34 @@
+```python
+import pandas as pd
+import re
+
+def transform_address_states(seq_a):
+    df = pd.DataFrame(seq_a, columns=['address'])
+
+    def extract_state(address):
+        parts = address.split(',')
+        if len(parts) == 4:
+            return parts[-2].strip().upper()
+        
+        match = re.search(r'\b([A-Za-z]{2})\b', parts[-1])
+        if match:
+            return match.group(1).upper()
+
+        state_map = {'California': 'CA'}
+        for state, abbreviation in state_map.items():
+            if state.lower() in address.lower():
+                return abbreviation
+        return None
+
+    df['state'] = df['address'].apply(extract_state)
+    return df['state'].tolist()
+
+seq_a = ['1 microsoft way, redmond, wa, 98052', 
+         '1201 super commerce blvd Ste H, Richmond, VA, 23452', 
+         '100 sunset blvd, room 301, Sacramento California', 
+         '747 6th St S, Kirkland, WA 98033', 
+         '10 commerce way, Richmond, VA, 23452']
+
+seq_b = transform_address_states(seq_a)
+print(seq_b)
+```

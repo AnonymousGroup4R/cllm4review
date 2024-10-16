@@ -1,0 +1,22 @@
+```python
+import pandas as pd
+from urllib.parse import quote
+
+def url_encode_characters(seq_a):
+    # Convert the list into a pandas DataFrame
+    df = pd.DataFrame(seq_a, columns=['Characters'])
+    
+    # Apply URL encoding to each character. Since '%20' is already encoded, it needs special handling
+    df['Encoded'] = df['Characters'].apply(lambda x: '' if x == '%20' else quote(x, safe=''))
+    
+    return df['Encoded'].tolist()
+
+# Define the initial sequence (seq_a)
+seq_a = ['%20', '!', '"', '#', '$', '%', '&', "'", '(', ')']
+
+# Call the function with seq_a and get the transformed sequence as seq_b
+seq_b = url_encode_characters(seq_a)
+
+# Print the transformed sequence
+print(seq_b)
+```

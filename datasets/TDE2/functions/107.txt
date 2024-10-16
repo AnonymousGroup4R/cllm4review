@@ -1,0 +1,45 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_meters_to_feet(seq_a):
+    # Define a conversion factor from meters to feet
+    meters_to_feet = 3.28084
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    def convert_to_feet(x):
+        # Split the string to isolate the numeric part
+        number_of_meters = float(x.split()[0])
+        # Convert meters to feet
+        feet = number_of_meters * meters_to_feet
+        feet = format_output(feet)
+        # Return formatted string with conversion result
+        return f'{feet} feet'
+
+    # Convert seq_a into a pandas Series
+    data = pd.Series(seq_a)
+
+    # Apply the conversion function to each element in the series
+    seq_b = data.apply(convert_to_feet)
+
+    return seq_b.tolist()
+
+# Input sequence (seq_a)
+seq_a = ['3 meter', '19 meter', '20 meter', '4 meter', '2 meter']
+
+# Convert meters to feet
+result = convert_meters_to_feet(seq_a)
+
+# Print the result
+print(result)
+```

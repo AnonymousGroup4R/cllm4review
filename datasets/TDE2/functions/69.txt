@@ -1,0 +1,32 @@
+```python
+import pandas as pd
+import mgrs
+
+def convert_lat_long_to_mgrs(seq_a):
+    # Initialize the MGRS converter
+    m = mgrs.MGRS()
+
+    # Convert string to DataFrame with latitude and longitude as separate columns
+    df = pd.DataFrame(seq_a, columns=['lat_long'])
+    df[['lat', 'long']] = df['lat_long'].str.split(',', expand=True).astype(float)
+
+    # Function to convert lat, long to MGRS
+    def convert_to_mgrs(lat, long):
+        return m.toMGRS(lat, long, MGRSPrecision=5)  # precision 5 for 1m grid
+
+    # Apply conversion to each row
+    df['mgrs'] = df.apply(lambda row: convert_to_mgrs(row['lat'], row['long']), axis=1)
+
+    # Extract the resulting MGRS codes to a list
+    seq_b = df['mgrs'].tolist()
+
+    return seq_b
+
+# seq_a: your list of latitude and longitude strings
+seq_a = ['23.11, -39.33', '44.11, -77.33', '66.99, -33.11', '23.33, -39.55', '44.22, -77.44']
+
+# Call the function to transform seq_a to seq_b
+transformed_seq = convert_lat_long_to_mgrs(seq_a)
+
+print(transformed_seq)
+```

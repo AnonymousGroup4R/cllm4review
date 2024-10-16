@@ -1,0 +1,43 @@
+```python
+import pandas as pd
+
+# Data sequence
+seq_a = ['used car', 'honest mistake', 'computer', 'orange', 'hour']
+
+def transform_words_prefix(seq_a):
+    # Convert sequence to pandas Series
+    series_a = pd.Series(seq_a)
+
+    def build_exception_dict():
+        exceptions_an = ['honest', 'hour']
+        exceptions_a = ['used']
+        _cache = dict()
+        for e in exceptions_an:
+            _cache[e] = 'an'
+        for e in exceptions_a:
+            _cache[e] = 'a'
+        return _cache
+
+    exception_dict = build_exception_dict()
+
+    def determine_prefix(word):
+        vowels = 'aeiou'
+        if word.split()[0] in exception_dict:
+            return '{} {}'.format(exception_dict[word.split()[0]], word)
+        if word.split()[0][0] in vowels:
+            return f"an {word}"
+        else:
+            return f"a {word}"
+
+    # Apply the function to each element of the series
+    series_b = series_a.apply(determine_prefix)
+
+    # Convert back to list
+    seq_b = series_b.tolist()
+
+    return seq_b
+
+# Call the function and display the result
+transformed_seq = transform_words_prefix(seq_a)
+print(transformed_seq)
+```

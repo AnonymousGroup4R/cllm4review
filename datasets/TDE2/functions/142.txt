@@ -1,0 +1,24 @@
+Here is the refactored code snippet in the form of a function:
+
+```python
+import pandas as pd
+
+def convert_feet_to_meters_list(seq_a):
+    def convert_feet_to_meters(feet_string):
+        number_of_feet = float(feet_string.split()[0])
+        meters = number_of_feet * 0.3048
+        return f'{meters:.4f} m'
+
+    series_a = pd.Series(seq_a)
+    seq_b = series_a.apply(convert_feet_to_meters)
+    seq_b_list = seq_b.tolist()
+    
+    return seq_b_list
+
+# Usage example
+seq_a = ['3 feet', '7 feet', '18 feet', '4 feet', '22 feet']
+transformed_list = convert_feet_to_meters_list(seq_a)
+print(transformed_list)
+```
+
+In this refactored version, the code is encapsulated within a function called `convert_feet_to_meters_list` which takes a list `seq_a` as input and returns the transformed list `seq_b`. The function applies the conversion logic to each element of the input list using the `apply` method and then converts the resulting series back to a list.

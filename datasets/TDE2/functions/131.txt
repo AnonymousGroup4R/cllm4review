@@ -1,0 +1,30 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def pounds_to_grams(seq_a):
+    conversion_factor = 453.59237
+    df = pd.DataFrame(seq_a, columns=['weights'])
+    df['weights_numeric'] = df['weights'].str.extract('(\d+)').astype(int)
+
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 8 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    df['weights_in_grams'] = df['weights_numeric'] * conversion_factor
+    df['formatted_grams'] = df['weights_in_grams'].apply(lambda x: f"{format_output(x)} g")
+
+    return df['formatted_grams'].tolist()
+
+# Sequence A from the question
+seq_a = ['1 lb', '502 lb', '76 lb', '234 lb', '122 lb']
+
+# Display the output sequence
+seq_b = pounds_to_grams(seq_a)
+print(seq_b)
+```

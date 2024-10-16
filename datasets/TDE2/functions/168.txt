@@ -1,0 +1,27 @@
+```python
+import pandas as pd
+
+def transform_seq(seq_a):
+    # Create a DataFrame from the input sequence
+    df = pd.DataFrame(seq_a, columns=['expression'])
+    
+    # Evaluate the expressions using eval() and assign it back to the DataFrame
+    df['result'] = df['expression'].apply(eval)
+    
+    # Convert the numerical results into ints
+    df['result'] = df['result'].astype(int).astype(str)
+    
+    # Retrieve the result column as a list which is the required output seq_b
+    seq_b = df['result'].tolist()
+    
+    return seq_b
+
+# Define the input sequence
+seq_a = ['1 + 23', '6/2', '(1+3)/2', '3 + 4', '2 / 2 + 1']
+
+# Call the function with the input sequence
+result = transform_seq(seq_a)
+
+# Print the results
+print(result)
+```

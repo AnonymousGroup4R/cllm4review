@@ -1,0 +1,16 @@
+// modified manually
+// seq_a: ['1235550102', '4254423457', '4251239876', '1231239876', '4259876543']
+// seq_b: ['(123) 555-0102', '(425) 442-3457', '(425) 123-9876', '(123) 123-9876', '(425) 987-6543']
+```python
+import pandas as pd
+
+def transform_phone_numbers(seq_a):
+    df = pd.DataFrame(seq_a, columns=['phone_number'])
+    df['phone_number'] = df['phone_number'].apply(lambda x: f"({x[0:3]}) {x[3:6]}-{x[6:]}")
+    seq_b = df['phone_number'].tolist()
+    
+    return seq_b
+
+seq_a = ['1235550102', '4254423457', '4251239876', '1231239876', '4259876543']
+print(transform_phone_numbers(seq_a))
+```

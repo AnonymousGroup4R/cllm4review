@@ -1,0 +1,38 @@
+```python
+import pandas as pd
+
+def transform_to_bytes(input_list):
+    
+    def convert_to_bytes(size_str):
+        size_str = size_str.replace(' ', '')
+        idx = 0
+        while idx < len(size_str) and size_str[idx].isdigit():
+            idx += 1
+
+        number = int(size_str[:idx])
+        unit = size_str[idx:]
+
+        unit_to_bytes = {
+            'b': 0.125,
+            'B': 1,
+            'KB': 1024,
+            'MB': 1024**2,
+            'GB': 1024**3
+        }
+
+        if unit in unit_to_bytes:
+            return number * unit_to_bytes[unit]
+        else:
+            return "Unit not recognized"
+
+    df = pd.DataFrame({'Data': input_list})
+    df['Bytes'] = df['Data'].apply(convert_to_bytes)
+    df['Scientific Notation'] = df['Bytes'].apply(lambda x: f"{x:.2E} Bytes").apply(lambda x: x.replace('E+0', 'E').replace('E-0', 'E-'))
+    
+    return df['Scientific Notation'].tolist()
+
+# Example usage
+seq_a = ['10B', '100 KB', '1000MB', '1b', '100 B', '1GB']
+seq_b = transform_to_bytes(seq_a)
+print(seq_b)
+```

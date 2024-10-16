@@ -1,0 +1,28 @@
+Here is the refactored code snippet into a function called `transform_dates`:
+
+```python
+import pandas as pd
+
+def transform_dates(seq_a):
+    # Convert to pandas datetime
+    dates_a = pd.to_datetime(seq_a, errors='coerce')  # 'coerce' to handle empty strings
+
+    # Define the timedelta differences noticed from seq_a to seq_b
+    time_delta = pd.DateOffset(hours=12, minutes=30)
+
+    # Apply timedelta to each date in dates_a
+    dates_b = dates_a + time_delta
+
+    # Convert dates back to string format
+    seq_b = [date.strftime('%B %d, %Y, %H:%M') if not pd.isna(date) else '' for date in dates_b]
+
+    return seq_b
+
+# Input sequences
+seq_a = ['August 20, 2015, 16:11', 'April 11, 2015, 15:14', 'April 27, 2015, 10:00', 'May 27, 2015, 01:00', 'December 27, 2015, 15:00', '']
+
+# Call the function with seq_a as input
+seq_b = transform_dates(seq_a)
+
+print(seq_b)
+```

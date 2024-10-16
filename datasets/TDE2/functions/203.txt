@@ -1,0 +1,39 @@
+```python
+import pandas as pd
+import re
+
+def convert_to_seo_friendly_url(seq_a):
+    # Create a DataFrame from the input sequence
+    df = pd.DataFrame(seq_a, columns=["title"])
+
+    # Function to convert titles to SEO-friendly URLs
+    def seo_friendly_url(title):
+        # Convert to lowercase
+        result = title.lower()
+        # Replace special characters or remove unwanted characters
+        result = re.sub(r"'", '', result).strip()
+        result = re.sub(r"[^\w\s]", ' ', result).strip()
+        result = re.sub(r"\s+%20\s+|\s+", '-', result).strip()
+        return result
+
+    # Apply the function to the column
+    df['seo_friendly_title'] = df['title'].apply(seo_friendly_url)
+
+    # Return the transformed output as a list
+    return df['seo_friendly_title'].tolist()
+
+# Input sequence A
+seq_a = [
+    'How do you change a title to be part of the URL like Stack Overflow',
+    'Built-In Character Casing functions in .Net',
+    "What's the difference between String and string",
+    'Asp.Net Routing - Replace white spaces %20 with dashes from URLs generated',
+    '.NET method to convert a string to sentence case'
+]
+
+# Call the function to transform the sequence
+seq_b = convert_to_seo_friendly_url(seq_a)
+
+# Print the transformed output
+print(seq_b)
+```

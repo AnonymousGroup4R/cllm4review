@@ -1,0 +1,31 @@
+```python
+import pandas as pd
+import re
+
+def transform_emails(seq_a):
+    # Define a function to validate email
+    def validate_email(email):
+        # Simple regex for validating an email
+        if re.match(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$", email):
+            return email
+        else:
+            return 'invalid'
+    
+    # Create a DataFrame
+    df = pd.DataFrame(seq_a, columns=['email'])
+    
+    # Apply the validation function
+    df['email'] = df['email'].apply(validate_email)
+    
+    # Convert to list
+    seq_b = df['email'].tolist()
+    
+    return seq_b
+
+# Sequence A
+seq_a = ['testing@invalid@email.com', 'walter@xyz.com', 'tom@qq.com', 'asdf', 'ab@xyz.xyz', 'wa@lter@xyz.com']
+# Call the function to transform the list of emails
+result = transform_emails(seq_a)
+# Display the transformed list
+print(result)
+```

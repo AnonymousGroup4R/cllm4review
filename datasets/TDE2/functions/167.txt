@@ -1,0 +1,30 @@
+// modified manually
+// seq_a = ['Abcdef@example.com', 'very.common@example.com', 'A@b@c@example.com', 'good@example.com', 'A@b.com@example.com']
+// seq_b = ['true', 'true', 'false', 'true', 'false']
+```python
+import pandas as pd
+import re
+
+def transform_email_addresses(email_list):
+    """Transform email addresses from seq_a to seq_b based on validity criteria"""
+    def is_valid_email(email):
+        """Check if the email is valid. Assume simple check on '@' and '.' placement."""
+        if email.count('@') == 1:
+            local_part, domain_part = email.split('@')
+            if '.' in domain_part and not any(['@' in local_part, '@' in domain_part.split(".")[-1]]):
+                return 'true'
+        return 'false'
+
+    df = pd.DataFrame(email_list, columns=['email'])
+    df['is_valid'] = df['email'].apply(is_valid_email)
+    
+    return df['is_valid'].tolist()
+
+# Define the first sequence of email addresses
+seq_a = ['Abcdef@example.com', 'very.common@example.com', 'A@b@c@example.com', 'good@example.com', 'A@b.com@example.com']
+# Apply the function to determine the validity of email addresses
+resulting_seq = transform_email_addresses(seq_a)
+
+# Print the transformed results
+print(resulting_seq)
+```

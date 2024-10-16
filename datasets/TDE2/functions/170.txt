@@ -1,0 +1,24 @@
+```python
+import pandas as pd
+import ipaddress
+
+def extract_last_address_from_ip_range_or_cidr(seq_a):
+    def transform(ip_range_or_cidr):
+        if '-' in ip_range_or_cidr:
+            start_ip, end_ip = ip_range_or_cidr.split('-')
+            return end_ip
+        else:
+            ip_net = ipaddress.ip_network(ip_range_or_cidr, strict=False)
+            return str(ip_net[-1])
+
+    return [transform(ip) for ip in seq_a]
+
+# Input sequence as provided
+seq_a = ['192.168.70.30-192.168.70.31', 'fe80::/10', 'fe80::d501:4ee:3882:c586-fe80::d502:4ee:3882:c586', '2001:db8::/48']
+
+# Apply the conversion using the function
+seq_b = extract_last_address_from_ip_range_or_cidr(seq_a)
+
+# Output the resulting sequence
+print(seq_b)
+```

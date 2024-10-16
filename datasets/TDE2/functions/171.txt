@@ -1,0 +1,31 @@
+```python
+import pandas as pd
+import ipaddress
+
+def ipv4_to_ipv6_transform(seq_a):
+    def ipv4_to_ipv6(ipv4):
+        ipv4_address = ipaddress.IPv4Address(ipv4)
+        ipv6_address = ipaddress.IPv6Address('::ffff:' + ipv4_address.exploded)
+        return ipv6_address.exploded
+
+    def remove_leading_zeros(v):
+        s = 0
+        while s < len(v) and v[s] == '0':
+            s += 1
+        if s == len(v):
+            return '0'
+        return v[s:]
+
+    ipv4_series = pd.Series(seq_a)
+    ipv6_series = ipv4_series.apply(ipv4_to_ipv6).apply(lambda x: ':'.join([remove_leading_zeros(x) for x in x.split(':')]))
+
+    return ipv6_series.to_list()
+
+# Define the sequence of IPv4 addresses
+seq_a = ['102.3.1.2', '102.31.1.244', '20.55.255.255', '39.91.29.11', '39.255.255.255']
+
+# Get transformed IPv6 addresses from the function
+seq_b = ipv4_to_ipv6_transform(seq_a)
+
+print(seq_b)
+```

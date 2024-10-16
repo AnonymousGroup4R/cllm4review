@@ -1,0 +1,41 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def transform_to_square_feet(seq_a):
+    conversion_factor = 10.7639104167  # Conversion factor from square meters to square feet
+
+    # Create a DataFrame from seq_a
+    df = pd.DataFrame(seq_a, columns=['original'])
+
+    # Extract numeric values
+    df['meters_value'] = df['original'].str.extract(r'(\d+)').astype(float)
+
+    # Convert square meters to square feet
+    df['feet_value'] = df['meters_value'] * conversion_factor
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 8 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    # Format the output to match the desired precision, as strings with "square feet"
+    df['formatted_feet'] = df['feet_value'].apply(lambda x: f"{format_output(x)} square feet")
+
+    # Get the desired sequence output
+    seq_b = df['formatted_feet'].tolist()
+
+    return seq_b
+
+# Given sequence
+seq_a = ['4 square meters', '560 square meters', '2000 square meters', '42 square meters', '323 square meters']
+
+result = transform_to_square_feet(seq_a)
+print(result)
+```

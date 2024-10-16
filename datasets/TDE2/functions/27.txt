@@ -1,0 +1,24 @@
+```python
+def transform_sequence(seq_a):
+    seq_b = []
+    for s in seq_a:
+        parts = s.split('_')                  # Split the string by underscore
+        transformed_string = ''.join([parts[0][:2], parts[2][-2:]])  # Join the first two letters from the first part and the last two letters from the third part together
+        seq_b.append(transformed_string)  
+    return seq_b
+
+# Creating the initial sequence as a list
+seq_a = [
+    'abc_def_xyz_8922ksd',
+    'all_i23saii_jjk_fhdkaj',
+    'ipo_2839a_zif_fjei',
+    '32a_xxde_ttt_32eresaf',
+    'axd_effe_xzz_ttesfes'
+]
+
+# Transforming the sequence
+seq_b = transform_sequence(seq_a)
+
+# Displaying the transformed sequence
+print(seq_b)
+```

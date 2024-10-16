@@ -1,0 +1,18 @@
+def convert_inches_to_meters(seq_a):
+    import pandas as pd
+    
+    # Create a DataFrame with the conversion factor
+    df = pd.DataFrame({'inch': seq_a})
+    conversion_factor = 0.0254
+    
+    # Apply the conversion to inches to meters
+    df['meter'] = df['inch'] * conversion_factor
+    
+    seq_b = [f'{round(val, 4)} m' for val in df['meter'].values]
+    
+    return seq_b
+
+# Testing the function
+seq_a = [4, 980, 2000, 321, 111]
+result = convert_inches_to_meters(seq_a)
+print(result)

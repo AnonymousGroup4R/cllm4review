@@ -1,0 +1,15 @@
+Here is the refactored code snippet into a function called transform_months:
+```python
+import pandas as pd
+
+def transform_months(seq_a):
+    month_dict = {'January': '1', 'February': '2', 'March': '3', 'April': '4', 'May': '5', 'June': '6', 'July': '7', 'August': '8', 'September': '9', 'October': '10', 'November': '11', 'December': '12', '': ''}
+    seq_b = [month_dict[month] for month in seq_a]
+    return seq_b
+
+# Create sequence seq_a
+seq_a = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', '']
+
+result = transform_months(seq_a)
+print(result)
+```

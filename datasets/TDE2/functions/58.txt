@@ -1,0 +1,29 @@
+def transform_html_to_text(seq_a):
+    import pandas as pd
+    from bs4 import BeautifulSoup
+    
+    # Function to convert HTML to plain text
+    def html_to_text(html):
+        soup = BeautifulSoup(html, 'html.parser')
+        return soup.get_text(separator='', strip=False)
+    
+    # Using pandas to apply the function to the sequence
+    seq_a_series = pd.Series(seq_a)
+    seq_b_series = seq_a_series.apply(html_to_text)
+    
+    # Getting the list from the series
+    seq_b = seq_b_series.tolist()
+    
+    return seq_b
+
+# Example usage:
+seq_a = [
+    '<b>Hello World.</b><br/><p><i>Is there anyone out there?</i><p>', 
+    '<b>hello world!</b><br /><i>it is me</i>', 
+    '<b>hello, </b><b>hi.</b><b>welcome</b>', 
+    '<b>test</b>', 
+    '<b>this</b><b> is</b><b> a</b><b> test</b>'
+]
+
+seq_b = transform_html_to_text(seq_a)
+print(seq_b)

@@ -1,0 +1,17 @@
+```python
+import pandas as pd
+
+def convert_timezone(seq_a):
+    dates = pd.Series(seq_a)
+    dates_dt = pd.to_datetime(dates, format='%I:%M %p, %b %d, %Y').dt.tz_localize('US/Pacific')
+    dates_dt_est = dates_dt.dt.tz_convert('US/Eastern')
+    seq_b = dates_dt_est.dt.strftime('%I:%M %p, %b %d, %Y').str.replace(' 0', ' ').str.lstrip('0').tolist()
+    return seq_b
+
+# Define the sequence of dates in PST (UTC-8)
+seq_a = ['9:41 PM, Aug 17, 2015', '1:00 AM, Jun 3, 2015', '10:00 AM, Mar 20, 2015', '5:00 AM, Jun 5, 2015', '11:00 AM, Mar 20, 2015']
+
+# Function call
+seq_b = convert_timezone(seq_a)
+print(seq_b)
+```

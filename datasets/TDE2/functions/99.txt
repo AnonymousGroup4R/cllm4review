@@ -1,0 +1,36 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_inches_to_feet(seq_a):
+    # Convert seq_a into a pandas Series
+    s = pd.Series(seq_a)
+    
+    # Extract the numeric part and convert it to feet
+    s = s.str.extract(r'(\d+)').astype(int) / 12
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 8 - d.adjusted()
+        return f'{x:.{round_num}f}'.format(x)
+
+    def remove_trailing_zeros(res):
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end >= 0 and res[_end-1] == '.': _end -= 1
+        return res[:_end]
+
+    # Format the output to string with required precision
+    seq_b_converted = s[0].apply(format_output).apply(remove_trailing_zeros).apply(lambda x: f'{x} feet').tolist()
+
+    return seq_b_converted
+
+# Sequence of measurements in inches
+seq_a = ['3 inch', '37 inch', '12 inch', '169 inch', '44 inch']
+seq_b = convert_inches_to_feet(seq_a)
+
+# Display the new sequence
+print(seq_b)
+```

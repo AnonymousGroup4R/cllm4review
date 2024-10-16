@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+from tld import get_tld
+
+def transform_domains(seq_a):
+    # Convert seq_a into a pandas Series
+    domains = pd.Series(seq_a)
+
+    # Apply the function to each element in the Series
+    seq_b = domains.apply(lambda x: f'http://{x}').apply(get_tld)
+
+    # Convert the resulting Series back to a list
+    return seq_b.tolist()
+
+# Original sequence
+seq_a = ['photos.facebook.co.uk', 'photos.twitter.com', 'cnn.com.au', 'news.abc.com.ca', 'cnbc.com']
+seq_b_list = transform_domains(seq_a)
+print(seq_b_list)
+```

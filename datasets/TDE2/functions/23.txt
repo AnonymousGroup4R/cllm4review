@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+
+def remove_surrounding_quotes(seq_a):
+    df = pd.DataFrame(seq_a, columns=['text'])
+    df['text'] = df['text'].apply(lambda x: x.strip('"'))
+    seq_b = df['text'].tolist()
+    
+    return seq_b
+
+# Original list
+seq_a = ['"Do you like this site?"', '"--cool--"', '"...ok!"', '"None"', '"test if this works"']
+
+# Transform seq_a to seq_b
+seq_b = remove_surrounding_quotes(seq_a)
+
+# Print the result
+print(seq_b)
+```

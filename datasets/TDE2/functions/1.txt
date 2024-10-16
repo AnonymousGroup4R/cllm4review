@@ -1,0 +1,20 @@
+def transform_seq_a_to_seq_b(seq_a):
+    result = [None]*len(seq_a)
+    for i in range(len(seq_a)):
+        result[i] = ''.join([word[0] for word in seq_a[i].split()]).lower()
+    return result
+
+# Test the function
+data = {
+    'seq_a': [
+        'association computing machinery',
+        'principle of programming lanaguages',
+        'special interest group management of data',
+        'special interest group information retrieval',
+        'relational data base management system'
+    ]
+}
+
+seq_a = data['seq_a']
+seq_b = transform_seq_a_to_seq_b(seq_a)
+print(seq_b)

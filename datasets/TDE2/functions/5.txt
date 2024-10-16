@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def transform_date_format(seq_a):
+    dates = pd.Series(seq_a)
+    dates = pd.to_datetime(dates, format='%Y%m%d')
+    seq_b = dates.dt.strftime('%m-%d-%Y')
+    seq_b_list = seq_b.tolist()
+    
+    return seq_b_list
+
+# Define your initial sequence
+seq_a = ['19610223', '19700101', '19330212', '19221213', '19111122']
+seq_b_list = transform_date_format(seq_a)
+print(seq_b_list)
+```

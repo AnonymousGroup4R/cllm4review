@@ -1,0 +1,18 @@
+// modified manually
+// seq_a = ['9 mm', '145 mm', '23 mm', '3 mm', '199 mm']
+// seq_b = ['0.9 cm', '14.5 cm', '2.3 cm', '0.3 cm', '19.9 cm']
+```python
+import pandas as pd
+
+def convert_mm_to_cm(seq_a):
+    df = pd.DataFrame({'seq_a': seq_a})
+    df['value'] = df['seq_a'].str.split(' ').str[0].astype(int)
+    df['value'] = df['value'] / 10
+    df['seq_b'] = df['value'].astype(str) + ' cm'
+    seq_b = df['seq_b'].tolist()
+    
+    return seq_b
+
+seq_a = ['9 mm', '145 mm', '23 mm', '3 mm', '199 mm']
+print(convert_mm_to_cm(seq_a)) 
+```

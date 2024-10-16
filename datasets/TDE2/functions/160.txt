@@ -1,0 +1,39 @@
+```python
+import pandas as pd
+
+def extract_middle_initial(seq_a):
+    # Create a pandas DataFrame from seq_a
+    df = pd.DataFrame(seq_a, columns=['name'])
+
+    # Define a function to extract the middle initial
+    def extract_middle_initial(name):
+        # Remove prefixes and suffixes by removing periods and commas, and then striping
+        name = name.replace('Mr.', '').replace('III', '').replace('.', '').replace(',', '').strip()
+
+        # Split the name into parts
+        parts = name.split()
+
+        # If there are at least three parts, the middle part could be the middle name
+        if len(parts) >= 3:
+            # Check if middle part is single letter or followed by a period initial indication
+            return parts[1][0]
+        else:
+            return ''  # No middle name
+
+    # Apply the function to the 'name' column to get a new 'middle_initial' column
+    df['middle_initial'] = df['name'].apply(extract_middle_initial)
+
+    # Extract the desired list from the DataFrame
+    seq_b = df['middle_initial'].tolist()
+
+    return seq_b
+
+# Define the initial sequence
+seq_a = ['Mr. Charles P. Wooten, III', 'John Adam Johnson', 'Doe, John', 'James Bob Smith', 'Charlie Denis Edwards']
+
+# Transform seq_a to seq_b
+seq_b = extract_middle_initial(seq_a)
+
+# Display the output
+print(seq_b)
+```

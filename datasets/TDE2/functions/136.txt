@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_sq_feet_to_sq_yards(seq_a):
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 8 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end > 0 and res[_end-1] == '.':
+            _end -= 1
+        return res[:_end]
+
+    df = pd.DataFrame(seq_a, columns=['sq_feet'])
+    df['sq_yards'] = df['sq_feet'].str.extract('(\d+)').astype(int) / 9
+    df['sq_yards'] = df['sq_yards'].apply(lambda x: f'{format_output(x)} square yards')
+    
+    return df['sq_yards'].tolist()
+
+seq_a = ['9 square feet', '390 square feet', '2456 square feet', '123 square feet', '872 square feet']
+seq_b = convert_sq_feet_to_sq_yards(seq_a)
+print(seq_b)
+```

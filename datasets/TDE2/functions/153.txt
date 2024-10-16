@@ -1,0 +1,38 @@
+```python
+def get_street_names(seq_a):
+    import pandas as pd
+    
+    # Create a DataFrame
+    data = pd.DataFrame(seq_a, columns=['address'])
+    
+    # Define a function to clean and extract the street name
+    def extract_street_name(address):
+        # Split by commas to separate components like city, state etc.
+        parts = address.split(',')
+        # First part contains number and street
+        first_part = parts[0]
+        # Remove the first part in the address
+        street_name = ' '.join(first_part.split()[1:]).lower()
+        # Split again if there are still extra descriptors like Suite, Room, etc.
+        street_name = street_name.split(' ste ')[0].split(' room ')[0].split(' ste. ')[0]
+        return street_name.strip()
+    
+    # Apply the function to the 'address' column
+    data['street_name'] = data['address'].apply(extract_street_name)
+    
+    return data['street_name'].tolist()
+
+# Initialize the list
+seq_a = [
+    '1 microsoft way, redmond, wa, 98052',
+    '5 super commerce place blvd Ste H, Richmond, VA, 23452',
+    '1001 sunset blvd, Room 301, Sacramento California',
+    '747 6th St room 111, Kirkland, WA 98033',
+    '10 commerce way, Richmond, VA, 23452'
+]
+
+# Transform the input list (seq_a) to seq_b using the function
+seq_b = get_street_names(seq_a)
+
+print(seq_b)
+```

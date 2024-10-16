@@ -1,0 +1,36 @@
+```python
+def convert_storage_sizes(seq_a):
+    
+    def convert_to_bytes(size_str):
+        size_str = size_str.replace(' ', '')
+
+        idx = 0
+        while idx < len(size_str) and size_str[idx].isdigit():
+            idx += 1
+
+        number = int(size_str[:idx])
+        unit = size_str[idx:]
+
+        unit_to_bytes = {
+            'b': 0.125,
+            'B': 1,
+            'KB': 1024,
+            'MB': 1024**2,
+            'GB': 1024**3
+        }
+
+        if unit in unit_to_bytes:
+            return number * unit_to_bytes[unit]
+        else:
+            return "Unit not recognized"
+
+    bytes_values = [convert_to_bytes(item) for item in seq_a]
+    seq_b = [f"{value} Bytes" for value in bytes_values]
+
+    return seq_b
+
+# Define the original sequence
+seq_a = ['10B', '100 KB', '1000MB', '1b', '100 B', '1GB']
+result = convert_storage_sizes(seq_a)
+print(result)
+```

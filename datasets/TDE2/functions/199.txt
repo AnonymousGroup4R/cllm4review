@@ -1,0 +1,14 @@
+```python
+import pandas as pd
+
+def convert_to_camel_case(seq_a):
+    df = pd.DataFrame(seq_a, columns=['Original'])
+    df['CamelCase'] = df['Original'].apply(lambda x: ''.join(word.capitalize() for word in x.split()))
+    seq_b = df['CamelCase'].tolist()
+    return seq_b
+
+# Example usage:
+seq_a = ['Hello there everyone', 'What is wrong', 'Wait for a while', 'Main page', 'Test is good for everyone']
+result = convert_to_camel_case(seq_a)
+print(result)
+```

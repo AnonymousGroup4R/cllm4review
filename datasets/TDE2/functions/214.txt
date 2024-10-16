@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+from num2words import num2words
+
+def convert_numbers_to_words(seq_a):
+    # Convert string numbers to integers
+    seq_a_int = [int(num) for num in seq_a]
+    
+    def number_to_words(num):
+        # Convert number to words, specifying 'en' for English
+        words = num2words(num, lang='en')
+        return words.replace(',', '')
+    
+    # Convert integers to words
+    seq_b_converted = [number_to_words(num) for num in seq_a_int]
+    
+    return seq_b_converted
+
+# Define the first sequence provided
+seq_a = ['10183', '90', '5888', '100000', '999999', '1000001', '10000007']
+
+# Transform seq_a to seq_b
+seq_b = convert_numbers_to_words(seq_a)
+
+print(seq_b)
+```

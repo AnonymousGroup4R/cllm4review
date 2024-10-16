@@ -1,0 +1,21 @@
+```python
+import pandas as pd
+
+def transform_dates(seq_a):
+    # Step 2: Create a series from seq_a
+    dates = pd.Series(seq_a)
+
+    # Step 3: Convert date strings into datetime objects
+    # Pandas' to_datetime can infer the correct format, though it's more reliable when format hints are provided when possible
+    dates = pd.to_datetime(dates)
+
+    # Step 4: Format these datetime objects
+    seq_b = dates.dt.strftime('%B %-d')  # %B is full month name, %d is zero-padded day of the month
+
+    return seq_b.tolist()
+
+# Example usage
+seq_a = ['2011-09-21', '2011-Jan-12', '7/1/2009', '2012-02-12', '6/1/2009 12:01:01']
+transformed_dates = transform_dates(seq_a)
+print(transformed_dates)
+```

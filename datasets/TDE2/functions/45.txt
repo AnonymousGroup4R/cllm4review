@@ -1,0 +1,32 @@
+```python
+import pandas as pd
+import re
+
+def extract_uppercase_words_from_list(seq_a):
+    # Create DataFrame
+    df = pd.DataFrame(seq_a, columns=['Text'])
+
+    # Function to extract uppercase words
+    def extract_uppercase_words(text):
+        # Find all words where each character is uppercase
+        return ', '.join(re.findall(r'\b[A-Z]{2,}\b', text))
+
+    # Apply the function to the DataFrame
+    df['Upper Words'] = df['Text'].apply(extract_uppercase_words)
+
+    # Convert the 'Upper Words' column back to a list similar to seq_b
+    seq_b = df['Upper Words'].tolist()
+    
+    return seq_b
+
+# Data
+seq_a = ['This is one of the best breakfasts I have had! Is the decor dated? Absolutely but it just adds to the nostalgic charm! The place just reeks of beef cooking... Ahhh delicious! Check out the pastry cases!!!! OMG, is all I have to say!',
+         'When she asked if we had reservations, I replied no, and she commented NO?  You KNOW IT IS SATURDAY.  I wanted to say yes, yesterday was Friday and tomorrow is Sunday.  Instead I replied that I was TERRIBLY sorry i did not realize i needed a reservation',
+         'This is a TEST, NOT a real line',
+         'test ONE, test TWO, test THREE',
+         'This is a TEST, not a real line']
+
+# Call the function and print the result
+seq_b = extract_uppercase_words_from_list(seq_a)
+print(seq_b)
+```

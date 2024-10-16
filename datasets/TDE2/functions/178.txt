@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+
+def transform_names(seq_a):
+    df = pd.DataFrame(seq_a, columns=['name'])
+
+    def parse_name(name):
+        name = name.replace("'", "").replace("Mr. ", "").replace(", III", "").replace(", II", "").replace(", Jr.", "")
+        if ',' in name:
+            last_name, first_name = name.split(', ')
+        else:
+            parts_of_name = name.split()
+            first_name = parts_of_name[0]
+            last_name = parts_of_name[-1]
+        initial = first_name[0]
+        return f"{initial}. {last_name}"
+    
+    df['formatted_name'] = df['name'].apply(parse_name)
+    return df['formatted_name'].tolist()
+
+# Sequence A provided
+seq_a = ["'Doe, John'", "'James Smith'", "'Mr. Charles P. Wooten, III'", "'John Johnson'", "'Alice C. Doe'"]
+seq_b = transform_names(seq_a)
+print(seq_b)
+```

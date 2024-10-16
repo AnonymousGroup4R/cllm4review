@@ -1,0 +1,33 @@
+```python
+import pandas as pd
+import re
+
+def remove_xml_attributes(seq_a):
+    # Function to remove XML attributes using regular expressions
+    def remove_attrs(text):
+        # Replace attributes inside the tags (but keep the tags and contents intact)
+        return re.sub(r'\s+xns:\w+="[^"]*"', '', text)
+    
+    # Create a pandas Series from the sequence
+    series_a = pd.Series(seq_a)
+    
+    # Apply the function to each element of the series using .map
+    seq_b = series_a.map(remove_attrs)
+    
+    # Convert back to a list
+    seq_b_list = seq_b.tolist()
+    
+    return seq_b_list
+
+# Define your initial list (seq_a)
+seq_a = [
+    '<sample1 xns:id="e7b014d9-6271-4e32-921d-7488edfd6ea4">a</sample1>',
+    '<sample2 xns:id="d3450e86-7264-4512-9891-6c7183257741">b</sample2>',
+    '<sample3 xns:id="abc">xyz</sample3>',
+    '<sample3 xns:id="7f04f178-f235-4647-8584-c4e77f73fecf">c</sample3>',
+    '<sample6 xns:id="test">b</sample6>'
+]
+
+# Output the results
+print(remove_xml_attributes(seq_a))
+```

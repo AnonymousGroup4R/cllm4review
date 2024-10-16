@@ -1,0 +1,27 @@
+```python
+import pandas as pd
+
+def convert_to_hex(seq_a):
+    # Define a function that takes a decimal number as string and returns it in hexadecimal
+    def to_hex(num_str):
+        # Convert the string to an integer
+        num = int(num_str)
+        # Convert the integer to hex, remove the '0x' and convert to uppercase
+        hex_num = hex(num)[2:].upper()
+        return hex_num
+    
+    # Convert seq_a to a pandas Series
+    seq_series = pd.Series(seq_a)
+    
+    # Apply the to_hex function to each element in the series
+    seq_b = seq_series.apply(to_hex)
+    
+    return seq_b.tolist()
+
+# Initial sequence given in the problem
+seq_a = ['214633', '1246367', '9872031', '323', '123234']
+# Call the function to transform seq_a to seq_b
+seq_b = convert_to_hex(seq_a)
+# Print the resulting sequence
+print(seq_b)
+```

@@ -1,0 +1,23 @@
+```python
+import pandas as pd
+
+def transform_sequence(seq_a):
+    # Define the function to split a string into chunks of 4 characters separated by commas.
+    def split_into_chunks(s, n=4):
+        return ','.join(s[i:i+n] for i in range(0, len(s), n))
+    
+    # Create a pandas Series from seq_a.
+    series_a = pd.Series(seq_a)
+    
+    # Apply the function split_into_chunks to each element in the series.
+    seq_b = series_a.apply(split_into_chunks)
+    
+    # Convert the result back to a list and return it.
+    return seq_b.tolist()
+
+# Define the initial sequence (seq_a).
+seq_a = ['1111222233334444', '123412341234', '1111222', '123412345', '1']
+
+# Call the function on seq_a and print the transformed sequence.
+print(transform_sequence(seq_a))
+```

@@ -1,0 +1,29 @@
+```python
+import pandas as pd
+
+def transform_phone_numbers(seq_a):
+    df = pd.DataFrame(seq_a, columns=['phone'])
+
+    def standardize_phone_number(phone):
+        phone = ''.join(filter(str.isdigit, phone))
+
+        if len(phone) == 7:
+            return '425-' + phone[:3] + '-' + phone[3:]
+        elif len(phone) == 10:
+            return phone[:3] + '-' + phone[3:6] + '-' + phone[6:]
+        elif len(phone) == 11:
+            return phone[1:4] + '-' + phone[4:7] + '-' + phone[7:]
+        else:
+            return phone
+
+    df['standard_phone'] = df['phone'].apply(standardize_phone_number)
+    
+    return df['standard_phone'].tolist()
+
+# Test the function
+seq_a = ['4259990200', '390-9292', '499-999-2020', '(299)-398-0003',
+         '(288) 3998888', '999-2020', '425-9990200', '(288) 3998888',
+         '499-999-2020', '(299)-398-0003', '(288) 3998888', '425-9990200']
+seq_b_transformed = transform_phone_numbers(seq_a)
+print(seq_b_transformed)
+```

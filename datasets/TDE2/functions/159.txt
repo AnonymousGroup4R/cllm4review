@@ -1,0 +1,48 @@
+```python
+import pandas as pd
+
+def extract_last_names(names_list):
+    # Create a DataFrame
+    df = pd.DataFrame(names_list, columns=['names'])
+
+    # Define a function to extract the last name
+    def extract_last_name(full_name):
+        # Remove any titles or suffixes (like "Mr.", "III")
+        name = full_name.replace('Mr.', '').replace('III', '').strip()
+        
+        first, last = None, None
+        # Find comma and split accordingly
+        if ',' in name:
+            # check if the first part is a full name.
+            parts = name.split(',')
+            if len(parts) == 2 and ' ' not in parts[0]:
+                last, first = parts
+            else:
+                name = parts[0]
+        
+        if last is None:
+            name_parts = name.split()
+            if len(name_parts) > 1:
+                first, last = name_parts[0], name_parts[-1]
+            else:
+                # Handling potential unusual cases where there might be just one name part
+                return name
+        
+        # Take the first letter of the first name and combine with the last name
+        return f"{last.strip()}"
+
+    # Apply the function to each name in the DataFrame
+    df['last_name'] = df['names'].apply(extract_last_name)
+
+    # Extract the last names into a list
+    seq_b = df['last_name'].tolist()
+
+    return seq_b
+
+# Define the original list of names
+seq_a = ['Doe, John', 'James Smith', 'Mr. Charles P. Wooten, III', 'John Johnson']
+seq_b = extract_last_names(seq_a)
+
+# Display the output
+print(seq_b)
+```

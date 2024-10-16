@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def transform_domains(seq_a):
+    df = pd.DataFrame(seq_a, columns=['Domain'])
+    df['Domain'] = df['Domain'].apply(lambda x: x.replace('http://', '').replace('www.', ''))
+    seq_b = df['Domain'].tolist()
+    return seq_b
+
+seq_a = ['stackoverflow.com', 'www.stackoverflow.com', 'http://stackoverflow.com', 'http://www.stackoverflow.com',
+         'facebook.com', 'www.facebook.com', 'http://facebook.com', 'http://www.facebook.com',
+         'google.com', 'www.google.com', 'http://google.com', 'http://www.google.com']
+
+seq_b = transform_domains(seq_a)
+print(seq_b)
+```

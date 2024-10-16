@@ -1,0 +1,23 @@
+```python
+import pandas as pd
+
+def convert_decimal_degrees_to_dms(seq_a):
+    def decimal_degrees_to_dms(decimal_degrees):
+        degrees = int(decimal_degrees)
+        remainder = (decimal_degrees - degrees) * 60
+        minutes = int(remainder)
+        seconds = round((remainder - minutes) * 60)
+        return f"{degrees} {minutes}' {seconds}\""
+    
+    seq_a_float = [float(item) for item in seq_a]
+    seq_b = [decimal_degrees_to_dms(deg) for deg in seq_a_float]
+    
+    return seq_b
+
+# Sequence of decimal degree values
+seq_a = ['4', '11.35', '129.45', '23']
+seq_b = convert_decimal_degrees_to_dms(seq_a)
+
+# Print the output sequence
+print(seq_b)
+```

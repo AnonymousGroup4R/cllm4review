@@ -1,0 +1,22 @@
+// modified manually
+// seq_a = ['2 feet', '30 feet', '53 feet', '44 feet', '23 feet']
+// seq_b = ['24 inches', '360 inches', '636 inches', '528 inches', '276 inches']
+```python
+import pandas as pd
+
+def feet_to_inches(seq_a):
+    # Create a DataFrame with the initial sequence
+    data = {'Feet': seq_a}
+    df = pd.DataFrame(data)
+    # Convert feet to inches
+    df['Feet'] = df['Feet'].apply(lambda x: int(x.split(' ')[0]) * 12)
+    # Rename the column to Inches
+    df.rename(columns={'Feet': 'Inches'}, inplace=True)
+    # Convert the DataFrame to the final sequence
+    seq_b = df['Inches'].apply(lambda x: f'{x} inches').tolist()
+    
+    return seq_b
+
+seq_a = ['2 feet', '30 feet', '53 feet', '44 feet', '23 feet']
+print(feet_to_inches(seq_a))
+```

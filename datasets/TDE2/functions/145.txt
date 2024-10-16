@@ -1,0 +1,41 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_miles_to_kilometers(seq_a):
+    # Convert seq_a into a pandas Series
+    data = pd.Series(seq_a)
+
+    # Extract numbers (miles) and convert them to float for calculation
+    miles = data.str.extract(r'(\d+)').astype(float)
+
+    # Conversion factor from miles to kilometers
+    conversion_factor = 1.609344
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end > 0 and res[_end-1] == '.':
+            _end -= 1
+        return res[:_end]
+
+    # Perform conversion
+    kilometers = miles * conversion_factor
+
+    # Format kilometers with 'km' and round to 4 decimal places
+    seq_b = kilometers[0].apply(lambda x: f"{format_output(x)} km").tolist()
+
+    return seq_b
+
+# Define the original sequence
+seq_a = ['15 mile', '19 mile', '240 mile', '33 mile', '11 mile']
+
+# Output the transformed sequence
+print(convert_miles_to_kilometers(seq_a))
+```

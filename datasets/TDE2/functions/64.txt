@@ -1,0 +1,34 @@
+```python
+def transform_sequence_to_hex(seq_a):
+    import pandas as pd
+   
+    # Define a function to convert the names or characters to hexadecimal
+    def ascii_to_hex(item):
+        # Control Characters and their ASCII codes
+        control_chars = {
+            'DC2': 18,  # Device Control 2
+            'RS': 30    # Record Separator
+        }
+    
+        # Check if the item is a control character or not
+        if item in control_chars:
+            # Convert the control character ASCII code to hexadecimal
+            return format(control_chars[item], '02X')
+        else:
+            # Convert the regular character to hexadecimal
+            return format(ord(item), '02X')
+  
+    # Apply the function across seq_a
+    seq_b_converted = [ascii_to_hex(item) for item in seq_a]
+
+    return seq_b_converted
+
+# Initialize the sequence
+seq_a = ['DC2', 'RS', '#', 'D', '"']
+
+# Obtain the transformed sequence using the function
+seq_b_converted = transform_sequence_to_hex(seq_a)
+
+# If only the output sequence is needed:
+print(seq_b_converted)
+```

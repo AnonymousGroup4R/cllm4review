@@ -1,0 +1,39 @@
+```python
+import pandas as pd
+import re
+
+def transform_names(names_list):
+    def extract_initials(full_name):
+        name = full_name.replace('Mr.', '').replace('III', '').strip()
+        first, last = None, None
+        
+        if ',' in name:
+            parts = name.split(',')
+            if len(parts) == 2 and ' ' not in parts[0]:
+                last, first = parts
+            else:
+                name = parts[0]
+        
+        if last is None:
+            name_parts = name.split()
+            if len(name_parts) > 1:
+                first, last = name_parts[0], name_parts[-1]
+            else:
+                return name
+        
+        return f"{last.strip()[0]}{first.strip()[0]}"
+    
+    names = pd.Series(names_list)
+    initials = names.apply(extract_initials)
+    
+    return initials.tolist()
+
+# Initialize the sequence
+seq_a = ['Doe, John', 'James Smith', 'Mr. Charles P. Wooten, III', 'John Johnson', 'Alice Bob Doe']
+
+# Apply the function to the input list
+seq_b = transform_names(seq_a)
+
+# Print transformed sequence
+print(seq_b)
+```

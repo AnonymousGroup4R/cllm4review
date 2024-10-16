@@ -1,0 +1,16 @@
+// modified manually
+// seq_a = ['192.168.70.30-192.168.70.31', 'fe80::/10', 'fe80::d501:4ee:3882:c586-fe80::d502:4ee:3882:c586', '192.168.100.0/22', '192.168.100.14/24']
+// seq_b = ['192.168.70.31', 'fe80::', 'fe80::d502:4ee:3882:c586', '192.168.100.0', '192.168.100.14']
+```python
+import pandas as pd
+
+def transform_cidr_to_inter_domain(seq_a):
+    data = {'CIDR': seq_a}
+    df = pd.DataFrame(data)
+    df['Inter-Domain_Routing'] = df['CIDR'].str.split('-').str[-1].str.split('/').str[0]
+    seq_b = df['Inter-Domain_Routing'].tolist()
+    return seq_b
+
+seq_a = ['192.168.70.30-192.168.70.31', 'fe80::/10', 'fe80::d501:4ee:3882:c586-fe80::d502:4ee:3882:c586', '192.168.100.0/22', '192.168.100.14/24']
+print(transform_cidr_to_inter_domain(seq_a))
+```

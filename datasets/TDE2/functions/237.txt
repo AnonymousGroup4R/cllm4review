@@ -1,0 +1,24 @@
+```python
+import pandas as pd
+import re
+
+def clean_whitespace_between_tags(seq_a):
+    def remove_spaces_between_tags(html_text):
+        return re.sub(r">\s+<", "><", html_text)
+    
+    df = pd.DataFrame(seq_a, columns=['html'])
+    df['clean_html'] = df['html'].apply(remove_spaces_between_tags)
+    
+    return df['clean_html'].tolist()
+
+seq_a = [
+    '<p>blahblahblah</p>            <p>blahblahblah</p>',
+    '<head> <title>A Simple HTML Example</title> </head>',
+    '<h2>HTML is Easy To Learn</h2> <p>Welcome to the world of the </p>',
+    '<h2>test1</h2> <p>test2</p>',
+    '<h2>test1</h2> <p>test2</p> <p>test3</p> <p>test4</p>'
+]
+
+seq_b = clean_whitespace_between_tags(seq_a)
+print(seq_b)
+```

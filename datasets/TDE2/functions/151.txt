@@ -1,0 +1,28 @@
+// modified manually
+// seq_a = ['1 microsoft way, redmond, wa, 98052', '1201 super commerce blvd Ste H, Richmond, VA, 23452', '100 sunset blvd, Room 301, Sacramento California', '747 6th St, room 1010, Kirkland, WA 98033', '10 commerce way ste a, Richmond, VA, 23452']
+// seq_b = ['', 'STE H', 'ROOM 301', 'ROOM 1010', 'STE A']
+```python
+import pandas as pd
+import re
+
+def transform_addresses(seq_a):
+    df = pd.DataFrame({'address': seq_a})
+    
+    pat = r'\b(ste|room|rm|suite)\s*([a-z0-9]+)\b'
+    extract_df = df['address'].str.extract(pat, flags=re.IGNORECASE, expand=False)
+    df['suite_room'] = extract_df.apply(lambda x: ' '.join(x.dropna()), axis=1)
+
+    abbreviation_map = {
+        'ste': 'STE', 
+        'room': 'ROOM',
+        'rm': 'RM', 
+        'suite': 'SUITE'
+    }
+    df['suite_room'] = df['suite_room'].replace(abbreviation_map, regex=True).str.upper()
+    df['suite_room'].fillna('', inplace=True)
+
+    return df['suite_room'].tolist()
+
+seq_a = ['1 microsoft way, redmond, wa, 98052', '1201 super commerce blvd Ste H, Richmond, VA, 23452', '100 sunset blvd, Room 301, Sacramento California', '747 6th St, room 1010, Kirkland, WA 98033', '10 commerce way ste a, Richmond, VA, 23452']
+print(transform_addresses(seq_a))
+```

@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+
+conversion_dict = {
+    'oz': 0.125
+}
+
+def convert_ounces_to_cups(ounces):
+    ounces = int(ounces.split(' ')[0])
+    cups = ounces * conversion_dict['oz']
+    return '{} cup'.format(round(cups, 3))
+
+def transform_ounces_to_cups(seq_a):
+    return [convert_ounces_to_cups(oz) for oz in seq_a]
+
+seq_a = ['2 oz', '1988 oz', '37 oz', '33 oz', '123 oz']
+seq_b = transform_ounces_to_cups(seq_a)
+print(seq_b)
+```

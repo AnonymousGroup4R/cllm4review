@@ -1,0 +1,24 @@
+```python
+def hex_to_rgb_list(seq_a):
+    def hex_to_rgb(hex_color):
+        # Remove the '#' character then convert the remaining string from hex to decimal
+        r = int(hex_color[1:3], 16)
+        g = int(hex_color[3:5], 16)
+        b = int(hex_color[5:7], 16)
+        return r, g, b
+
+    # Convert the hex to tuples of RGB
+    seq_rgb_tuples = [hex_to_rgb(color) for color in seq_a]
+
+    # Format the RGB tuples into strings of the expected format 'r,g,b'
+    seq_b = [','.join(map(str, rgb)) for rgb in seq_rgb_tuples]
+
+    return seq_b
+
+# Pass seq_a to the function and store the result
+seq_a = ['#000000', '#00FF00', '#FF00FF', '#FFFF3F', '#223344']
+transformed_seq = hex_to_rgb_list(seq_a)
+
+# Print the resulting sequence
+print(transformed_seq)
+```

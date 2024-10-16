@@ -1,0 +1,29 @@
+```python
+import pandas as pd
+import re
+
+def extract_domains(seq_a):
+    seq_a_series = pd.Series(seq_a)
+    
+    def extract_domain(cookie_string):
+        match = re.search(r'domain=([.\w-]+)', cookie_string)
+        if match:
+            return match.group(1)
+        return ""
+    
+    seq_b_series = seq_a_series.apply(extract_domain)
+    
+    return seq_b_series.tolist()
+
+# Define the sequence seq_a
+seq_a = ['username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/', 
+         'skin=noskin; path=/; domain=.amazon.com; expires=Mon, 22-Mar-2010 18:40:34 GMT;', 
+         'path=/; expires=Wed, 13 Jan 2021 22:23:01 GMT; domain=.foo.com;', 
+         'path=/; domain=.microsoft.com; expires=Mon, 1-Mar-2010 18:40:34 GMT;', 
+         'path=/; expires=Wed, 13 Jan 2021 22:23:01 GMT; domain=.abc.com;']
+
+# Call the function with the input sequence seq_a
+seq_b = extract_domains(seq_a)
+
+print(seq_b)
+```

@@ -1,0 +1,22 @@
+```python
+def transform_sequence(seq_a):
+    mapping = {
+        'αι': 'AE', 'ν': 'I', 'σ': 'O', 'ϊ': 'U',
+    }
+
+    def transform_string(s):
+        for gr_char, en_char in mapping.items():
+            s = s.replace(gr_char, en_char)
+        return s.upper()
+
+    seq_b_transformed = [transform_string(word) for word in seq_a]
+    
+    return seq_b_transformed
+
+# Original sequence
+seq_a = ['αινσϊ', 'aeiou', 'aeνouxyz', 'aeνo', 'aeνouνσϊz']
+
+# Transformed sequence
+seq_b = transform_sequence(seq_a)
+print(seq_b)
+```

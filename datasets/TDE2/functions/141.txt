@@ -1,0 +1,14 @@
+// modified manually
+// seq_a = ['1 mg', '43 mg', '211 mg', '100 mg', '304 mg']
+// seq_b = ['2 ml', '86 ml', '422 ml', '200 ml', '608 ml']
+```python
+import pandas as pd
+
+def convert_mg_to_ml(seq_a):
+    df = pd.DataFrame({'seq_a': seq_a})
+    df['seq_b'] = df['seq_a'].apply(lambda x: str(int(x.split(' ')[0]) * 2) + ' ml')
+    return df['seq_b'].tolist()
+
+seq_a = ['1 mg', '43 mg', '211 mg', '100 mg', '304 mg']
+print(convert_mg_to_ml(seq_a))
+```

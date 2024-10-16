@@ -1,0 +1,24 @@
+// modified manually
+// seq_a = ['This is one of the best breakfasts I have had! Is the decor dated? Absolutely but it just adds to the nostalgic charm! The place just reeks of beef cooking... Ahhh delicious! Check out the pastry cases!!!! OMG, is all I have to say!', 'Went here for lunch with two co-workers, checked Yelp before we went and the reviews were very positive so we decided to give it a try.\\n\\nYikes! How can the reviews be 4-5 stars and the service at best \\"average\\", the food was terrible and myself and my co-workers all agreed, this restaurant doesn\'t rate two stars.\\n\\nI had one of the special Friday offerings, Smelt. It came with a salad (very average but fresh), fries (ordinary) and the Smelt. After a 20-25 minute wait our server came with our orders. I looked at my plate and was shocked! There was 12-15 so-called Smelt about 3\\" long and deep fried. They looked like little fat cigarettes! I bit into one and it was all batter, I tried another and it was the same!! I had deep fried batter for lunch!!', 'Test example!!! This is a test!!!', 'Test one!', 'one! two!! three!!!']
+// seq_b = ['!, !, !, !!!!, !', '!, !, !, !!, !!', '!!!, !!!', '!', '!, !!, !!!']
+```python
+import pandas as pd
+import re
+
+def extract_exclamations(text_list):
+    def extract_exclamations_helper(text):
+        groups = re.findall(r'!+', text)
+        result = ', '.join(groups)
+        return result
+
+    seq_a_series = pd.Series(text_list)
+    seq_b = seq_a_series.apply(extract_exclamations_helper)
+    seq_b_list = seq_b.tolist()
+    
+    return seq_b_list
+
+seq_a = ['This is one of the best breakfasts I have had! Is the decor dated? Absolutely but it just adds to the nostalgic charm! The place just reeks of beef cooking... Ahhh delicious! Check out the pastry cases!!!! OMG, is all I have to say!', 'Went here for lunch with two co-workers, checked Yelp before we went and the reviews were very positive so we decided to give it a try.\\n\\nYikes! How can the reviews be 4-5 stars and the service at best \\"average\\", the food was terrible and myself and my co-workers all agreed, this restaurant doesn\'t rate two stars.\\n\\nI had one of the special Friday offerings, Smelt. It came with a salad (very average but fresh), fries (ordinary) and the Smelt. After a 20-25 minute wait our server came with our orders. I looked at my plate and was shocked! There was 12-15 so-called Smelt about 3\\" long and deep fried. They looked like little fat cigarettes! I bit into one and it was all batter, I tried another and it was the same!! I had deep fried batter for lunch!!', 'Test example!!! This is a test!!!', 'Test one!', 'one! two!! three!!!']
+
+result = extract_exclamations(seq_a)
+print(result)
+```

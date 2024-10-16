@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+from fractions import Fraction
+
+def decimal_to_fraction(seq_a):
+    def to_fraction(decimal_str):
+        return str(Fraction(decimal_str).limit_denominator())
+    
+    seq_a_series = pd.Series(seq_a)
+    seq_b_series = seq_a_series.apply(to_fraction)
+    seq_b = seq_b_series.tolist()
+    
+    return seq_b
+
+# Sequence of decimal strings
+seq_a = ['0.003', '0.125', '4.5', '0.25', '0.2']
+seq_b = decimal_to_fraction(seq_a)
+print(seq_b)
+```

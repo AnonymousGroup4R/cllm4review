@@ -1,0 +1,28 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_meters_to_miles(seq_a):
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+    
+    def convert_to_miles(s):
+        meters = float(s.split()[0])
+        miles = meters * 0.00062137119
+        return f"{format_output(miles)} mile"
+    
+    data = pd.Series(seq_a)
+    seq_b = data.apply(convert_to_miles)
+    
+    return seq_b.tolist()
+
+seq_a = ['5 meter', '180 meter', '92 meter', '23 meter', '11 meter']
+result = convert_meters_to_miles(seq_a)
+print(result)
+```

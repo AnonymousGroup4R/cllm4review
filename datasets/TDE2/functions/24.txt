@@ -1,0 +1,27 @@
+```python
+import pandas as pd
+
+def clean_spaces_in_list(seq_a):
+    # Create a pandas Series
+    series_a = pd.Series(seq_a)
+    
+    # Define a function to clean the strings:
+    # This function uses Python string's split() and join() methods to eliminate extra spaces.
+    def clean_string(s):
+        return ' '.join(s.split())
+    
+    # Apply this function to each element in the series
+    seq_b = series_a.apply(clean_string)
+    
+    # Convert series to list, if needed
+    seq_b_list = seq_b.tolist()
+    
+    return seq_b_list
+
+# Define the original sequence
+seq_a = ['a bb  cc    dd ee', 'a b  c   d    e', 'a b     e', 'a b c d e  f', 'aaa  bbb  ccc  ddd']
+# Transform seq_a to seq_b
+seq_b = clean_spaces_in_list(seq_a)
+# Print the cleaned sequence
+print(seq_b)
+```

@@ -1,0 +1,30 @@
+```python
+import pandas as pd
+
+def inch_to_mm_converter(seq_a):
+    
+    inch_series = pd.Series(seq_a)
+    numbers = inch_series.str.replace(' inch', '').astype(int)
+    
+    millimeters = numbers * 25.4
+    
+    def remove_trailing_zeros(res):
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        if _end >= 0 and res[_end-1] == '.':
+            _end -= 1
+        return res[:_end]
+    
+    seq_b = millimeters.apply(lambda x: '{} mm'.format(remove_trailing_zeros(f'{x:.1f}')))
+    
+    return seq_b.tolist()
+
+# Now, define the sequence containing the inch values:
+
+seq_a = ['4 inch', '50 inch', '429 inch', '5 inch', '40 inch']
+
+# Call the function to transform seq_a to seq_b
+seq_b = inch_to_mm_converter(seq_a)
+print(seq_b)
+```

@@ -1,0 +1,28 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_lbs_to_kg(weights):
+    def format_output(x):
+        d = Decimal(x)
+        round_num = 8 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    def lbs_to_kg(weight_string):
+        pounds = float(weight_string.split(' ')[0])
+        kilograms = pounds / 2.20462262
+        output = format_output(kilograms)
+        return f'{output} kg'
+
+    df = pd.DataFrame(weights, columns=['Weight'])
+    df['Weight'] = df['Weight'].apply(lbs_to_kg)
+    return df['Weight'].tolist()
+
+seq_a = ['1 b', '18 b', '101 b', '33 b', '12 b']
+seq_b = convert_lbs_to_kg(seq_a)
+print(seq_b)
+```

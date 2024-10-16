@@ -1,0 +1,18 @@
+```python
+import pandas as pd
+import re
+
+def transform_sequences(seq_a):
+    def replace_multiple_spaces(text):
+        return re.sub(r'\s+', ' ', text)
+    
+    series_a = pd.Series(seq_a)
+    series_b = series_a.apply(replace_multiple_spaces)
+    
+    return series_b.tolist()
+
+# Define the initial sequence seq_a
+seq_a = ['1 2 3 4   5', 'How are    you', 'What   is the   matter', '1   2  4  4', 'How   fun']
+seq_b = transform_sequences(seq_a)
+print(seq_b)
+```

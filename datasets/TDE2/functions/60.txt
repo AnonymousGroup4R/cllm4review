@@ -1,0 +1,21 @@
+```python
+import pandas as pd
+from datetime import timedelta
+
+def convert_pt_to_et(seq_a):
+    # Define a function to convert time in strings from PT to ET
+    def convert_single_pt_to_et(dt_str):
+        dt_obj = pd.to_datetime(dt_str, format='%I:%M %p,%a,%b %d,%Y')
+        dt_obj += timedelta(hours=3)
+        return dt_obj.strftime('%-I:%M %p,%a,%b %-d,%Y')
+
+    seq_b = [convert_single_pt_to_et(time) for time in seq_a]
+    return seq_b
+
+# Data
+seq_a = ['2:30 AM,Mon,Aug 17,2015', '11:00 PM,Sun,Aug 2,2015', '3:30 AM,Mon,Feb 2,2015', '10:00 PM,Sun,Aug 2,2015', '2:30 AM,Mon,Feb 2,2015']
+
+# Apply the conversion function and print results
+seq_b = convert_pt_to_et(seq_a)
+print(seq_b)
+```

@@ -1,0 +1,36 @@
+```python
+import pandas as pd
+
+def transform_phone_numbers(seq_a):
+    # Convert input list to pandas Series
+    series_a = pd.Series(seq_a)
+    
+    # Function to process each phone number
+    def clean_phone_number(phone):
+        # Strip all non-digit characters
+        phone = ''.join(filter(str.isdigit, phone))
+        # Check length and format
+        if len(phone) == 7:  # missing area code
+            phone = '425' + phone
+        elif len(phone) == 10:
+            pass  # already correctly formatted
+        else:
+            raise ValueError(f"Unrecognized phone number format: {phone}")
+        # Adding hyphens to format as XXX-XXX-XXXX
+        phone = phone[:3] + '-' + phone[3:6] + '-' + phone[6:]
+        return phone
+    
+    # Apply the function to each phone number in the series
+    series_b = series_a.apply(clean_phone_number)
+    
+    # Convert the resulting series back to a list for final output
+    seq_b = series_b.tolist()
+    return seq_b
+
+# Original sequence
+seq_a = ['390-9292', '499-999-2020', '(299)-398-0003', '(288) 3998888', '999-2020', '425-9990200', '(288) 3998888', '499-999-2020', '(299)-398-0003', '(288) 3998888']
+
+# Transform the phone numbers using the function
+seq_b = transform_phone_numbers(seq_a)
+print(seq_b)
+```

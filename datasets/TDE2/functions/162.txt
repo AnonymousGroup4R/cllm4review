@@ -1,0 +1,15 @@
+```python
+import pandas as pd
+
+def transform_date_to_weekday(seq_a):
+    dates = pd.to_datetime(seq_a, format='%m/%d/%Y')
+    seq_b = dates.day_name()
+    seq_b_list = seq_b.tolist()
+    return seq_b_list
+
+# Input sequence
+seq_a = ['05/13/2015', '05/12/2015', '01/21/2014', '03/01/2013', '01/01/2014']
+# Transform the input sequence to weekday names
+transformed_seq = transform_date_to_weekday(seq_a)
+print(transformed_seq)
+```

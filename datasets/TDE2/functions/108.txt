@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def grams_to_ounces(seq_a):
+    data = pd.Series(seq_a)
+    data = data.str.replace(' g', '').astype(int)
+    data_in_ounces = data / 28.3495231
+    seq_b = data_in_ounces.apply(lambda x: f"{x:.8f} oz")
+    return seq_b.tolist()
+
+# Define the input sequence
+seq_a = ['1 g', '30 g', '1500 g', '3 g', '23 g']
+
+# Transform the input sequence to ounces and print the result
+print(grams_to_ounces(seq_a))
+```

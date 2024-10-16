@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+
+def transform_names_list(input_list):
+    # Convert input_list into a pandas DataFrame for easier manipulation
+    df = pd.DataFrame(input_list, columns=['full_name'])
+    df['full_name'] = df['full_name'].apply(lambda x: x.split('\t'))
+    
+    # Split into first name and last name
+    df[['first_name', 'last_name']] = pd.DataFrame(df['full_name'].tolist(), index=df.index)
+    
+    # Create a new column 'short_name'
+    df['short_name'] = df.apply(lambda row: row['first_name'][0] + row['last_name'], axis=1)
+    
+    # Create the desired list from the DataFrame
+    output_list = df['short_name'].tolist()
+    
+    return output_list
+
+# Initial sequence 'seq_a'
+seq_a = ['john\tsmith', 'adam\twilliams', 'james\tjohnson', 'alice\tbob', 'charlie\tdenis']
+seq_b = transform_names_list(seq_a)
+
+# Print the resulting sequence
+print(seq_b)
+```

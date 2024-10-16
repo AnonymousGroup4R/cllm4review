@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+
+def sq_feet_to_acres(seq_a):
+    df = pd.DataFrame(seq_a, columns=["Area_SqFt"])
+
+    def extract_numeric(area_str):
+        return int(area_str.split()[0])
+
+    df['Area_SqFt'] = df['Area_SqFt'].apply(extract_numeric)
+    df['Area_Acres'] = df['Area_SqFt'].apply(lambda x: x / 43560).apply(lambda x: f'{x:.8f} acres')
+
+    return df['Area_Acres'].tolist()
+
+# The given sequence of area descriptions in square feet
+seq_a = ['45 square feet', '120 square feet', '2300 square feet', '1300 square feet', '890 square feet']
+seq_b = sq_feet_to_acres(seq_a)
+print(seq_b)
+```

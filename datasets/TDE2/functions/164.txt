@@ -1,0 +1,22 @@
+```python
+import pandas as pd
+
+def transform_date_to_month(seq_a):
+    # Create a DataFrame with seq_a
+    df = pd.DataFrame({'date': seq_a})
+    # Convert the date column to datetime format
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    # Extract the month from the datetime column
+    df['month'] = df['date'].dt.month
+    # Convert the month integers to string values
+    df['month'] = df['month'].apply(lambda x: str(x))
+    # Return the final result
+    seq_b = df['month'].tolist()
+    
+    return seq_b
+
+# Example usage
+seq_a = ['2014-08-03', '2011-04-01', '01/31/2014', '2/21/2009 10:35 PM', 'February 26, 2009', 'March 26, 2009']
+result = transform_date_to_month(seq_a)
+print(result)
+```

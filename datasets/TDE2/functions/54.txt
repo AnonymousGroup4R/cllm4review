@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+
+def cmyk_to_rgb_transform(seq_a):
+    seq_b = []
+    cmyk_df = pd.DataFrame([x.split(',') for x in seq_a], columns=['C', 'M', 'Y', 'K']).astype(float)
+    
+    def cmyk_to_rgb(row):
+        C, M, Y, K = row['C'], row['M'], row['Y'], row['K']
+        R = 255 * (1 - C) * (1 - K)
+        G = 255 * (1 - M) * (1 - K)
+        B = 255 * (1 - Y) * (1 - K)
+        return f"{round(R)},{round(G)},{round(B)}"
+    
+    seq_b = cmyk_df.apply(cmyk_to_rgb, axis=1).tolist()
+    
+    return seq_b
+
+# Original sequence in CMYK
+seq_a = ['0,0,0,1', '0.16,0.67,0.61,0.73', '0,1,1,0', '0,1,0,0', '0.53,0.42,0.38,0.55']
+
+# Apply transformation function
+seq_b = cmyk_to_rgb_transform(seq_a)
+
+print(seq_b)
+```

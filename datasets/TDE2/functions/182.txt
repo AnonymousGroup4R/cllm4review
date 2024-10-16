@@ -1,0 +1,17 @@
+```python
+import pandas as pd
+
+def transform_sequence(seq_a):
+    # Convert each string to an integer, multiply by 3 and convert it back to string to match the format of seq_b
+    seq_b_transformed = pd.Series(seq_a).astype(int) * 3
+    # Alternatively, if you wish to have the result as strings:
+    seq_b_transformed_as_strings = seq_b_transformed.astype(str)
+    return seq_b_transformed_as_strings.tolist()
+
+# Define sequence A as a list
+seq_a = ['1', '3', '5', '8', '9']
+
+# Call the function to transform seq_a to seq_b
+seq_b = transform_sequence(seq_a)
+print(seq_b)
+```

@@ -1,0 +1,28 @@
+```python
+import pandas as pd
+
+def extract_team_name(input_list):
+    # Convert list to DataFrame
+    df = pd.DataFrame(input_list, columns=['text'])
+
+    # Use a regular expression to extract the team name, get the second group.
+    df['team_name'] = df['text'].str.extract(r'\|\[\[\d{4} (.*?) season\|(.*?)\]\]')[1]
+
+    # Return transformed output
+    return df['team_name'].tolist()
+
+# Initialize the input sequence as a list
+seq_a = [
+    '| styple = "background #d0e7ff;"|{{Sort|Green Bay Packers 01|[[1966 Green Bay Packers season|Green Bay Packers]]<sup>^</sup>}}',
+    '| styple = "background #d0e7ff;"|{{Sort|Green Bay Packers 02|[[1967 Green Bay Packers season|Green Bay Packers]]<sup>^</sup>}}',
+    '| styple = "background #d0e7ff;"|{{Sort|New York Jets 01|[[1968 Green Bay Packers season|New York Jets]]<sup>^</sup>}}',
+    '| styple = "background #d0e7ff;"|{{Sort|San Francisco 49ers 01|[[1981 San Francisco 49ers season|San Francisco 49ers]]<sup>^</sup>}}',
+    '| styple = "background #d0e7ff;"|{{Sort|Green Bay Packers 02|[[1911 Green Bay Packers season|Green Bay Packers]]<sup>^</sup>}}'
+]
+
+# Call the function
+result = extract_team_name(seq_a)
+
+# View result
+print(result)
+```

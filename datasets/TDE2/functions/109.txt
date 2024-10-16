@@ -1,0 +1,29 @@
+```python
+import pandas as pd
+
+def convert_inches_to_cm(seq_a):
+    df = pd.DataFrame(seq_a, columns=['measurement'])
+    df['value_in_inches'] = df['measurement'].str.replace(' inch', '').astype(float)
+    df['value_in_cm'] = df['value_in_inches'] * 2.54
+
+    def remove_trailing_zeros(res):
+        _end = len(res)
+        while _end > 0 and res[_end - 1] == '0':
+            _end -= 1
+        if _end >= 0 and res[_end - 1] == '.':
+            _end -= 1
+        return res[:_end]
+
+    df['formatted_cm'] = df['value_in_cm'].map(lambda x: f'{x:.2f}').map(remove_trailing_zeros).map('{} cm'.format)
+
+    return df['formatted_cm'].tolist()
+
+# Original sequence
+seq_a = ['8 inch', '39 inch', '300 inch', '30 inch', '2 inch']
+
+# Call the function to transform seq_a to seq_b
+seq_b = convert_inches_to_cm(seq_a)
+
+# Print the output sequence
+print(seq_b)
+```

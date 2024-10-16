@@ -1,0 +1,37 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+def convert_kg_to_lbs(seq_a):
+    # Remove 'kg' from each element and convert to float
+    weights_kg = pd.Series(seq_a).str.replace(' kg', '').astype(float)
+
+    # Conversion factor from kg to pounds
+    kg_to_lbs = 2.20462262185
+
+    # Convert weights to pounds
+    weights_lbs = weights_kg * kg_to_lbs
+
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 5 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+
+    # Format the output as required
+    seq_b = weights_lbs.apply(lambda x: f'{format_output(x)} b').tolist()
+    
+    return seq_b
+
+# The given sequence of weights in kilograms
+seq_a = ['3 kg', '7 kg', '11 kg', '23 kg', '1 kg']
+
+# Convert and print the transformed sequence
+seq_b = convert_kg_to_lbs(seq_a)
+print(seq_b)
+```  

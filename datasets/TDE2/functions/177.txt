@@ -1,0 +1,42 @@
+```python
+import pandas as pd
+
+def transform_isbn10_to_isbn13(seq_a):
+    """
+    Converts a list of ISBN-10 numbers to ISBN-13 format.
+    
+    Args:
+    seq_a: List of ISBN-10 numbers
+    
+    Returns:
+    List of ISBN-13 numbers after conversion
+    """
+    
+    def isbn10_to_isbn13(isbn10):
+        isbn13_partial = '978' + isbn10[:-1]  
+        check_digit = 0
+        for i, char in enumerate(isbn13_partial):
+            if i % 2 == 0:
+                check_digit += int(char)
+            else:
+                check_digit += 3 * int(char)
+        check_digit = (10 - (check_digit % 10)) % 10  
+        
+        return f"{isbn13_partial}{check_digit}"
+    
+    isbn10 = [isbn.split('-')[1] for isbn in seq_a]
+    
+    df = pd.DataFrame(isbn10, columns=['ISBN10'])
+    df['ISBN13'] = df['ISBN10'].apply(isbn10_to_isbn13)
+    
+    df['ISBN13'] = df['ISBN13'].apply(lambda x: '-'.join([x[:3], x[3:4], x[4:7], x[7:12], x[12:]]))
+    
+    return df['ISBN13'].tolist()
+
+# Define the initial list of ISBN-10 numbers
+seq_a = ['ISBN13-0830818030', 'ISBN13-316148410X', 'ISBN13-1566199093', 'ISBN13-0198526636', 'ISBN13-1861972717']
+
+# Apply the transformation function
+seq_b = transform_isbn10_to_isbn13(seq_a)
+print(seq_b)
+```

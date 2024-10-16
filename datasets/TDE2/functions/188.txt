@@ -1,0 +1,11 @@
+def transform_sequence(seq_a):
+    import pandas as pd
+    df = pd.DataFrame(seq_a, columns=['col_a'])
+    df['col_b'] = df['col_a'].str.pad(width=5, side='left')
+    seq_b = df['col_b'].tolist()
+    return seq_b
+
+# Example usage
+seq_a = ['xxx', 'yy', 'zzzzz', 'abcdefg', 'c']
+transformed_seq = transform_sequence(seq_a)
+print(transformed_seq)

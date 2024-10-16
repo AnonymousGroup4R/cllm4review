@@ -1,0 +1,21 @@
+// modified manually.
+
+```python
+import pandas as pd
+
+def rgb_to_pantone(seq_a):
+    data = {'RGB': ['244,237,124', '244,237,71', '249,232,20', '249,214,22', '198,160,12'],
+            'Pantone': ['100', '101', '102', '109', '117']}
+    df = pd.DataFrame(data)
+    
+    rgb_to_pantone = df.set_index('RGB')['Pantone'].to_dict()
+    
+    seq_b = [rgb_to_pantone[rgb] for rgb in seq_a]
+    
+    return seq_b
+
+# Test the function
+seq_a = ['244,237,124', '244,237,71', '249,232,20', '249,214,22', '198,160,12']
+result = rgb_to_pantone(seq_a)
+print(result)
+```

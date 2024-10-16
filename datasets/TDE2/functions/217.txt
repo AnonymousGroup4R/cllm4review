@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def calculate_median_from_sequence(seq_a):
+    df = pd.DataFrame(seq_a, columns=['Values'])
+    df['Median'] = df['Values'].apply(lambda x: pd.Series([int(val) for val in x.split(',')]).median())
+    seq_b = df['Median'].astype(int).astype(str).tolist()
+    
+    return seq_b
+
+# Given sequences
+seq_a = ['2,2,3,4,7,8,9', '1,2,3,5,6,7,8', '1,2,3', '4,5,6,7,8,9,10,11,12', '1,2,3,4,5']
+
+result = calculate_median_from_sequence(seq_a)
+print(result)
+```

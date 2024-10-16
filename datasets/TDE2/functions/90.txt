@@ -1,0 +1,38 @@
+Here is the refactored code snippet transformed into a function:
+
+```python
+import pandas as pd
+
+def convert_fraction_list(seq_a):
+    # Convert the given list of fraction strings to a pandas Series
+    fractions = pd.Series(seq_a)
+    
+    # Function to convert fraction string to decimal
+    def fraction_to_decimal(frac_str):
+        numerator, denominator = map(int, frac_str.split('/'))
+        return numerator / denominator
+    
+    # Apply the function to each element in the Series
+    decimals = fractions.apply(fraction_to_decimal)
+    
+    # Format decimals to string with fixed decimal precision
+    formatted_decimals = decimals.map(lambda x: '{:.2f}'.format(x).rstrip('0').rstrip('.'))
+    
+    # Convert the resulting Series back to a list
+    seq_b_converted = formatted_decimals.tolist()
+    
+    return seq_b_converted
+
+# The original sequence of fraction strings
+seq_a = ['1/4', '200/4', '9/100', '3/4', '1/2']
+
+# Call the function with the input list and store the result
+seq_b = convert_fraction_list(seq_a)
+
+# Print the transformed output
+print(seq_b)
+```
+
+In the refactored code, the function `convert_fraction_list` takes `seq_a` as input, processes it to transform the fraction strings into decimal format, and returns the resulting list of transformed strings.
+
+You can now simply call the function `convert_fraction_list` with any list of fraction strings to get the desired transformation.

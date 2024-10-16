@@ -1,0 +1,27 @@
+```python
+import pandas as pd
+
+def convert_minutes_to_hundredths(seq_a):
+    # Create a pandas Series from the list
+    minutes_series = pd.Series(seq_a)
+
+    # Function to extract the number of minutes and convert to hundredths of an hour
+    def minutes_to_hundredths(time_str):
+        # Extracting numerical part from the string
+        minutes = int(time_str.split()[0])
+        # Converting minutes to hour fractions and rounding to 2 decimal places
+        hour_fraction = round(minutes / 60, 2)
+        # Format to ensure the result has 2 decimal places
+        return format(hour_fraction, ".2f").lstrip("0")
+
+    # Apply the conversion function to each element in the series
+    seq_b = minutes_series.apply(minutes_to_hundredths)
+
+    return seq_b.tolist()
+
+# Define the initial sequence of times in minutes
+seq_a = ['13 minutes', '43 minutes', '58 minutes', '15 minutes', '44 minutes']
+
+# Call the function to transform seq_a to seq_b and print the result
+print(convert_minutes_to_hundredths(seq_a))
+```

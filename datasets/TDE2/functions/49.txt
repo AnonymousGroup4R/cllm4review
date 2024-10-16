@@ -1,0 +1,22 @@
+Here is the rewritten code snippet as a function named `transform_slope_to_degrees`:
+
+```python
+import pandas as pd
+import math
+
+def transform_slope_to_degrees(seq_a):
+    slopes = pd.Series(seq_a)
+    slopes = slopes.str.replace('%', '').astype(float)
+    slopes_in_degrees = slopes.apply(lambda x: math.atan(x / 100) * (180 / math.pi))
+    seq_b = slopes_in_degrees.apply(lambda x: f"{x:.2f} Degrees").tolist()
+    
+    return seq_b
+
+# Input sequence
+seq_a = ['4%', '30%', '45%', '24%', '12%']
+# Output after transformation
+seq_b = transform_slope_to_degrees(seq_a)
+print(seq_b)
+```
+
+You can use the `transform_slope_to_degrees` function by passing the input sequence `seq_a` as an argument, and it will return the transformed sequence `seq_b` based on the described logic.

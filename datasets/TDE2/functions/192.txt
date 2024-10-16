@@ -1,0 +1,20 @@
+```python
+def transform_numbers(seq_a):
+    def format_number(s):
+        try:
+            return f"{float(s):,.0f}"
+        except ValueError:
+            return ''
+    
+    seq_b = []
+    for item in seq_a:
+        formatted = format_number(item)
+        seq_b.append(formatted)
+    
+    return seq_b
+
+# Test the function with seq_a list
+seq_a = ['1234567890', '2134', '1234.123\t1,234.123', '123456789', '1234']
+seq_b = transform_numbers(seq_a)
+print(seq_b)
+```

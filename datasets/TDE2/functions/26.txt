@@ -1,0 +1,30 @@
+```python
+import re
+
+def transform_sequence(seq_a):
+    def parse_string(s):
+        matches = re.findall(r'\{(.*?)\}', s)
+        nested_lists = [item.split(', ') for item in matches]
+        return nested_lists
+
+    parsed_lists = [parse_string(item) for item in seq_a]
+
+    seq_b = [item[-2][-1] for item in parsed_lists if len(item) > 1 and len(item[1]) > 0]
+
+    return seq_b
+
+# Define the input sequence
+seq_a = [
+    '{{a, b}, {cccc, d}, {e, f}}',
+    '{{x, aaay}, {aaaz, d}}',
+    '{{a}, {ffeaa}, {aa, aaa, aaa, aaa}}',
+    '{{ajfj, ajfie, ajaj, aj}, {jwi, ajaj, aj, a}, {aj, ajiw, ajif, jfi}}',
+    '{{a}, {b}, {c}}'
+]
+
+# Call the function with seq_a as input
+seq_b_result = transform_sequence(seq_a)
+
+# Display resulting list
+print(seq_b_result)
+```

@@ -1,0 +1,15 @@
+```python
+import pandas as pd
+
+def transform_phone_numbers(seq_a):
+    df = pd.DataFrame({'phone_number': seq_a})
+    df['phone_number'] = df['phone_number'].str.replace(r'\D+', '')
+    seq_b = df['phone_number'].tolist()
+    
+    return seq_b
+
+# Example of how to use the function
+seq_a = ['519-781-8816', '(913)-444-5555', '509-791-8816', '(912)-444-5555', '4654764768']
+result = transform_phone_numbers(seq_a)
+print(result)
+```

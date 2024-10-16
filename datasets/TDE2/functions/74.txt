@@ -1,0 +1,18 @@
+```python
+import pandas as pd
+
+def transform_date_format(seq_a):
+    # Convert the input list into a pandas Series
+    date_series = pd.Series(seq_a)
+    # Convert the date strings into datetime objects
+    date_series = pd.to_datetime(date_series, format='%Y%m%d')
+    # Format these datetime objects to the desired output format 'Month dd, yyyy'
+    seq_b = date_series.dt.strftime('%b %d, %Y').tolist()
+    
+    return seq_b
+
+# Usage:
+seq_a = ['19851231', '19811120', '20110301', '19841121', '20210311']
+transformed_dates = transform_date_format(seq_a)
+print(transformed_dates)
+```

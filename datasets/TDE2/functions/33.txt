@@ -1,0 +1,24 @@
+```python
+import pandas as pd
+import re
+
+def extract_exclamation_marks(text):
+    exclamations = re.findall(r'!+', text)
+    return ', '.join(exclamations)
+
+def transform_sequence(seq_a):
+    series_a = pd.Series(seq_a)
+    seq_b = series_a.apply(extract_exclamation_marks)
+    return seq_b.tolist()
+
+seq_a = [
+    "This is one of the best breakfasts I have had! Is the decor dated? Absolutely but it just adds to the nostalgic charm! The place just reeks of beef cooking... Ahhh delicious! Check out the pastry cases!!!! OMG, is all I have to say!",
+    "Went here for lunch with two co-workers, checked Yelp before we went and the reviews were very positive so we decided to give it a try.\n\Yikes! How can the reviews be 4-5 stars and the service at best \"average\", the food was terrible and myself and my co-workers all agreed, this restaurant doesn't rate two stars.\n\I had one of the special Friday offerings, Smelt. It came with a salad (very average but fresh), fries (ordinary) and the Smelt. After a 20-25 minute wait our server came with our orders. I looked at my plate and was shocked! There was 12-15 so-called Smelt about 3\" long and deep fried. They looked like little fat cigarettes! I bit into one and it was all batter, I tried another and it was the same!! I had deep fried batter for lunch!!",
+    "Test example!!! This is a test!!!",
+    "Test one!",
+    "one! two!! three!!!"
+]
+
+result = transform_sequence(seq_a)
+print(result)
+```

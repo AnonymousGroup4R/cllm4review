@@ -1,0 +1,15 @@
+```python
+import pandas as pd
+
+def extract_month_names(seq_a):
+    # Convert seq_a to a pandas Series
+    s = pd.Series(seq_a)
+    # Extract month name
+    seq_b = pd.to_datetime(s).dt.strftime('%B').tolist()
+    
+    return seq_b
+
+seq_a = ['10/11/2009', '01/12/2012', '03/14/2013', '05/09/2014', '12/12/2012']
+seq_b = extract_month_names(seq_a)
+print(seq_b)
+```

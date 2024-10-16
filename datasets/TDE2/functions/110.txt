@@ -1,0 +1,23 @@
+```python
+import pandas as pd
+
+def convert_ml_to_oz(seq_a):
+    # Convert strings to numerical values in milliliters
+    ml_values = pd.Series(seq_a).str.extract('(\d+)').astype(int)[0]
+
+    # Apply conversion factor from ml to oz
+    # Conversion factor: 1 ml = 0.033814 oz
+    oz_values = ml_values * 0.033814
+
+    # Format the output to match the precision provided in sequence b
+    seq_b_converted = oz_values.apply(lambda x: f'{x:.6f} oz').tolist()
+
+    return seq_b_converted
+
+# Define the sequence
+seq_a = ['10 ml', '39 ml', '200 ml', '3 ml', '30 ml']
+
+seq_b = convert_ml_to_oz(seq_a)
+
+print(seq_b)
+```

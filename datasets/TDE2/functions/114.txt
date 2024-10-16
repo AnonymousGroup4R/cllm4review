@@ -1,0 +1,24 @@
+```python
+import pandas as pd
+
+def convert_weights_to_cups(seq_a):
+    # Extracting numeric values from the sequence of weights
+    weights_grams = pd.Series(seq_a).str.extract(r'(\d+)').astype(int)
+
+    # Calculating the conversion factor (from provided values or approximate)
+    conversion_factor = 0.00422675284 # cups per gram
+
+    # Convert grams to cups using the conversion_factor
+    weights_cups = weights_grams[0] * conversion_factor
+
+    # Format the output in cups with appropriate string formatting
+    seq_b_converted = weights_cups.apply(lambda x: f'{x:.5f} cups')
+
+    return seq_b_converted.tolist()
+
+# List of weights in string format including unit
+seq_a = ['2 grams', '15 grams', '50 grams', '25 grams', '10 grams']
+
+result = convert_weights_to_cups(seq_a)
+print(result)
+```

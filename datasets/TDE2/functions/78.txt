@@ -1,0 +1,35 @@
+```python
+import pandas as pd
+
+def transform_values(seq_a):
+    def parse_fraction(value):
+        """
+        Parses a string containing a mixed number, fraction, or whole number and returns it as a float.
+        """
+        if ' ' in value:  # handle mixed numbers
+            whole, fraction = value.split()
+            num, denom = fraction.split('/')
+            return float(whole) + float(num) / float(denom)
+        elif '/' in value:  # handle fractions
+            num, denom = value.split('/')
+            return float(num) / float(denom)
+        else:  # handle whole numbers
+            return float(value)
+    
+    def remove_zeros(sv):
+        _idx = len(sv) -1
+        while _idx > 0 and sv[_idx] in ['0', '.']:
+            _idx -=1
+        return sv[:_idx+1]
+    
+    series_a = pd.Series(seq_a)
+    seq_b = series_a.apply(parse_fraction)
+    seq_b = seq_b.apply(lambda x: format(x, '.3f')).apply(remove_zeros).tolist()
+    
+    return seq_b
+
+# Original sequence
+seq_a = ['2 1/2', '51 3/4', '112', '7 2/5', '3 1/4', '1/8']
+seq_b = transform_values(seq_a)
+print(seq_b)
+```

@@ -1,0 +1,30 @@
+```python
+def extract_course_values(seq_a):
+    import pandas as pd
+
+    # Create a DataFrame from the input sequence
+    df = pd.DataFrame(seq_a, columns=['data'])
+
+    # Split the 'data' column on comma and expand it into separate columns
+    df_expanded = df['data'].str.split(',', expand=True)
+
+    # Extract the eighth column which contains the course values
+    course_values = df_expanded[8].replace('', '0').tolist()
+
+    return course_values
+
+# Define the input sequence
+seq_a = [
+    '$GPRMC,084752.000,A,5152.4175,N,00832.5083,W,11.90,62.01,231110,,*12',
+    '$GPRMC,155123.000,A,4043.8432,N,07359.7653,W,0.15,83.25,200407,,*28',
+    '$GPRMC,235947.000,V,0000.0000,N,00000.0000,E,,,041299,,*1D',
+    '$GPRMC,092204.999,A,4250.5589,S,14718.5084,E,0.00,89.68,211200,,*25',
+    '$GPRMC,155123.000,A,4043.8432,N,07359.7653,W,0.15,83.25,200407,,*28'
+]
+
+# Extract and store the course values list
+course_values = extract_course_values(seq_a)
+
+# Display or use the extracted course values list
+print(course_values)
+```

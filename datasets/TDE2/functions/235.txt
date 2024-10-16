@@ -1,0 +1,15 @@
+```python
+def extract_subdomain(seq_a):
+    seq_b = []
+    for item in seq_a:
+        start_index = item.find('.') + 1
+        end_index = item.rfind('.')
+        extracted_text = item[start_index:end_index]
+        seq_b.append(extracted_text)
+    return seq_b
+
+# Example usage:
+seq_a = ['www.google.com', 'www.facebook.com', 'www.sina.cn', 'www.cs.uwaterloo.ca', 'www.abc.com']
+seq_b = extract_subdomain(seq_a)
+print(seq_b)
+```

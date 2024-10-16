@@ -1,0 +1,19 @@
+```python
+import pandas as pd
+
+def transform_mb_to_gb(seq_a):
+    df = pd.DataFrame(seq_a, columns=['Size'])
+    df['Size'] = df['Size'].str.replace(' mb', '').astype(int)
+    df['Size'] = df['Size'] / 1000
+    df['Size'] = df['Size'].map('{:.3f} gb'.format)
+    seq_b = df['Size'].tolist()
+    
+    return seq_b
+
+# Original sequence
+seq_a = ['1 mb', '790 mb', '49 mb', '744 mb', '42 mb']
+# Transform the sequence
+seq_b = transform_mb_to_gb(seq_a)
+# Print the transformed sequence
+print(seq_b)
+```

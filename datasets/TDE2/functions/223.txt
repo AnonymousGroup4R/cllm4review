@@ -1,0 +1,31 @@
+// modified manually
+// seq_a = ['DHCH', 'KLKLHHMO', 'XUCHU', '123123', '9090']
+// seq_b = ['DHC', 'KLHMO', 'XUCH', '123', '90']
+```python
+import pandas as pd
+
+def get_unique_characters_list(seq_a):
+    # Convert the sequence into a pandas Series
+    series_a = pd.Series(seq_a)
+
+    # Define a function to get distinct characters maintaining the order
+    def get_distinct_characters(s):
+        seen = set()
+        # List comprehension to keep the order and check if already seen
+        return ''.join([char for char in s if not (char in seen or seen.add(char))])
+
+    # Apply the function to each element in the series
+    seq_b = series_a.apply(get_distinct_characters)
+
+    # Convert the result back to a list
+    seq_b = seq_b.tolist()
+
+    return seq_b
+
+# Define the input sequence
+seq_a = ['DHCH', 'KLKLHHMO', 'XUCHU', '123123', '9090']
+
+# Call the function and print the transformed output
+seq_b = get_unique_characters_list(seq_a)
+print(seq_b)
+```

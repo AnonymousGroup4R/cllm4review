@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def convert_celsius_to_kelvin(seq_a):
+    df = pd.DataFrame(seq_a, columns=['Temperature'])
+    df['Temperature'] = df['Temperature'].str.replace(' Celsuis', '').astype(float)
+    df['Temperature'] = df['Temperature'] + 273.15
+    df['Temperature'] = df['Temperature'].map('{:.2f} Kelvin'.format)
+    seq_b = df['Temperature'].tolist()
+    return seq_b
+
+# Example Usage:
+seq_a = ['1 Celsuis', '12 Celsuis', '12.3 Celsuis', '188 Celsuis', '24 Celsuis']
+seq_b = convert_celsius_to_kelvin(seq_a)
+print(seq_b)
+```

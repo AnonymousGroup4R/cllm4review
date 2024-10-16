@@ -1,0 +1,24 @@
+```python
+import pandas as pd
+
+def transform_to_uppercase(input_list):
+    # Convert input list into a pandas Series
+    series_a = pd.Series(input_list)
+
+    # Convert each element of the series to uppercase
+    series_b = series_a.str.upper()
+
+    # Convert the modified series back to a list
+    transformed_list = series_b.tolist()
+
+    return transformed_list
+
+# Define the original sequence
+seq_a = ['What is the matter', 'Something is wrong', 'Background color', 'Everyday activity', 'Test is good for everyone']
+
+# Call the function with seq_a as input
+seq_b = transform_to_uppercase(seq_a)
+
+# Print the result
+print(seq_b)
+```

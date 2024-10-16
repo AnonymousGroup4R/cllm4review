@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def extract_useful_values(seq_a):
+    df = pd.DataFrame(seq_a, columns=['json_str'])
+    df['json_dict'] = df['json_str'].apply(lambda x: eval(x))
+    df['useful_values'] = df['json_dict'].apply(lambda x: x['useful'])
+    seq_b = df['useful_values'].astype(str).tolist()
+    
+    return seq_b
+
+# Example usage:
+seq_a = ['{"funny": 0, "useful": 2, "cool": 1}', '{"funny": 0, "useful": 2, "cool": 0}', '{"funny": 0, "useful": 0, "cool": 0}', '{"funny": 0, "useful": 1, "cool": 1}', '{"funny": 3, "useful": 3, "cool": 6}']
+seq_b = extract_useful_values(seq_a)
+print(seq_b)
+```

@@ -1,0 +1,25 @@
+// modified manually
+// seq_a= ['This is one of the best breakfasts I have had! Is the decor dated? Absolutely but it just adds to the nostalgic charm! The place just reeks of beef cooking... Ahhh delicious! Check out the pastry cases!!!! OMG, is all I have to say!', 'When she asked if we had reservations, I replied no,  and she commented NO?  You KNOW IT IS SATURDAY.  I wanted to say yes, yesterday was Friday and tomorrow is Sunday.  Instead I replied that I was TERRIBLY sorry i did not realize i needed a reservation', 'This is a TEST, NOT a real line', 'test ONE, test TWO, test THREE', 'This is a TEST, not a real line']
+// seq_b= ['OMG', 'NO, KNOW, IT, IS, SATURDAY, TERRIBLY', 'TEST, NOT', 'ONE, TWO, THREE', 'TEST']
+```python
+import pandas as pd
+import re
+
+def extract_capitalized_words(seq_a):
+    data = {'text': seq_a}
+    df = pd.DataFrame(data)
+
+    def extract_capitalized(text):
+        matches = re.findall(r'\b[A-Z]{2,}\b', text)
+        return ', '.join(matches)
+
+    df['extracted'] = df['text'].apply(extract_capitalized)
+    result_seq_b = df['extracted'].tolist()
+    
+    return result_seq_b
+
+# Example usage
+seq_a = ['This is one of the best breakfasts I have had! Is the decor dated? Absolutely but it just adds to the nostalgic charm! The place just reeks of beef cooking... Ahhh delicious! Check out the pastry cases!!!! OMG, is all I have to say!', 'When she asked if we had reservations, I replied no,  and she commented NO?  You KNOW IT IS SATURDAY.  I wanted to say yes, yesterday was Friday and tomorrow is Sunday.  Instead I replied that I was TERRIBLY sorry i did not realize i needed a reservation', 'This is a TEST, NOT a real line', 'test ONE, test TWO, test THREE', 'This is a TEST, not a real line']
+seq_b = extract_capitalized_words(seq_a)
+print(seq_b)
+```

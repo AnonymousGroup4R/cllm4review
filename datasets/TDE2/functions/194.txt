@@ -1,0 +1,28 @@
+```python
+import pandas as pd
+import math
+
+def transform_sequence(seq_a):
+    # Convert list to pandas Series to utilize vectorized operations
+    series_a = pd.Series(seq_a)
+
+    # Convert to float
+    series_a = series_a.astype(float)
+
+    # Format the numbers: Include commas and restrict decimals to two places
+    formatted_series = series_a.map(lambda x: math.floor(x*100)/100).map('{:,.2f}'.format)
+
+    # Convert the formatted Series back to a list
+    seq_b = formatted_series.tolist()
+
+    return seq_b
+
+# Define the input sequence
+seq_a = ['432324', '12334.13', '12334.133', '12334.137']
+
+# Call the function to transform the sequence
+transformed_seq = transform_sequence(seq_a)
+
+# Print the transformed result to verify
+print(transformed_seq)
+```

@@ -1,0 +1,15 @@
+def transform_to_uppercase(seq_a):
+    import pandas as pd
+    # Convert the input sequence to a pandas Series
+    ser_a = pd.Series(seq_a)
+    # Apply the upper() method to convert all elements to uppercase
+    ser_b = ser_a.str.upper()
+    # Convert the pandas Series back to a list
+    seq_b = list(ser_b)
+    
+    return seq_b
+
+# Define the initial sequence
+seq_a = ['xxx', 'this is well', 'In my backpack, There is a monkey', 'test', 'Test Is Good']
+result = transform_to_uppercase(seq_a)
+print(result)

@@ -1,0 +1,14 @@
+```python
+import pandas as pd
+
+def snake_case_to_camel_case(seq_a):
+    def snake_to_camel(word):
+        components = word.split('_')
+        return components[0] + ''.join(x.capitalize() for x in components[1:])
+
+    return pd.Series(seq_a).apply(snake_to_camel).tolist()
+
+seq_a = ['active_record', 'good_spirit', 'a_string_var', 'num_hit_count_curr', 'a_bc_de_fg_hi_jk']
+seq_b = snake_case_to_camel_case(seq_a)
+print(seq_b)
+```

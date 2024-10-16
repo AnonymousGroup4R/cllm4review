@@ -1,0 +1,21 @@
+```python
+import pandas as pd
+
+def transform_names(seq_a):
+    names = pd.Series(seq_a)
+    
+    def transform_name(name):
+        last_name, first_name = name.split(',')
+        last_name, first_name = last_name.strip(), first_name.strip()
+        modified_name = first_name[0].lower() + last_name.lower()
+        return modified_name
+    
+    seq_b = names.apply(transform_name)
+    
+    return seq_b.tolist()
+
+# Example Usage:
+seq_a = ['smith, john', 'williams, adam', 'johnson, james', 'denis, alice', 'smith, bob']
+transformed_names = transform_names(seq_a)
+print(transformed_names)
+```

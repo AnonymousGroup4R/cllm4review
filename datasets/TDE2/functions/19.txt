@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+import re
+
+def transform_phone_numbers(seq_a):
+    def format_phone_number(number):
+        cleaned_number = re.sub(r"[^0-9]", "", number)
+        if len(cleaned_number) == 7:
+            cleaned_number = '425' + cleaned_number
+        elif len(cleaned_number) == 6:
+            cleaned_number = '425235' + cleaned_number[-4:]
+        if len(cleaned_number) == 10:
+            return "{}-{}-{}".format(cleaned_number[:3], cleaned_number[3:6], cleaned_number[6:])
+        else:
+            return number
+
+    seq_a_series = pd.Series(seq_a)
+    seq_b_series = seq_a_series.apply(format_phone_number)
+    return seq_b_series.tolist()
+
+# Example usage:
+seq_a = ['323-708-7700', '(425)-706-7709', '510.220.5586', '235 7654', '745-8139', '111-222-3333', '888 9999']
+seq_b = transform_phone_numbers(seq_a)
+print(seq_b)
+```

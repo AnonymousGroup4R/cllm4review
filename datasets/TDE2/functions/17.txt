@@ -1,0 +1,16 @@
+```python
+import pandas as pd
+
+def transform_sequence(input_list):
+    df = pd.DataFrame(input_list, columns=['original'])
+    df[['LastName', 'Initial', 'FirstName']] = df['original'].str.split('\t', expand=True)
+    df['formatted'] = df['LastName'] + ', ' + df['FirstName'] + ' ' + df['Initial'].str[0] + '.'
+    return df['formatted'].tolist()
+
+# Input sequence
+seq_a = ['Freehafer\tDrew\tNancy', 'Cencini\tA\tAndrew', 'Kotas\tBollen\tJan', 'Thorpe\tJ\tSteven', 'Charlie\tBob\tAlice']
+# Call the transform function
+seq_b = transform_sequence(seq_a)
+# Print the new sequence
+print(seq_b)
+```

@@ -1,0 +1,25 @@
+```python
+import pandas as pd
+
+def transform_psia_to_psig(seq_a):
+    # Convert list to pandas Series
+    series_a = pd.Series(seq_a)
+
+    # Strip ' psia' and convert to float
+    series_a = series_a.str.replace(' psia', '').astype(float)
+
+    # Convert psia to psig by subtracting atmospheric pressure (14.695949 psi)
+    atmospheric_pressure = 14.695949
+    series_b = series_a - atmospheric_pressure
+
+    # Format the result to match the given sequence with specific precision
+    formatted_series_b = series_b.map('{:.6f} psig'.format)
+
+    return formatted_series_b.tolist()
+
+# Sequence of psia values
+seq_a = ['33 psia', '17 psia', '100 psia', '22 psia', '3 psia']
+
+# Call the function and show the processed and formatted output
+print(transform_psia_to_psig(seq_a))
+```

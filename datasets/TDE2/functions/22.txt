@@ -1,0 +1,26 @@
+Here's the refactored code snippet as a function:
+
+```python
+import pandas as pd
+
+def clean_text(seq_a):
+    # Convert list to pandas Series
+    series_a = pd.Series(seq_a)
+
+    # Remove punctuation at the start and end, customize based on needs
+    # This regex pattern targets: quotation marks, any dashes, dots, or exclamation,
+    series_b = series_a.str.replace(r'[-.!?,"]+', '', regex=True)
+
+    # Strip any remaining leading and trailing whitespace (there shouldn't be any, but just in case)
+    series_b = series_b.str.strip()
+    
+    return series_b.tolist()
+
+# Original sequence
+seq_a = ['"Do you like this site?",', '"--cool--",', '"...ok!",', '"None",', '"test if this works"?']
+
+cleaned_seq_b = clean_text(seq_a)
+print(cleaned_seq_b)
+``` 
+
+In the refactored code, the transform logic is enclosed within the `clean_text()` function. This function takes `seq_a` as input (a list) and returns the cleaned transformed result list. The appropriate name `clean_text()` reflects the intent of the transformation.

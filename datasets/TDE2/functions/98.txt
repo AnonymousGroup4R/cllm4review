@@ -1,0 +1,26 @@
+```python
+import pandas as pd
+from decimal import Decimal
+
+# Define the conversion factor from kilometers to miles
+km_to_mile_factor = 0.6213711922
+
+def convert_km_to_miles(seq_a):
+    def format_output(x):
+        d = Decimal(x)
+        # get exponent
+        round_num = 8 - d.adjusted()
+        res = f'{x:.{round_num}f}'.format(x)
+        # remove trailing zeros.
+        _end = len(res)
+        while _end > 0 and res[_end-1] == '0':
+            _end -= 1
+        return res[:_end]
+        
+    seq_b = [f"{format_output(float(dist.split(' ')[0]) * km_to_mile_factor)} mile" for dist in seq_a]
+    return seq_b
+
+seq_a = ['5 km', '18 km', '1349 km', '3 km', '33 km']
+seq_b = convert_km_to_miles(seq_a)
+print(seq_b)
+```
