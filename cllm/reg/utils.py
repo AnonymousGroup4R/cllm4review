@@ -5,6 +5,8 @@ import math
 def get_q_hat(cf_scores: ArrayLike, alpha: float):
     cf_scores = cf_scores.reshape(-1)
     n = len(cf_scores)
+    if n == 0:
+        return 0
     quantiles = math.ceil((n+1) * (1-alpha)) / n
     if quantiles > 1: quantiles=1
     # print(quantiles)

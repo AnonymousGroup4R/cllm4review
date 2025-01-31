@@ -38,7 +38,7 @@ def backup_existing_file(file_name):
   
   next_id = max(numbers) + 1
   os.rename(file_name, '{}.old.{}'.format(file_name, next_id))
-  logging.info('renaming file [%s] to [%s]', file_name, next_id)
+  # logging.info('renaming file [%s] to [%s]', file_name, next_id)
   print('renaming file', file_name, next_id)
 
 def setup_logging(level=logging.DEBUG, to_file=True, log_name=None):

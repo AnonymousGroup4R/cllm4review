@@ -12,10 +12,18 @@ from tqdm import tqdm
 
 class OpenAIClient:
     
-    def __init__(self, model_name) -> None:
+    def __init__(self, model_name, endpoint='openai') -> None:
         self.model_name = model_name
-        self.client = OpenAI(api_key = os.environ.get("OPENAI_API_KEY"))
-        self.encoding = tiktoken.encoding_for_model(model_name)
+        if endpoint == 'openai':
+            self.client = OpenAI(api_key = os.environ.get("OPENAI_API_KEY"))
+        elif endpoint == 'deepseek':
+            self.client = OpenAI(api_key = os.environ.get("DEEPSEEK_API_KEY"), base_url='https://api.deepseek.com/')
+        else:
+            raise ValueError(f"Invalid endpoint: {endpoint}")
+        # self.encoding = tiktoken.encoding_for_model(model_name)
+
+    def close(self):
+        self.client.close()
 
     # see https://platform.openai.com/docs/guides/rate-limits/error-mitigation
     @backoff.on_exception(backoff.expo, RateLimitError)

@@ -1,4 +1,4 @@
-from cllm.reg.io import load_tbe_data, balance_tbe_data, reshape_open_dataset, load_std_data, load_std_mgt_as_one_data, load_tbe2_data
+from cllm.reg.io import *
 from cllm.io import split_data
 from cllm.reg.basecp import BaseRegCP, OptimalSolution, ConformalScore2Norm, ConformalScoreRightSide, RawPredSolution
 from cllm.reg.groupcp import GroupCP
@@ -55,6 +55,39 @@ def run_onebatch(dataset, target_name, balance=False, reg_model=None, split_trai
     elif dataset == 'aug':
         pdf = load_tbe2_data(dataset)
         gt_func_num = 225
+    elif dataset == 'ds1k':
+        pdf = load_ds1k_data(dataset)
+        gt_func_num = 1000
+    elif dataset == 'ds10kbase':
+        pdf = load_ds10k_data('base')
+        gt_func_num = 416
+    elif dataset == 'ds10kall':
+        pdf = load_ds10k_data('all')
+        gt_func_num = 833
+    elif dataset == 'ds10kbase_v2':
+        pdf = load_ds10k_data_v2('base')
+        gt_func_num = 390
+    elif dataset == 'ds10kall_v2':
+        pdf = load_ds10k_data_v2('all')
+        gt_func_num = 782
+    elif dataset == 'ds10kbase_deepseek':
+        pdf = load_ds10k_data_v2_deepseek('base')
+        gt_func_num = 377
+    elif dataset == 'ds10kall_deepseek':
+        pdf = load_ds10k_data_v2_deepseek('all')
+        gt_func_num = 771
+    elif dataset == 'ds10kbase_deepseek_iodesc':
+        pdf = load_ds10k_data_v2_deepseek('base', embed_key='iodesc')
+        gt_func_num = 377
+    elif dataset == 'ds10kall_deepseek_iodesc':
+        pdf = load_ds10k_data_v2_deepseek('all', embed_key='iodesc')
+        gt_func_num = 771
+    elif dataset == 'ds10kbase_deepseek_iodesc_st':
+        pdf = load_ds10k_data_v2_deepseek('base', embed_key='iodesc', use_st_embedding=True)
+        gt_func_num = 377
+    elif dataset == 'ds10kall_deepseek_iodesc_st':
+        pdf = load_ds10k_data_v2_deepseek('all', embed_key='iodesc', use_st_embedding=True)
+        gt_func_num = 771
     else:
         raise NotImplementedError()
     # else:
@@ -71,7 +104,7 @@ def run_onebatch(dataset, target_name, balance=False, reg_model=None, split_trai
         raise NotImplementedError()
     methods = [
         ('base', BaseRegCP(model, score=ConformalScore2Norm())),
-        # ('base_weight', ConditionNEWCP(model, score=ConformalScore2Norm(), method='softmax')),
+        ('base_weight', ConditionNEWCP(model, score=ConformalScore2Norm(), method='softmax')),
         # ('group_2', GroupCP(model, 2, score=ConformalScore2Norm())),
         # ('group_3', GroupCP(model, 3, score=ConformalScore2Norm())),
         # ('fixed_group_learnq_2_8_2', FixedGroupCP(model, group_ratios=[0.8, 0.2], num_epochs_pinball=500)),
@@ -87,10 +120,13 @@ def run_onebatch(dataset, target_name, balance=False, reg_model=None, split_trai
         # ('size_group_k_2', AvgSizeThresCP(model, 2, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
         # ('size_group_k_1', AvgSizeThresCP(model, 1, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
 
-        # ('size_group_kp_2', AvgSizeThresCP(model, 0.02*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
+        ('size_group_kp_1', AvgSizeThresCP(model, 0.01*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
+        ('size_group_kp_05', AvgSizeThresCP(model, 0.005*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
+        ('size_group_kp_2', AvgSizeThresCP(model, 0.02*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
         # ('size_group_kp_4', AvgSizeThresCP(model, 0.04*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
         # ('size_group_kp_6', AvgSizeThresCP(model, 0.06*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
         # ('size_group_kp_8', AvgSizeThresCP(model, 0.08*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='none', T=1)),
+
         # ('size_group_weight_kp_4', AvgSizeThresCP(model, 0.04*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='softmax', T=1, use_weight_calibration=False)),
         # ('size_group_weight_kp_6', AvgSizeThresCP(model, 0.06*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='softmax', T=1, use_weight_calibration=False)),
         # ('size_group_weight_kp_8', AvgSizeThresCP(model, 0.08*gt_func_num, num_epochs=1000, score=ConformalScore2Norm(), weight_method='softmax', T=1, use_weight_calibration=False)),
@@ -142,9 +178,9 @@ if __name__ == '__main__':
     exp_pairs = [
         # ('aug_mgt_as_one', 'std_struct_mgt_as_one_test_reg', False, 'SVR'),
         # ('aug_mgt_as_one', 'std_struct_mgt_as_one_test_noreg', False, None, True, False),
-        ('aug', 'tde2_struct_test_reg', False, 'SVR', True, False),
-        ('aug', 'tde2_struct_test_noreg', False, None, True, False),
-        ('aug', 'tde2_struct_test_reg_neural', False, 'Neural', True, False),
+        # ('aug', 'tde2_struct_test_reg', False, 'SVR', True, False),
+        # ('aug', 'tde2_struct_test_noreg', False, None, True, False),
+        # ('aug', 'tde2_struct_test_reg_neural', False, 'Neural', True, False),
         # ('aug_mgt_as_one', 'std_base_noreg_all_alpha_36', False, None, False, 0.36),
         # ('aug', 'tde2_base_noreg_all_alpha_36', False, None, False, 0.36),
 
@@ -154,6 +190,38 @@ if __name__ == '__main__':
         # ('aug_mgt_as_one', 'std_fix_alpha_noreg_all', False, None, False, 0.2),
         # ('aug', 'tde2_fix_alpha_noreg_all', False, None, False, 0.2),
 
+        # ('ds1k', 'ds1k_base_noreg_all', False, None, False, False),
+        # ('ds1k', 'ds1k_fix_alpha_noreg_all', False, None, False, 0.2),
+
+        # ('ds10kbase', 'ds10kbase_base_noreg_all', False, None, False, False),
+        # ('ds10kbase', 'ds10kbase_fix_alpha_noreg_all', False, None, False, 0.2),
+
+        # ('ds10kall', 'ds10kall_base_noreg_all', False, None, False, False),
+        # ('ds10kall', 'ds10kall_fix_alpha_noreg_all', False, None, False, 0.2),
+
+        # ('ds10kbase_v2', 'ds10kbase_v2_base_noreg_all', False, None, False, False),
+        # ('ds10kbase_v2', 'ds10kbase_v2_fix_alpha_noreg_all', False, None, False, 0.2),
+
+        # ('ds10kall_v2', 'ds10kall_v2_base_noreg_all', False, None, False, False),
+        # ('ds10kall_v2', 'ds10kall_v2_fix_alpha_noreg_all', False, None, False, 0.2),
+
+
+        # deepseek
+        # ('ds10kbase_deepseek', 'ds10kbase_deepseek_base_noreg_all', False, None, False, False),
+        # ('ds10kbase_deepseek', 'ds10kbase_deepseek_fix_alpha_noreg_all', False, None, False, 0.2),
+
+        # ('ds10kall_deepseek', 'ds10kall_deepseek_base_noreg_all', False, None, False, False),
+        # ('ds10kall_deepseek', 'ds10kall_deepseek_fix_alpha_noreg_all', False, None, False, 0.2),    
+
+        # ('ds10kbase_deepseek_iodesc', 'ds10kbase_deepseek_base_noreg_all_iodesc', False, None, False, False),
+        # ('ds10kbase_deepseek_iodesc', 'ds10kbase_deepseek_fix_alpha_noreg_all_iodesc', False, None, False, 0.2),
+        ('ds10kall_deepseek_iodesc', 'ds10kall_deepseek_base_noreg_all_iodesc', False, None, False, False),
+        # ('ds10kall_deepseek_iodesc', 'ds10kall_deepseek_fix_alpha_noreg_all_iodesc', False, None, False, 0.2),
+
+        # ('ds10kbase_deepseek_iodesc_st', 'ds10kbase_deepseek_base_noreg_all_iodesc_st', False, None, False, False),
+        # ('ds10kbase_deepseek_iodesc_st', 'ds10kbase_deepseek_fix_alpha_noreg_all_iodesc_st', False, None, False, 0.2),
+        # ('ds10kall_deepseek_iodesc_st', 'ds10kall_deepseek_base_noreg_all_iodesc_st', False, None, False, False),
+        # ('ds10kall_deepseek_iodesc_st', 'ds10kall_deepseek_fix_alpha_noreg_all_iodesc_st', False, None, False, 0.2),
     ]
 
     for dataset, target, balance, use_reg_model, split_train, specify_alpha in exp_pairs:
